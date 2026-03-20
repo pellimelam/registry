@@ -44,7 +44,10 @@ box-sizing:border-box;
 border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-
+.nav img{
+width:auto !important;
+height:32px;
+}
 
 .logo{
 font-weight:700;
@@ -191,7 +194,7 @@ box-shadow:0 8px 20px rgba(0,0,0,0.3);
 <div class="logo" style="display:flex;align-items:center;gap:10px;">
 
 <img src="https://registry.vidhwaan.com/icons1/logo.png"
-style="height:32px;width:auto;display:block;">
+style="height:32px;width:auto;display:block;max-width:none;">
 
 <span style="font-weight:700;font-size:18px;color:white;">
 Vidhwaan
@@ -206,7 +209,7 @@ Vidhwaan
 <a href="https://vidhwaan.com">Foundation</a>
 </div>
 
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="menu-btn" id="menuBtn">☰</div>
 </div>
 
 <div id="mobileMenu" class="mobile-menu">
@@ -238,11 +241,10 @@ ${inner}
 © Vidhwaan Group • Culture • Technology • Impact
 </div>
 
-
 <script>
-function toggleMenu(){
+document.getElementById("menuBtn").onclick = function(){
 document.getElementById("mobileMenu").classList.toggle("active");
-}
+};
 </script>
 
 </body>
