@@ -4,20 +4,20 @@ const hero = `
 
 <section class="hero">
 
-<img src="./icons1/logo.png" class="logo" alt="Vidhwaan Logo">
+<img src="./icons/logo.png" class="logo" alt="Vidhwaan Logo">
 
-<h1>Vidhwaan Group</h1>
+<h1>Vidhwaan Community</h1>
 
-<p>Technology · Culture · Innovation</p>
+<p>Official Vidhwaan Registration Platform</p>
 
 <div class="hero-buttons">
 
-<a class="btn btn-primary" href="https://tech.vidhwaan.com">
-Explore Technology
+<a class="btn btn-primary" href="#registration">
+Start Registration
 </a>
 
 <a class="btn btn-outline" href="https://pellimelam.vidhwaan.com">
-Explore Culture
+Explore PelliMelam
 </a>
 
 </div>
