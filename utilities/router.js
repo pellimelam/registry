@@ -40,6 +40,14 @@ break;
 
 if(!phone) return;
 
+// ✅ HIDE LANDING UI WHEN PROFILE LOADS
+document.getElementById("nav").style.display = "none";
+document.getElementById("hero").style.display = "none";
+document.getElementById("registration").style.display = "none";
+document.getElementById("edit").style.display = "none";
+document.getElementById("footer").style.display = "none";
+
+
 /* PAGE TYPE */
 let page = "home";
 
