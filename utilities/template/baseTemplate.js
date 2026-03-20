@@ -13,17 +13,23 @@ color:white;
 }
 
 /* ===== NAV ===== */
+
 .nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:16px 20px;
-background:rgba(0,0,0,0.4);
+padding:14px 20px;
+background:rgba(2,6,23,0.9);
 backdrop-filter: blur(10px);
 position:sticky;
 top:0;
 z-index:100;
+width:100%;
+box-sizing:border-box;
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
+
+
 
 .logo{
 font-weight:700;
