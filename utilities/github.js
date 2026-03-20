@@ -3,10 +3,10 @@ import { generateGallery } from "./template/gallery.js";
 import { generateVideos } from "./template/videos.js";
 import { generateAbout } from "./template/about.js";
 
-
-
+/* ⚠️ TEMP ONLY — MOVE TO BACKEND LATER */
 const GITHUB_TOKEN = "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";
 const ORG = "vidhwaan";
+
 
 /* =========================
    CHECK REPO
@@ -63,7 +63,7 @@ headers:{
 "Accept":"application/vnd.github+json"
 },
 body:JSON.stringify({
-message:"init commit",
+message:"update",
 content:btoa(unescape(encodeURIComponent(content)))
 })
 });
