@@ -46,11 +46,16 @@ import { loadFooter } from "./utilities/footer.js"
 import { loadRegistration } from "./utilities/registration.js"
 import { initRouter } from "./utilities/router.js"   // ✅ ADD THIS
 
+const isProfile = window.location.pathname.match(/\d{10}$/);
+
+if(!isProfile){
 loadNav()
 loadHero()
 loadRegistration()
 loadFooter()
-initRouter()
+}
+
+initRouter();
 
 </script>
 
@@ -147,11 +152,12 @@ const geoPath = `
 ${slugify(state)}/
 ${slugify(district)}/
 ${slugify(subdistrict)}/
+${slugify(village)}/
 ${slugify(instrument)}/
 ${slug}
 `.replace(/\n/g,"");
 
-const url = `https://registry.vidhwaan.com/${geoPath}`;
+const url = `https://registry.vidhwaan.com/${slug}`;
 
 document.getElementById("result").innerHTML = `
 <a href="${url}" target="_blank" style="color:#2563eb;">
