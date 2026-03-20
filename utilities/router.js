@@ -32,7 +32,7 @@ if(path === "/" || path === "/index.html") return;
 const parts = path.split("/").filter(Boolean);
 
 /* FIND PHONE */
-let phone = null;
+let userId = null;
 
 for(const part of parts){
 const match = part.match(/(vdw-[a-z0-9]+|\d{10})$/);
@@ -42,7 +42,7 @@ break;
 }
 }
 
-if(!phone) return;
+if(!userId) return;
 
 // ✅ HIDE LANDING UI WHEN PROFILE LOADS
 document.getElementById("nav").style.display = "none";
@@ -69,13 +69,13 @@ loadProfilePage(userId, page);
    LOAD PROFILE
 ========================= */
 
-async function loadProfilePage(phone, page){
+async function loadProfilePage(userId, page){
 
 
 try{
 
 /* CDN */
-const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${phone}/data.json`);
+const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${userId}/data.json`);
 
 if(!res.ok){
 document.body.innerHTML = "Profile not found";
