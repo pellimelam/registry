@@ -361,6 +361,7 @@ downloadQR(
 this.dataset.name,
 this.dataset.instrument,
 this.dataset.url
+data.phone
 );
 };
 }
@@ -372,57 +373,62 @@ this.dataset.url
 
 
 
-function downloadQR(name, instrument, url){
+function downloadQR(name, instrument, url, phone){
+
+const scale = 2; // 🔥 HIGH QUALITY SCALE
 
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 600;
-canvas.height = 820;
+canvas.width = 600 * scale;
+canvas.height = 820 * scale;
 
-// ================= BACKGROUND (SINGLE CLEAN) =================
-ctx.fillStyle = "#0b1220"; // solid deep navy
+ctx.scale(scale, scale);
+
+// ================= BACKGROUND (REMOVE BLUE) =================
+ctx.fillStyle = "#ffffff"; // FULL WHITE BACKGROUND
 ctx.fillRect(0,0,600,820);
 
 // ================= MAIN CARD =================
 ctx.beginPath();
-ctx.roundRect(40,40,520,740,20);
-ctx.fillStyle = "#ffffff"; // FULL WHITE (official look)
+ctx.roundRect(20,20,560,780,20);
+ctx.fillStyle = "#ffffff";
 ctx.fill();
 
 // ================= TOP HEADER BAR =================
 ctx.fillStyle = "#111827";
-ctx.fillRect(40,40,520,80);
+ctx.fillRect(20,20,560,80);
 
-// HEADER TEXT
+// HEADER TEXT (FIXED ALIGNMENT)
 ctx.fillStyle = "#ffffff";
 ctx.font = "bold 24px Inter, Arial";
 ctx.textAlign = "center";
-ctx.fillText("VIDHWAAN IDENTITY", 300, 90);
+ctx.textBaseline = "middle"; // 🔥 FIX
+ctx.fillText("VIDHWAAN IDENTITY", 300, 60); // perfectly centered
 
 // ================= GOLD LINE =================
 ctx.fillStyle = "#d4af37";
-ctx.fillRect(100,140,400,2);
+ctx.fillRect(100,120,400,2);
 
 // ================= NAME =================
 ctx.fillStyle = "#111827";
 ctx.font = "bold 28px Inter";
-ctx.fillText(name, 300, 200);
+ctx.textAlign = "center";
+ctx.fillText(name, 300, 180);
 
 // ================= ROLE =================
 ctx.fillStyle = "#2563eb";
 ctx.font = "18px Inter";
-ctx.fillText(instrument, 300, 240);
+ctx.fillText(instrument, 300, 220);
 
 // ================= QR BOX =================
 ctx.beginPath();
-ctx.roundRect(150,280,300,300,16);
+ctx.roundRect(150,250,300,300,16);
 ctx.fillStyle = "#ffffff";
 ctx.fill();
 
-// BORDER FOR QR (important for authority look)
 ctx.lineWidth = 2;
-ctx.strokeStyle = "#e5e7eb";
+ctx.strokeStyle = "#d1d5db";
 ctx.stroke();
 
 // ================= FETCH QR =================
@@ -435,33 +441,31 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-ctx.drawImage(img, 165, 295, 270, 270);
+ctx.drawImage(img, 165, 265, 270, 270);
 
-// ================= ID NUMBER =================
-const id = "VID-" + Math.floor(100000 + Math.random() * 900000);
-
+// ================= ID NUMBER (PHONE BASED) =================
 ctx.fillStyle = "#6b7280";
 ctx.font = "14px Inter";
-ctx.fillText(id, 300, 620);
+ctx.fillText(`VID-${phone}`, 300, 580);
 
 // ================= FOOTER =================
 ctx.fillStyle = "#111827";
 ctx.font = "bold 18px Inter";
-ctx.fillText("Vidhwaan Community", 300, 670);
+ctx.fillText("Vidhwaan Community", 300, 630);
 
 // TAGLINE
 ctx.fillStyle = "#6b7280";
 ctx.font = "13px Inter";
-ctx.fillText("Tradition • Pride • Legacy", 300, 700);
+ctx.fillText("Tradition • Pride • Legacy", 300, 660);
 
 // ================= SECURITY LINE =================
 ctx.fillStyle = "#111827";
-ctx.fillRect(120,730,360,1);
+ctx.fillRect(120,700,360,1);
 
 // ================= DOWNLOAD =================
 const link = document.createElement("a");
 link.download = `${name}-vidhwaan-id.png`;
-link.href = canvas.toDataURL("image/png");
+link.href = canvas.toDataURL("image/png", 1.0); // 🔥 MAX QUALITY
 link.click();
 
 };
@@ -469,7 +473,6 @@ link.click();
 });
 
 }
-
 
 
 
