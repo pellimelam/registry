@@ -2,6 +2,21 @@ export function layout(data, inner){
 
 return `
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Vidhwaan</title>
+
+<!-- ✅ FAVICON -->
+<link rel="icon" href="https://registry.vidhwaan.com/favicon.ico">
+
+</head>
+<body>
 <style>
 
 /* ===== GLOBAL ===== */
@@ -179,8 +194,16 @@ box-shadow:0 8px 20px rgba(0,0,0,0.3);
 
 <!-- NAV -->
 <div class="nav">
-<div class="logo" style="color:#fff;font-size:20px;">
+
+<div class="logo" style="display:flex;align-items:center;gap:10px;">
+
+<img src="https://registry.vidhwaan.com/icons1/logo.png"
+style="height:30px;width:auto;display:block;">
+
+<span style="font-weight:700;font-size:18px;color:white;">
 Vidhwaan
+</span>
+
 </div>
 
 <div class="nav-links">
@@ -231,3 +254,8 @@ document.getElementById("mobileMenu").classList.toggle("active");
 
 `;
 }
+
+
+</body>
+</html>
+`;
