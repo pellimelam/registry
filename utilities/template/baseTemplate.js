@@ -179,7 +179,9 @@ box-shadow:0 8px 20px rgba(0,0,0,0.3);
 
 <!-- NAV -->
 <div class="nav">
-<div class="logo">Vidhwaan</div>
+<div class="logo" style="color:#fff;font-size:20px;">
+Vidhwaan
+</div>
 
 <div class="nav-links">
 <a href="/">Home</a>
