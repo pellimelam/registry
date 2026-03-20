@@ -230,6 +230,7 @@ ${inner}
 
 <a href="tel:${data.phone}" class="float-btn call">📞</a>
 
+<a href="https://wa.me/91${data.phone}" class="float-btn whatsapp">💬</a>
 
 </div>
 
