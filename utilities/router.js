@@ -230,18 +230,35 @@ ${data.location.village}, ${data.location.subdistrict}, ${data.location.district
 <!-- QR SECTION (PHONEPE STYLE) -->
 <div class="card" style="text-align:center;">
 
-<h3>Scan & Share Profile</h3>
+<h3 style="margin-bottom:5px;">Scan & Share</h3>
 
 <p style="color:#94a3b8;font-size:13px;">
-Scan this QR to open profile instantly
+Instant profile access
 </p>
 
-<img src="${qr}" style="width:200px;margin-top:10px;">
+<div style="
+background:white;
+padding:15px;
+border-radius:16px;
+display:inline-block;
+margin-top:10px;
+">
+
+<img src="${qr}" style="width:180px;">
+
+</div>
 
 <br><br>
 
 <a href="${qr}" download="vidhwaan-qr.png"
-style="display:inline-block;background:#1e40af;padding:10px 16px;border-radius:8px;color:white;text-decoration:none;">
+style="
+display:inline-block;
+background:#1e40af;
+padding:10px 16px;
+border-radius:8px;
+color:white;
+text-decoration:none;
+">
 Download QR
 </a>
 
