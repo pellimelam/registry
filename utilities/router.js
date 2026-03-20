@@ -372,29 +372,36 @@ function downloadQR(name, instrument, url){
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 400;
-canvas.height = 520;
+canvas.width = 500;
+canvas.height = 650;
 
-// Background
-ctx.fillStyle = "#0f172a";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Background gradient
+const gradient = ctx.createLinearGradient(0,0,0,650);
+gradient.addColorStop(0,"#1e3a8a");
+gradient.addColorStop(1,"#020617");
+ctx.fillStyle = gradient;
+ctx.fillRect(0,0,500,650);
+
+// Card container
+ctx.fillStyle = "rgba(255,255,255,0.05)";
+ctx.fillRect(40,40,420,570);
 
 // Title
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 22px Arial";
+ctx.font = "bold 26px Arial";
 ctx.textAlign = "center";
-ctx.fillText("Vidhwaan", 200, 40);
+ctx.fillText("Vidhwaan Card", 250, 90);
 
 // Name
-ctx.font = "bold 18px Arial";
-ctx.fillText(name, 200, 80);
+ctx.font = "bold 22px Arial";
+ctx.fillText(name, 250, 140);
 
 // Instrument
 ctx.fillStyle = "#60a5fa";
-ctx.font = "14px Arial";
-ctx.fillText(instrument, 200, 110);
+ctx.font = "16px Arial";
+ctx.fillText(instrument, 250, 180);
 
-// FETCH QR FIRST (IMPORTANT FIX)
+// Fetch QR
 fetch(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`)
 .then(res => res.blob())
 .then(blob => {
@@ -404,10 +411,20 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-ctx.drawImage(img, 100, 140, 200, 200);
+// QR
+ctx.drawImage(img, 150, 210, 200, 200);
 
+// Footer
+ctx.fillStyle = "#94a3b8";
+ctx.font = "14px Arial";
+ctx.fillText("Vidhwaan Community", 250, 470);
+
+ctx.font = "12px Arial";
+ctx.fillText("Tradition • Pride • Legacy", 250, 500);
+
+// Download
 const link = document.createElement("a");
-link.download = "vidhwaan-qr.png";
+link.download = "vidhwaan-card.png";
 link.href = canvas.toDataURL("image/png");
 link.click();
 
@@ -416,7 +433,6 @@ link.click();
 });
 
 }
-
 
 
 
