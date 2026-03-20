@@ -242,16 +242,23 @@ ${inner}
 </div>
 
 <script>
-document.addEventListener("click", function(e){
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
 
-const btn = e.target.closest("#menuBtn");
+if(menuBtn && mobileMenu){
 
-if(btn){
-const menu = document.getElementById("mobileMenu");
-if(menu) menu.classList.toggle("active");
-}
-
+menuBtn.addEventListener("click", function(e){
+e.stopPropagation();
+mobileMenu.classList.toggle("active");
 });
+
+document.addEventListener("click", function(e){
+if(!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)){
+mobileMenu.classList.remove("active");
+}
+});
+
+}
 </script>
 
 </body>
