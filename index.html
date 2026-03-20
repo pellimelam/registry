@@ -108,6 +108,15 @@ alert("Vidhwaan with this phone number already exists. If not you contact suppor
 return;
 }
 
+if(exists){
+document.getElementById("result").innerHTML = `
+<div style="color:#ef4444;">
+❌ Profile already exists with this phone number. If not you contact support.
+</div>
+`;
+return;
+}
+
 /* CREATE */
 
 document.getElementById("result").innerHTML = "Creating profile...";
@@ -160,9 +169,49 @@ ${slug}
 const url = `https://registry.vidhwaan.com/${slug}`;
 
 document.getElementById("result").innerHTML = `
-<a href="${url}" target="_blank" style="color:#2563eb;">
-${url}
-</a>
+<div style="
+background:#1e293b;
+padding:16px;
+border-radius:10px;
+margin-top:15px;
+text-align:center;
+">
+
+<h3 style="margin-bottom:10px;color:#22c55e;">
+✅ Profile Created Successfully
+</h3>
+
+<p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
+Save or copy your profile link
+</p>
+
+<input value="${url}" readonly
+style="
+width:100%;
+padding:10px;
+border-radius:8px;
+border:none;
+background:#020617;
+color:white;
+text-align:center;
+font-size:13px;
+">
+
+<br><br>
+
+<button onclick="navigator.clipboard.writeText('${url}')"
+style="
+background:#2563eb;
+color:white;
+padding:10px 14px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+">
+Copy URL
+</button>
+
+</div>
 `;
 
 alert("Profile created 🚀");
