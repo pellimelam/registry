@@ -1,4 +1,10 @@
-function renderAbout(data){
+import { layout } from "./template/baseTemplate.js";
+
+function renderLayout(content){
+  document.getElementById("app").innerHTML = content;
+}
+
+export function renderAbout(data){
 
 const content = `
 
