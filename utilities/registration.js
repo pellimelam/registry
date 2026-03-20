@@ -4,15 +4,19 @@ export async function loadRegistration(){
 
 const html = `
 
-<section class="section">
+<section class="section" id="registration">
+
 <div class="container">
 
 <h2 class="section-title">Register as Vidhwaan</h2>
 
-<div class="card" style="max-width:500px;margin:auto;">
+<div class="card" style="max-width:700px;margin:auto;">
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
 
 <select id="state"></select>
 <select id="district"></select>
+
 <select id="subdistrict"></select>
 <select id="village"></select>
 
@@ -29,15 +33,18 @@ const html = `
 <option>Drum</option>
 </select>
 
-<button class="btn btn-primary" onclick="registerUser()">
+</div>
+
+<button class="btn btn-primary" style="margin-top:15px;width:100%;" onclick="registerUser()">
 Register
 </button>
 
-<div id="result" style="margin-top:10px;"></div>
+<div id="result" style="margin-top:12px;"></div>
 
 </div>
 
 </div>
+
 </section>
 
 `;
@@ -47,7 +54,7 @@ document.getElementById("registration").innerHTML = html;
 /* LOAD GEO */
 await loadGeo();
 
-/* INIT DROPDOWNS */
+/* INIT */
 initState();
 
 }
@@ -72,7 +79,10 @@ for(const url of parts){
 
 const res = await fetch(url);
 
-if(!res.ok) continue;
+if(!res.ok){
+console.error("Failed:", url);
+continue;
+}
 
 const data = await res.json();
 
@@ -81,6 +91,8 @@ Object.assign(merged,data);
 }
 
 GEO = merged;
+
+console.log("GEO LOADED:", GEO);
 
 }
 
