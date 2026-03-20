@@ -242,15 +242,13 @@ ${inner}
 </div>
 
 <script>
-window.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("click", function(e){
 
-const btn = document.getElementById("menuBtn");
+const btn = e.target.closest("#menuBtn");
+
+if(btn){
 const menu = document.getElementById("mobileMenu");
-
-if(btn && menu){
-btn.onclick = function(){
-menu.classList.toggle("active");
-};
+if(menu) menu.classList.toggle("active");
 }
 
 });
