@@ -1,10 +1,6 @@
 import { layout } from "./baseTemplate.js";
 
-function renderLayout(content){
-  document.getElementById("app").innerHTML = content;
-}
-
-export function renderAbout(data){
+export function generateAbout(data){
 
 const content = `
 
@@ -22,6 +18,6 @@ I perform in weddings, cultural events, and traditional ceremonies.
 
 `;
 
-renderLayout(layout(data, content));
+return layout(data, content);
 
 }
