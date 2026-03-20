@@ -6,42 +6,26 @@ const html = `
 
 <section class="section" id="registration">
 
-<div class="container">
+<div class="container" style="max-width:500px;margin:auto;">
 
 <h2 style="
 text-align:center;
-font-size:28px;
-margin-bottom:30px;
+font-size:26px;
+margin-bottom:25px;
 font-weight:600;
 ">
 Register as Vidhwaan
 </h2>
 
-<div style="
-max-width:800px;
-margin:auto;
-background:rgba(30,41,59,0.6);
-border:1px solid #334155;
-border-radius:20px;
-padding:30px;
-backdrop-filter:blur(10px);
-">
-
-<div style="
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:16px;
-">
+<div class="card" style="padding:20px;">
 
 <select id="state"></select>
 <select id="district"></select>
-
 <select id="subdistrict"></select>
 <select id="village"></select>
 
 <input id="firstName" placeholder="First Name">
 <input id="lastName" placeholder="Last Name">
-
 <input id="phone" placeholder="Mobile Number" maxlength="10">
 
 <select id="instrument">
@@ -52,19 +36,16 @@ gap:16px;
 <option>Drum</option>
 </select>
 
-</div>
-
 <button class="btn btn-primary" style="
-margin-top:20px;
+margin-top:15px;
 width:100%;
-height:50px;
+height:48px;
 font-size:16px;
-border-radius:12px;
 " onclick="registerUser()">
 Register
 </button>
 
-<div id="result" style="margin-top:15px;text-align:center;"></div>
+<div id="result" style="margin-top:12px;text-align:center;"></div>
 
 </div>
 
@@ -76,22 +57,19 @@ Register
 
 document.getElementById("registration").innerHTML = html;
 
-/* LOAD GEO */
 await loadGeo();
-
-/* INIT */
 initState();
 
 }
 
 
-/* ---------------- LOAD JSON ---------------- */
+/* ---------- LOAD GEO ---------- */
 
 async function loadGeo(){
 
 if(GEO) return;
 
-const parts = [
+const files = [
 "./geo_dataset_1.json",
 "./geo_dataset_2.json",
 "./geo_dataset_3.json",
@@ -100,87 +78,95 @@ const parts = [
 
 let merged = {};
 
-for(const url of parts){
+for(const file of files){
 
 try{
-const res = await fetch(url);
-if(!res.ok) throw new Error();
+const res = await fetch(file);
+
+if(!res.ok){
+console.error("❌ JSON NOT FOUND:", file);
+continue;
+}
+
 const data = await res.json();
-Object.assign(merged,data);
+Object.assign(merged, data);
+
 }catch(e){
-console.error("Failed loading:", url);
+console.error("❌ ERROR:", file, e);
 }
 
 }
 
 GEO = merged;
 
+console.log("✅ GEO LOADED:", Object.keys(GEO).length);
+
 }
 
 
-/* ---------------- STATE ---------------- */
+/* ---------- STATE ---------- */
 
 function initState(){
 
-const stateEl = document.getElementById("state");
+const el = document.getElementById("state");
 
-stateEl.innerHTML = `<option value="">Select State</option>`;
+el.innerHTML = `<option value="">Select State</option>`;
 
 Object.keys(GEO).forEach(key=>{
-stateEl.innerHTML += `<option value="${key}">${GEO[key].name}</option>`;
+el.innerHTML += `<option value="${key}">${GEO[key].name}</option>`;
 });
 
-stateEl.onchange = () => loadDistrict(stateEl.value);
+el.onchange = () => loadDistrict(el.value);
 
 }
 
 
-/* ---------------- DISTRICT ---------------- */
+/* ---------- DISTRICT ---------- */
 
 function loadDistrict(stateKey){
 
-const districtEl = document.getElementById("district");
-districtEl.innerHTML = `<option value="">Select District</option>`;
+const el = document.getElementById("district");
+el.innerHTML = `<option value="">Select District</option>`;
 
 if(!stateKey) return;
 
 const districts = GEO[stateKey].districts;
 
 Object.keys(districts).forEach(key=>{
-districtEl.innerHTML += `<option value="${key}">${districts[key].name}</option>`;
+el.innerHTML += `<option value="${key}">${districts[key].name}</option>`;
 });
 
-districtEl.onchange = () => loadSubdistrict(stateKey, districtEl.value);
+el.onchange = () => loadSubdistrict(stateKey, el.value);
 
 }
 
 
-/* ---------------- SUBDISTRICT ---------------- */
+/* ---------- SUBDISTRICT ---------- */
 
 function loadSubdistrict(stateKey, districtKey){
 
-const subEl = document.getElementById("subdistrict");
-subEl.innerHTML = `<option value="">Select Subdistrict</option>`;
+const el = document.getElementById("subdistrict");
+el.innerHTML = `<option value="">Select Subdistrict</option>`;
 
 if(!districtKey) return;
 
 const subs = GEO[stateKey].districts[districtKey].subdistricts;
 
 Object.keys(subs).forEach(key=>{
-subEl.innerHTML += `<option value="${key}">${subs[key].name}</option>`;
+el.innerHTML += `<option value="${key}">${subs[key].name}</option>`;
 });
 
-subEl.onchange = () => loadVillage(stateKey, districtKey, subEl.value);
+el.onchange = () => loadVillage(stateKey, districtKey, el.value);
 
 }
 
 
-/* ---------------- VILLAGE ---------------- */
+/* ---------- VILLAGE ---------- */
 
 function loadVillage(stateKey, districtKey, subKey){
 
-const villageEl = document.getElementById("village");
-villageEl.innerHTML = `<option value="">Select Village</option>`;
+const el = document.getElementById("village");
+el.innerHTML = `<option value="">Select Village</option>`;
 
 if(!subKey) return;
 
@@ -191,7 +177,7 @@ GEO[stateKey]
 .villages;
 
 villages.forEach(v=>{
-villageEl.innerHTML += `
+el.innerHTML += `
 <option value="${v.slug}">
 ${v.name} (${v.pincode})
 </option>`;
