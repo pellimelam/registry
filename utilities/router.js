@@ -5,14 +5,23 @@ const path = window.location.pathname.toLowerCase();
 /* IGNORE ROOT */
 if(path === "/" || path === "/index.html") return;
 
-/* EXTRACT PHONE */
-const phoneMatch = path.match(/(\d{10})/);
+/* SPLIT PATH */
+const parts = path.split("/").filter(Boolean);
 
-if(!phoneMatch) return;
+/* FIND PHONE IN ANY POSITION */
+let phone = null;
 
-const phone = phoneMatch[1];
+for(const part of parts){
+const match = part.match(/(\d{10})$/);
+if(match){
+phone = match[1];
+break;
+}
+}
 
-/* EXTRACT SUB PAGE */
+if(!phone) return;
+
+/* DETECT PAGE TYPE */
 let page = "home";
 
 if(path.includes("/gallery")) page = "gallery";
@@ -74,16 +83,29 @@ renderHome(data);
    COMMON NAV
 ========================= */
 
+function slugify(str){
+return str.toLowerCase().replace(/\s+/g,"-");
+}
+
 function nav(data){
 
 const slug = `${data.firstName}${data.lastName}${data.phone}`.toLowerCase();
 
+/* GEO PATH */
+const geoPath = `
+${slugify(data.location.state)}/
+${slugify(data.location.district)}/
+${slugify(data.location.subdistrict)}/
+${slugify(data.instrument)}/
+${slug}
+`.replace(/\n/g,"");
+
 return `
 <div style="margin-bottom:30px;display:flex;gap:16px;flex-wrap:wrap;">
-<a href="/${slug}">Home</a>
-<a href="/${slug}/gallery">Gallery</a>
-<a href="/${slug}/videos">Videos</a>
-<a href="/${slug}/about">About</a>
+<a href="/${geoPath}">Home</a>
+<a href="/${geoPath}/gallery">Gallery</a>
+<a href="/${geoPath}/videos">Videos</a>
+<a href="/${geoPath}/about">About</a>
 </div>
 `;
 
@@ -96,15 +118,24 @@ return `
 
 function applySEO(title, description, data){
 
-document.title = title;
+const geo = `${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}`;
 
-/* meta */
+/* TITLE */
+document.title = `${title} | ${geo}`;
+
+/* META */
 const meta = document.createElement("meta");
 meta.name = "description";
-meta.content = description;
+meta.content = `${description} in ${geo}`;
 document.head.appendChild(meta);
 
-/* schema */
+/* KEYWORDS (optional boost) */
+const keywords = document.createElement("meta");
+keywords.name = "keywords";
+keywords.content = `${data.instrument}, ${data.firstName}, ${geo}`;
+document.head.appendChild(keywords);
+
+/* STRUCTURED DATA */
 const script = document.createElement("script");
 script.type = "application/ld+json";
 
@@ -115,7 +146,8 @@ script.innerHTML = JSON.stringify({
 "jobTitle":data.instrument,
 "address":{
 "@type":"PostalAddress",
-"addressLocality":data.location.village
+"addressLocality":data.location.village,
+"addressRegion":data.location.district
 }
 });
 
