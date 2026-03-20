@@ -116,14 +116,7 @@ return;
 
 /* DATA OBJECT */
 
-function generateUID(){
-return "vdw-" + Math.random().toString(36).substring(2,10);
-}
-
-const uid = generateUID();
-
 const data = {
-uid, // ✅ NEW
 firstName,
 lastName,
 phone,
@@ -145,7 +138,7 @@ village
 
 /* FINAL URL */
 
-const slug = uid; // ✅ NEW SYSTEM
+const slug = `${firstName}${lastName}${phone}`.toLowerCase();
 function slugify(str){
 return str.toLowerCase().replace(/\s+/g,"-");
 }
