@@ -189,10 +189,18 @@ function formatName(str){
 return str.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 
+
 function extractPincode(village){
 const match = village.match(/\d{6}$/);
 return match ? match[0] : "";
 }
+
+
+function getVillageName(str){
+return str.split("-")[0].replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+
 
 /* =========================
    HOME
@@ -242,7 +250,7 @@ box-shadow:0 0 40px rgba(59,130,246,0.6);
 
 <p style="line-height:1.8;color:#cbd5f5;">
 
-${formatName(data.location.village)}<br>
+${getVillageName(data.location.village)} Village<br>
 ${formatName(data.location.subdistrict)} Mandal<br>
 ${formatName(data.location.district)} District<br>
 ${formatName(data.location.state)}<br>
@@ -336,7 +344,7 @@ const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 400;
-canvas.height = 500;
+canvas.height = 520;
 
 // Background
 ctx.fillStyle = "#0f172a";
@@ -344,36 +352,39 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // Title
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 20px Inter";
+ctx.font = "bold 22px Arial";
 ctx.textAlign = "center";
 ctx.fillText("Vidhwaan", 200, 40);
 
 // Name
-ctx.font = "bold 18px Inter";
+ctx.font = "bold 18px Arial";
 ctx.fillText(name, 200, 80);
 
 // Instrument
 ctx.fillStyle = "#60a5fa";
-ctx.font = "14px Inter";
+ctx.font = "14px Arial";
 ctx.fillText(instrument, 200, 110);
 
-// QR Image
+// FETCH QR FIRST (IMPORTANT FIX)
+fetch(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`)
+.then(res => res.blob())
+.then(blob => {
+
 const img = new Image();
-img.crossOrigin = "anonymous";
+img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
 ctx.drawImage(img, 100, 140, 200, 200);
 
-// Download
 const link = document.createElement("a");
 link.download = "vidhwaan-qr.png";
-link.href = canvas.toDataURL();
+link.href = canvas.toDataURL("image/png");
 link.click();
 
 };
 
-img.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`;
+});
 
 }
 
