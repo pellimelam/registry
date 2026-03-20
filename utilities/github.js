@@ -4,7 +4,7 @@ import { generateVideos } from "./template/videos.js";
 import { generateAbout } from "./template/about.js";
 
 /* ⚠️ TEMP ONLY — MOVE TO BACKEND LATER */
-const GITHUB_TOKEN = "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";
+const GITHUB_TOKEN = "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";
 const ORG = "vidhwaan";
 
 
