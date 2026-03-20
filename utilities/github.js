@@ -3,24 +3,24 @@ import { generateGallery } from "./template/gallery.js";
 import { generateVideos } from "./template/videos.js";
 import { generateAbout } from "./template/about.js";
 
-/* ⚠️ TEMP ONLY — MOVE TO BACKEND LATER */
-const GITHUB_TOKEN = "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";
-const ORG = "vidhwaan";
-
+const API = "https://cold-haze-63a2.needfullfil.workers.dev/";
 
 /* =========================
    CHECK REPO
 ========================= */
 export async function checkRepo(phone){
 
-const res = await fetch(`https://api.github.com/repos/${ORG}/${phone}`,{
-headers:{
-"Authorization":`Bearer ${GITHUB_TOKEN}`,
-"Accept":"application/vnd.github+json"
-}
+const res = await fetch(API, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+action: "checkRepo",
+phone
+})
 });
 
-return res.status === 200;
+const data = await res.json();
+return data.exists;
 
 }
 
@@ -30,23 +30,18 @@ return res.status === 200;
 ========================= */
 export async function createRepo(phone){
 
-const res = await fetch(`https://api.github.com/orgs/${ORG}/repos`,{
-method:"POST",
-headers:{
-"Authorization":`Bearer ${GITHUB_TOKEN}`,
-"Accept":"application/vnd.github+json"
-},
-body:JSON.stringify({
-name:phone,
-private:false,
-auto_init:true
+const res = await fetch(API, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+action: "createRepo",
+phone
 })
 });
 
-if(res.status === 422) return "exists";
-if(res.status === 201) return "created";
+if(res.status !== 200) return "error";
 
-return "error";
+return "created";
 
 }
 
@@ -56,15 +51,14 @@ return "error";
 ========================= */
 export async function pushFile(repo, path, content){
 
-await fetch(`https://api.github.com/repos/${ORG}/${repo}/contents/${path}`,{
-method:"PUT",
-headers:{
-"Authorization":`Bearer ${GITHUB_TOKEN}`,
-"Accept":"application/vnd.github+json"
-},
-body:JSON.stringify({
-message:"update",
-content:btoa(unescape(encodeURIComponent(content)))
+await fetch(API, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+action: "pushFile",
+repo,
+path,
+content: btoa(unescape(encodeURIComponent(content)))
 })
 });
 
@@ -78,8 +72,6 @@ export async function createUserSite(data){
 
 const { phone } = data;
 
-/* DEFAULT STRUCTURE */
-
 const fullData = {
 ...data,
 gallery:["","","","",""],
@@ -88,21 +80,12 @@ about:""
 };
 
 /* SAVE DATA */
-
 await pushFile(phone, "data.json", JSON.stringify(fullData, null, 2));
 
 /* GENERATE PAGES */
-
-const home = generateHome(fullData);
-const gallery = generateGallery(fullData);
-const videos = generateVideos(fullData);
-const about = generateAbout(fullData);
-
-/* PUSH FILES */
-
-await pushFile(phone, "index.html", home);
-await pushFile(phone, "gallery.html", gallery);
-await pushFile(phone, "videos.html", videos);
-await pushFile(phone, "about.html", about);
+await pushFile(phone, "index.html", generateHome(fullData));
+await pushFile(phone, "gallery.html", generateGallery(fullData));
+await pushFile(phone, "videos.html", generateVideos(fullData));
+await pushFile(phone, "about.html", generateAbout(fullData));
 
 }
