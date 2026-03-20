@@ -6,12 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Vidhwaan Registry</title>
+<title>Vidhwaan Community Registration</title>
 
-<meta name="description" content="Official Vidhwaan Community Registration Platform">
+<meta name="description" content="Register as a Vidhwaan and create your official profile in the Vidhwaan community.">
 
 <link rel="icon" href="./favicon.ico">
 
+<!-- CSS -->
 <link rel="stylesheet" href="./css/design-system.css">
 <link rel="stylesheet" href="./css/main.css">
 
@@ -19,11 +20,20 @@
 
 <body>
 
+<!-- NAV -->
 <div id="nav"></div>
+
+<!-- HERO -->
 <div id="hero"></div>
+
+<!-- REGISTRATION -->
 <div id="registration"></div>
+
+<!-- FOOTER -->
 <div id="footer"></div>
 
+
+<!-- MODULE LOAD -->
 <script type="module">
 
 import { loadNav } from "./utilities/nav.js"
@@ -38,6 +48,8 @@ loadFooter()
 
 </script>
 
+
+<!-- REGISTER FUNCTION -->
 <script>
 
 async function registerUser(){
@@ -52,13 +64,15 @@ const lastName = document.getElementById("lastName").value.trim();
 const phone = document.getElementById("phone").value.trim();
 const instrument = document.getElementById("instrument").value;
 
+/* VALIDATION */
+
 if(!state || !district || !subdistrict || !village){
-alert("Select full location");
+alert("Please select complete location");
 return;
 }
 
 if(!firstName || !lastName || !phone || !instrument){
-alert("Fill all details");
+alert("Please fill all details");
 return;
 }
 
@@ -67,16 +81,44 @@ alert("Enter valid mobile number");
 return;
 }
 
+/* URL GENERATION (TEMP) */
+
 const slug = `pelli-melam-${village}-${phone}`;
 const url = location.origin + "/" + slug;
 
+/* SHOW RESULT */
+
 document.getElementById("result").innerHTML = `
-<a href="${url}" target="_blank">${url}</a>
+<a href="${url}" target="_blank" style="color:#2563eb;">
+${url}
+</a>
 `;
 
-alert("Registration Ready ✅");
+alert("Registration ready ✅");
 
 }
+
+</script>
+
+
+<!-- OPTIONAL CARD HOVER EFFECT -->
+<script>
+
+document.addEventListener("mousemove", (e) => {
+
+document.querySelectorAll(".card").forEach(card => {
+
+const rect = card.getBoundingClientRect();
+
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+card.style.setProperty("--x", x + "px");
+card.style.setProperty("--y", y + "px");
+
+});
+
+});
 
 </script>
 
