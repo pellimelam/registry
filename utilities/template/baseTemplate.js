@@ -241,25 +241,31 @@ ${inner}
 © Vidhwaan Group • Culture • Technology • Impact
 </div>
 
+
 <script>
+setTimeout(() => {
+
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
 if(menuBtn && mobileMenu){
 
-menuBtn.addEventListener("click", function(e){
+menuBtn.onclick = function(e){
 e.stopPropagation();
 mobileMenu.classList.toggle("active");
-});
+};
 
-document.addEventListener("click", function(e){
+document.onclick = function(e){
 if(!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)){
 mobileMenu.classList.remove("active");
 }
-});
+};
 
 }
+
+}, 50);
 </script>
+
 
 </body>
 </html>
