@@ -198,8 +198,7 @@ box-shadow:0 8px 20px rgba(0,0,0,0.3);
 <div class="logo" style="display:flex;align-items:center;gap:10px;">
 
 <img src="https://registry.vidhwaan.com/icons1/logo.png"
-style="height:30px;width:auto;display:block;">
-
+style="height:32px;filter:drop-shadow(0 0 6px rgba(59,130,246,0.5));">
 <span style="font-weight:700;font-size:18px;color:white;">
 Vidhwaan
 </span>
