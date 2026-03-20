@@ -251,10 +251,8 @@ document.getElementById("mobileMenu").classList.toggle("active");
 }
 </script>
 
-`;
-}
-
-
 </body>
 </html>
+
 `;
+}
