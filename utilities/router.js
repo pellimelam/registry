@@ -303,7 +303,10 @@ margin-top:10px;
 
 <br><br>
 
-<button onclick="downloadQR('${data.firstName} ${data.lastName}', '${data.instrument}', '${profileUrl}')"
+<button id="downloadQRBtn"
+data-name="${data.firstName} ${data.lastName}"
+data-instrument="${data.instrument}"
+data-url="${profileUrl}"
 style="
 background:#1e40af;
 padding:10px 16px;
@@ -342,6 +345,22 @@ WhatsApp
 `;
 
 renderLayout(layout(data, content));
+
+setTimeout(()=>{
+
+const btn = document.getElementById("downloadQRBtn");
+
+if(btn){
+btn.onclick = function(){
+downloadQR(
+this.dataset.name,
+this.dataset.instrument,
+this.dataset.url
+);
+};
+}
+
+},100);
 
 }
 
