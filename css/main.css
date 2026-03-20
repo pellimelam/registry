@@ -164,3 +164,68 @@ margin:0;
 
 }
 
+/* =========================
+   REGISTRATION FORM FIX
+========================= */
+
+#registration .card{
+max-width:520px;
+margin:auto;
+padding:24px;
+}
+
+/* STACK FORM */
+#registration .form-group{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+/* INPUTS + SELECT */
+#registration input,
+#registration select{
+width:100%;
+height:48px;
+padding:0 14px;
+border-radius:10px;
+border:1px solid #334155;
+background:#0f172a;
+color:white;
+font-size:14px;
+outline:none;
+appearance:none;
+}
+
+/* FIX SELECT WIDTH ISSUE */
+#registration select{
+min-width:100%;
+display:block;
+}
+
+/* PLACEHOLDER COLOR */
+#registration input::placeholder{
+color:#64748b;
+}
+
+/* FOCUS EFFECT */
+#registration input:focus,
+#registration select:focus{
+border-color:#2563eb;
+box-shadow:0 0 0 1px #2563eb;
+}
+
+/* BUTTON */
+#registration .btn{
+height:50px;
+font-size:15px;
+border-radius:12px;
+}
+
+/* MOBILE PERFECT */
+@media (max-width:768px){
+
+#registration .card{
+padding:20px;
+}
+
+}
