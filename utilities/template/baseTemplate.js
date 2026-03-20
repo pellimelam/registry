@@ -79,7 +79,7 @@ top:60px;
 left:0;
 width:100%;
 background:#020617;
-z-index:998;
+z-index:1001;
 }
 
 .mobile-menu.active{
