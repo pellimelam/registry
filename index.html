@@ -138,7 +138,19 @@ village
 /* FINAL URL */
 
 const slug = `${firstName}${lastName}${phone}`.toLowerCase();
-const url = `https://registry.vidhwaan.com/${slug}`;
+function slugify(str){
+return str.toLowerCase().replace(/\s+/g,"-");
+}
+
+const geoPath = `
+${slugify(state)}/
+${slugify(district)}/
+${slugify(subdistrict)}/
+${slugify(instrument)}/
+${slug}
+`.replace(/\n/g,"");
+
+const url = `https://registry.vidhwaan.com/${geoPath}`;
 
 document.getElementById("result").innerHTML = `
 <a href="${url}" target="_blank" style="color:#2563eb;">
