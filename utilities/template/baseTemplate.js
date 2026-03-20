@@ -242,9 +242,18 @@ ${inner}
 </div>
 
 <script>
-document.getElementById("menuBtn").onclick = function(){
-document.getElementById("mobileMenu").classList.toggle("active");
+window.addEventListener("DOMContentLoaded", function(){
+
+const btn = document.getElementById("menuBtn");
+const menu = document.getElementById("mobileMenu");
+
+if(btn && menu){
+btn.onclick = function(){
+menu.classList.toggle("active");
 };
+}
+
+});
 </script>
 
 </body>
