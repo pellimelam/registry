@@ -243,7 +243,8 @@ ${inner}
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+
+function initMenu(){
 
 const btn = document.getElementById("menuBtn");
 const menu = document.getElementById("mobileMenu");
@@ -261,7 +262,10 @@ menu.classList.remove("active");
 }
 };
 
-});
+}
+
+setTimeout(initMenu, 50);
+
 </script>
 
 
