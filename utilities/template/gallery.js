@@ -7,7 +7,7 @@ const images = data.gallery || ["","","","",""];
 const content = `
 <h1>Gallery</h1>
 
-${images.map(img=>`
+${images.map(img => `
 <div class="card">
 ${img ? `<img src="${img}">` : "No Image"}
 </div>
