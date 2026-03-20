@@ -32,25 +32,39 @@ const nav = `
 
 `;
 
-document.getElementById("nav").innerHTML = nav;
+const navRoot = document.getElementById("nav");
+if(!navRoot) return;
+
+navRoot.innerHTML = nav;
+
+// 🔥 DELAY BINDING (CRITICAL FOR DYNAMIC DOM)
+requestAnimationFrame(() => {
 
 const toggle = document.getElementById("navToggle");
 const links = document.getElementById("navLinks");
 
-if(toggle && links){
+if(!toggle || !links) return;
 
-toggle.addEventListener("click", (e)=>{
+// ✅ PREVENT DUPLICATE EVENTS
+toggle.onclick = null;
+document.onclick = null;
+
+// TOGGLE MENU
+toggle.onclick = (e) => {
 e.stopPropagation();
-links.classList.toggle("active");
-});
 
-// close when clicking outside
-document.addEventListener("click", (e)=>{
+links.classList.toggle("active");
+toggle.classList.toggle("active"); // optional for animation
+};
+
+// CLOSE ON OUTSIDE CLICK
+document.onclick = (e) => {
 if(!links.contains(e.target) && !toggle.contains(e.target)){
 links.classList.remove("active");
+toggle.classList.remove("active");
 }
-});
+};
 
-}
+});
 
 }
