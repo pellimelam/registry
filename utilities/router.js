@@ -180,7 +180,9 @@ document.head.appendChild(script);
 
 function renderHome(data){
 
-const qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${window.location.href}`;
+const profileUrl = window.location.href;
+
+const qr = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${profileUrl}`;
 
 const content = `
 
@@ -188,36 +190,77 @@ const content = `
 
 <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
 
-<img src="https://ui-avatars.com/api/?name=${data.firstName}+${data.lastName}&background=1e3a8a&color=fff&size=120"
-style="border-radius:50%;width:100px;height:100px;">
+<!-- PROFILE IMAGE -->
+<img src="https://ui-avatars.com/api/?name=${data.firstName}+${data.lastName}&background=1e3a8a&color=fff&size=200"
+style="border-radius:50%;width:110px;height:110px;border:3px solid rgba(255,255,255,0.2);">
 
 <div>
+
 <h1>${data.firstName} ${data.lastName}</h1>
 
 <div class="badge">${data.instrument}</div>
 
 <p class="location">
-${data.location.village}, ${data.location.subdistrict}, ${data.location.district}
+${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}
 </p>
-</div>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- CONTACT -->
 <div class="card">
+
 <h3>Contact</h3>
+
 <p><b>Phone:</b> ${data.phone}</p>
+
 </div>
 
-<div class="card" style="text-align:center;">
-<h3>Scan & Share</h3>
 
-<img src="${qr}" style="width:180px;margin-top:10px;">
+<!-- QR SECTION (PHONEPE STYLE) -->
+<div class="card" style="text-align:center;">
+
+<h3>Scan & Share Profile</h3>
+
+<p style="color:#94a3b8;font-size:13px;">
+Scan this QR to open profile instantly
+</p>
+
+<img src="${qr}" style="width:200px;margin-top:10px;">
 
 <br><br>
 
-<a href="${qr}" download="vidhwaan-qr.png">Download QR</a>
+<a href="${qr}" download="vidhwaan-qr.png"
+style="display:inline-block;background:#1e40af;padding:10px 16px;border-radius:8px;color:white;text-decoration:none;">
+Download QR
+</a>
+
+</div>
+
+
+<!-- QUICK ACTIONS -->
+<div class="card">
+
+<h3>Quick Actions</h3>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<a href="tel:${data.phone}"
+style="background:#16a34a;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Call
+</a>
+
+<a href="https://wa.me/91${data.phone}"
+style="background:#22c55e;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+WhatsApp
+</a>
+
+</div>
+
 </div>
 
 `;
@@ -232,59 +275,96 @@ renderLayout(layout(data, content));
 
 function renderGallery(data){
 
-applySEO(
-`Gallery - ${data.firstName} ${data.lastName}`,
-`Gallery of ${data.firstName} ${data.lastName}`,
-data
-);
+const images = data.gallery && data.gallery.length
+? data.gallery
+: Array(5).fill("");
 
-document.body.innerHTML = `
-<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+const content = `
 
-${nav(data)}
+<h2>Gallery</h2>
 
-<h1>Gallery</h1>
+<p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
+Photos and event moments
+</p>
 
-${data.gallery.map(i=> i ? `
-<img src="${i}" style="width:100%;margin-bottom:12px;border-radius:12px;">
-` : "").join("")}
+<div class="grid">
 
-</div>
-`;
+${images.map(img => `
+<div class="card" style="padding:10px;">
 
+${img 
+? `<img src="${img}" style="height:180px;object-fit:cover;">`
+: `<div style="
+height:180px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.03);
+border-radius:10px;
+color:#64748b;
+font-size:13px;">
+No Image
+</div>`
 }
 
+</div>
+`).join("")}
 
+</div>
+
+`;
+
+renderLayout(layout(data, content));
+
+}
 /* =========================
    VIDEOS
 ========================= */
 
 function renderVideos(data){
 
-applySEO(
-`Videos - ${data.firstName} ${data.lastName}`,
-`Videos of ${data.firstName} ${data.lastName}`,
-data
-);
+const videos = data.videos && data.videos.length
+? data.videos
+: Array(5).fill("");
 
-document.body.innerHTML = `
-<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+const content = `
 
-${nav(data)}
+<h2>Videos</h2>
 
-<h1>Videos</h1>
+<p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
+Performance highlights and recordings
+</p>
 
-${data.videos.map(v=> v ? `
-<iframe src="${v.replace("watch?v=","embed/")}"
-style="width:100%;height:220px;margin-bottom:12px;border-radius:12px;border:none;">
-</iframe>
-` : "").join("")}
+<div class="grid">
 
-</div>
-`;
+${videos.map(v => `
+<div class="card" style="padding:10px;">
 
+${v 
+? `<iframe src="${v.replace("watch?v=","embed/")}" style="height:180px;"></iframe>`
+: `<div style="
+height:180px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.03);
+border-radius:10px;
+color:#64748b;
+font-size:13px;">
+No Video
+</div>`
 }
 
+</div>
+`).join("")}
+
+</div>
+
+`;
+
+renderLayout(layout(data, content));
+
+}
 
 /* =========================
    ABOUT
@@ -292,22 +372,62 @@ style="width:100%;height:220px;margin-bottom:12px;border-radius:12px;border:none
 
 function renderAbout(data){
 
-applySEO(
-`About - ${data.firstName} ${data.lastName}`,
-`About ${data.firstName} ${data.lastName}`,
-data
-);
+const content = `
 
-document.body.innerHTML = `
-<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+<h2>About</h2>
 
-${nav(data)}
+<div class="card">
 
-<h1>About</h1>
+<p style="line-height:1.6;color:#cbd5f5;">
 
-<p>${data.about || "No description yet."}</p>
+Hello, I am <b>${data.firstName} ${data.lastName}</b>, a dedicated and professional 
+<b>${data.instrument}</b> artist based in 
+<b>${data.location.village}</b>, ${data.location.district}, ${data.location.state}.
+
+</p>
+
+<p style="line-height:1.6;color:#cbd5f5;">
+
+I specialize in performing at weddings, cultural events, traditional ceremonies, and special occasions, bringing authentic musical experience to every event.
+
+</p>
+
+<p style="line-height:1.6;color:#cbd5f5;">
+
+With passion and experience in my field, I aim to deliver high-quality performances that create memorable moments for every audience.
+
+</p>
 
 </div>
+
+
+<div class="card">
+
+<h3>Services</h3>
+
+<ul style="color:#cbd5f5;line-height:1.8;padding-left:18px;">
+<li>Wedding Performances</li>
+<li>Cultural Events</li>
+<li>Temple Programs</li>
+<li>Private Functions</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+
+<h3>Location</h3>
+
+<p style="color:#cbd5f5;">
+${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}
+</p>
+
+</div>
+
 `;
 
+renderLayout(layout(data, content));
+
+}
 }
