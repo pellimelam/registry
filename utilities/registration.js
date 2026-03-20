@@ -8,11 +8,30 @@ const html = `
 
 <div class="container">
 
-<h2 class="section-title">Register as Vidhwaan</h2>
+<h2 style="
+text-align:center;
+font-size:28px;
+margin-bottom:30px;
+font-weight:600;
+">
+Register as Vidhwaan
+</h2>
 
-<div class="card" style="max-width:700px;margin:auto;">
+<div style="
+max-width:800px;
+margin:auto;
+background:rgba(30,41,59,0.6);
+border:1px solid #334155;
+border-radius:20px;
+padding:30px;
+backdrop-filter:blur(10px);
+">
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+<div style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+">
 
 <select id="state"></select>
 <select id="district"></select>
@@ -35,11 +54,17 @@ const html = `
 
 </div>
 
-<button class="btn btn-primary" style="margin-top:15px;width:100%;" onclick="registerUser()">
+<button class="btn btn-primary" style="
+margin-top:20px;
+width:100%;
+height:50px;
+font-size:16px;
+border-radius:12px;
+" onclick="registerUser()">
 Register
 </button>
 
-<div id="result" style="margin-top:12px;"></div>
+<div id="result" style="margin-top:15px;text-align:center;"></div>
 
 </div>
 
@@ -77,22 +102,18 @@ let merged = {};
 
 for(const url of parts){
 
+try{
 const res = await fetch(url);
-
-if(!res.ok){
-console.error("Failed:", url);
-continue;
-}
-
+if(!res.ok) throw new Error();
 const data = await res.json();
-
 Object.assign(merged,data);
+}catch(e){
+console.error("Failed loading:", url);
+}
 
 }
 
 GEO = merged;
-
-console.log("GEO LOADED:", GEO);
 
 }
 
@@ -109,16 +130,14 @@ Object.keys(GEO).forEach(key=>{
 stateEl.innerHTML += `<option value="${key}">${GEO[key].name}</option>`;
 });
 
-stateEl.onchange = handleDistrict;
+stateEl.onchange = () => loadDistrict(stateEl.value);
 
 }
 
 
 /* ---------------- DISTRICT ---------------- */
 
-function handleDistrict(){
-
-const stateKey = this.value;
+function loadDistrict(stateKey){
 
 const districtEl = document.getElementById("district");
 districtEl.innerHTML = `<option value="">Select District</option>`;
@@ -131,17 +150,14 @@ Object.keys(districts).forEach(key=>{
 districtEl.innerHTML += `<option value="${key}">${districts[key].name}</option>`;
 });
 
-districtEl.onchange = handleSubdistrict;
+districtEl.onchange = () => loadSubdistrict(stateKey, districtEl.value);
 
 }
 
 
 /* ---------------- SUBDISTRICT ---------------- */
 
-function handleSubdistrict(){
-
-const stateKey = document.getElementById("state").value;
-const districtKey = this.value;
+function loadSubdistrict(stateKey, districtKey){
 
 const subEl = document.getElementById("subdistrict");
 subEl.innerHTML = `<option value="">Select Subdistrict</option>`;
@@ -154,18 +170,14 @@ Object.keys(subs).forEach(key=>{
 subEl.innerHTML += `<option value="${key}">${subs[key].name}</option>`;
 });
 
-subEl.onchange = handleVillage;
+subEl.onchange = () => loadVillage(stateKey, districtKey, subEl.value);
 
 }
 
 
 /* ---------------- VILLAGE ---------------- */
 
-function handleVillage(){
-
-const stateKey = document.getElementById("state").value;
-const districtKey = document.getElementById("district").value;
-const subKey = this.value;
+function loadVillage(stateKey, districtKey, subKey){
 
 const villageEl = document.getElementById("village");
 villageEl.innerHTML = `<option value="">Select Village</option>`;
