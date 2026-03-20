@@ -35,9 +35,9 @@ const parts = path.split("/").filter(Boolean);
 let phone = null;
 
 for(const part of parts){
-const match = part.match(/(\d{10})$/);
+const match = part.match(/(vdw-[a-z0-9]+|\d{10})$/);
 if(match){
-phone = match[1];
+userId = match[1];
 break;
 }
 }
@@ -60,7 +60,7 @@ else if(path.includes("/videos")) page = "videos";
 else if(path.includes("/about")) page = "about";
 
 /* LOAD */
-loadProfilePage(phone, page);
+loadProfilePage(userId, page);
 
 }
 
