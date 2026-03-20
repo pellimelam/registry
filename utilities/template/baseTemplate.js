@@ -135,6 +135,35 @@ border-top:1px solid #1e293b;
 .menu-btn{display:block;}
 }
 
+
+/* FLOATING BUTTONS */
+.floating{
+position:fixed;
+bottom:20px;
+right:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+z-index:999;
+}
+
+.float-btn{
+width:50px;
+height:50px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+color:white;
+font-size:20px;
+text-decoration:none;
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+.call{background:#16a34a;}
+.whatsapp{background:#22c55e;}
+
+
 </style>
 
 
@@ -164,6 +193,16 @@ border-top:1px solid #1e293b;
 <div class="container">
 ${inner}
 </div>
+
+
+<div class="floating">
+
+<a href="tel:${data.phone}" class="float-btn call">📞</a>
+
+<a href="https://wa.me/91${data.phone}" class="float-btn whatsapp">💬</a>
+
+</div>
+
 
 
 <!-- FOOTER -->
