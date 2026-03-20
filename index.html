@@ -10,7 +10,7 @@
 
 <meta name="description" content="Register as a Vidhwaan and create your official profile in the Vidhwaan community.">
 
-<link rel="icon" href="./favicon.ico">
+<link rel="icon" href="/favicon.ico">
 
 <!-- CSS -->
 <link rel="stylesheet" href="./css/design-system.css">
@@ -49,18 +49,28 @@ import { initRouter } from "./utilities/router.js"   // ✅ ADD THIS
 // 🚨 CHECK FIRST (BEFORE ANYTHING LOADS)
 const isProfile = window.location.pathname.match(/\d{10}$/);
 
-if(isProfile){
-document.body.innerHTML = "<div id='app'></div>";
-}
 
-// NORMAL LOAD
+const isProfile = window.location.pathname.match(/\d{10}$/);
+
+if(isProfile){
+
+// ONLY APP ROOT
+document.body.innerHTML = "<div id='app'></div>";
+
+// ONLY ROUTER RUNS
+initRouter();
+
+}else{
+
+// NORMAL WEBSITE (UNCHANGED)
 loadNav()
 loadHero()
 loadRegistration()
 loadFooter()
-
-// ROUTER LAST
 initRouter()
+
+}
+  
 
 </script>
 
