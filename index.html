@@ -99,19 +99,19 @@ return;
 
 /* CHECK */
 
-document.getElementById("result").innerHTML = "Checking...";
+/* CHECK */
+
+const resultEl = document.getElementById("result");
+
+resultEl.innerHTML = "Checking...";
 
 const exists = await checkRepo(phone);
 
 if(exists){
-alert("Vidhwaan with this phone number already exists. If not you contact support.");
-return;
-}
-
-if(exists){
-document.getElementById("result").innerHTML = `
-<div style="color:#ef4444;">
-❌ Profile already exists with this phone number. If not you contact support.
+resultEl.innerHTML = `
+<div style="color:#ef4444;margin-top:10px;">
+❌ Profile already exists with this phone number.<br>
+If not, contact support.
 </div>
 `;
 return;
@@ -119,12 +119,16 @@ return;
 
 /* CREATE */
 
-document.getElementById("result").innerHTML = "Creating profile...";
+resultEl.innerHTML = "Creating profile...";
 
 const status = await createRepo(phone);
 
 if(status !== "created"){
-alert("Error creating profile");
+resultEl.innerHTML = `
+<div style="color:#ef4444;margin-top:10px;">
+❌ Error creating profile. Please try again.
+</div>
+`;
 return;
 }
 
@@ -170,11 +174,11 @@ const url = `https://registry.vidhwaan.com/${slug}`;
 
 document.getElementById("result").innerHTML = `
 <div style="
-background:#1e293b;
 padding:16px;
 border-radius:10px;
 margin-top:15px;
 text-align:center;
+background:rgba(255,255,255,0.03);
 ">
 
 <h3 style="margin-bottom:10px;color:#22c55e;">
@@ -182,22 +186,20 @@ text-align:center;
 </h3>
 
 <p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
-Save or copy your profile link
+Save or open your profile link
 </p>
 
-<input value="${url}" readonly
+<a href="${url}" target="_blank"
 style="
-width:100%;
-padding:10px;
-border-radius:8px;
-border:none;
-background:#020617;
-color:white;
-text-align:center;
+display:block;
+word-break:break-all;
+color:#60a5fa;
+text-decoration:none;
 font-size:13px;
+margin-bottom:12px;
 ">
-
-<br><br>
+${url}
+</a>
 
 <button onclick="navigator.clipboard.writeText('${url}')"
 style="
