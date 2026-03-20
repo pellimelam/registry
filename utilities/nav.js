@@ -19,8 +19,8 @@ const nav = `
 
 <nav class="nav-links" id="navLinks">
 
+<a href="https://vidhwaan.com">Home</a>
 <a href="https://pellimelam.vidhwaan.com">PelliMelam</a>
-<a href="https://ai.vidhwaan.com">AI</a>
 <a href="https://tech.vidhwaan.com">Technology</a>
 <a href="https://foundation.vidhwaan.com">Foundation</a>
 
@@ -30,18 +30,27 @@ const nav = `
 
 </header>
 
-`
+`;
 
-document.getElementById("nav").innerHTML = nav
+document.getElementById("nav").innerHTML = nav;
 
-/* SAFE TOGGLE */
-const toggle = document.getElementById("navToggle")
-const links = document.getElementById("navLinks")
+const toggle = document.getElementById("navToggle");
+const links = document.getElementById("navLinks");
 
 if(toggle && links){
-toggle.addEventListener("click", ()=>{
-links.classList.toggle("active")
-})
+
+toggle.addEventListener("click", (e)=>{
+e.stopPropagation();
+links.classList.toggle("active");
+});
+
+// close when clicking outside
+document.addEventListener("click", (e)=>{
+if(!links.contains(e.target) && !toggle.contains(e.target)){
+links.classList.remove("active");
+}
+});
+
 }
 
 }
