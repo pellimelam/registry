@@ -5,7 +5,7 @@ import { generateAbout } from "./template/about.js";
 
 
 
-const GITHUB_TOKEN = "PASTE_YOUR_TOKEN_HERE";
+const GITHUB_TOKEN = "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";
 const ORG = "vidhwaan";
 
 /* =========================
