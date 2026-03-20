@@ -76,29 +76,33 @@ content:btoa(unescape(encodeURIComponent(content)))
 ========================= */
 export async function createUserSite(data){
 
-const { firstName, lastName, phone, instrument, village } = data;
+const { phone } = data;
 
-/* CREATE DATA.JSON */
+/* DEFAULT STRUCTURE */
 
-await pushFile(phone, "data.json", JSON.stringify(data, null, 2));
+const fullData = {
+...data,
+gallery:["","","","",""],
+videos:["","","","",""],
+about:""
+};
 
-/* BASIC TEMPLATE */
+/* SAVE DATA */
 
-const indexHTML = `
-<!DOCTYPE html>
-<html>
-<head>
-<title>Vidhwaan - ${firstName} ${lastName}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body style="background:#0f172a;color:white;font-family:sans-serif;text-align:center;padding:40px;">
-<h1>${firstName} ${lastName}</h1>
-<p>${instrument}</p>
-<p>${village}</p>
-</body>
-</html>
-`;
+await pushFile(phone, "data.json", JSON.stringify(fullData, null, 2));
 
-await pushFile(phone, "index.html", indexHTML);
+/* GENERATE PAGES */
+
+const home = generateHome(fullData);
+const gallery = generateGallery(fullData);
+const videos = generateVideos(fullData);
+const about = generateAbout(fullData);
+
+/* PUSH FILES */
+
+await pushFile(phone, "index.html", home);
+await pushFile(phone, "gallery.html", gallery);
+await pushFile(phone, "videos.html", videos);
+await pushFile(phone, "about.html", about);
 
 }
