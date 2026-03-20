@@ -182,6 +182,18 @@ document.head.appendChild(script);
 }
 
 
+
+
+
+function formatName(str){
+return str.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+function extractPincode(village){
+const match = village.match(/\d{6}$/);
+return match ? match[0] : "";
+}
+
 /* =========================
    HOME
 ========================= */
@@ -190,7 +202,7 @@ function renderHome(data){
 
 const profileUrl = window.location.href;
 
-const qr = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${profileUrl}`;
+const qr = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${profileUrl}`;
 
 const content = `
 
@@ -214,13 +226,29 @@ box-shadow:0 0 40px rgba(59,130,246,0.6);
 
 <div class="badge">${data.instrument}</div>
 
-<p class="location">
-${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}
+<!-- ❌ REMOVED SLUG ADDRESS -->
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ✅ ADDRESS BOX (NEW) -->
+<div class="card">
+
+<h3>Location</h3>
+
+<p style="line-height:1.8;color:#cbd5f5;">
+
+${formatName(data.location.village)}<br>
+${formatName(data.location.subdistrict)} Mandal<br>
+${formatName(data.location.district)} District<br>
+${formatName(data.location.state)}<br>
+India - ${extractPincode(data.location.village)}
+
 </p>
-
-</div>
-
-</div>
 
 </div>
 
@@ -235,7 +263,7 @@ ${data.location.village}, ${data.location.subdistrict}, ${data.location.district
 </div>
 
 
-<!-- QR SECTION (PHONEPE STYLE) -->
+<!-- QR SECTION (UPGRADED DOWNLOAD) -->
 <div class="card" style="text-align:center;">
 
 <h3 style="margin-bottom:5px;">Scan & Share</h3>
@@ -252,23 +280,23 @@ display:inline-block;
 margin-top:10px;
 ">
 
-<img src="${qr}" style="width:180px;">
+<img src="${qr}" style="width:180px;" id="qrImage">
 
 </div>
 
 <br><br>
 
-<a href="${qr}" download="vidhwaan-qr.png"
+<button onclick="downloadQR('${data.firstName} ${data.lastName}', '${data.instrument}', '${profileUrl}')"
 style="
-display:inline-block;
 background:#1e40af;
 padding:10px 16px;
 border-radius:8px;
 color:white;
-text-decoration:none;
+border:none;
+cursor:pointer;
 ">
 Download QR
-</a>
+</button>
 
 </div>
 
@@ -299,6 +327,61 @@ WhatsApp
 renderLayout(layout(data, content));
 
 }
+
+
+
+function downloadQR(name, instrument, url){
+
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = 400;
+canvas.height = 500;
+
+// Background
+ctx.fillStyle = "#0f172a";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+// Title
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 20px Inter";
+ctx.textAlign = "center";
+ctx.fillText("Vidhwaan", 200, 40);
+
+// Name
+ctx.font = "bold 18px Inter";
+ctx.fillText(name, 200, 80);
+
+// Instrument
+ctx.fillStyle = "#60a5fa";
+ctx.font = "14px Inter";
+ctx.fillText(instrument, 200, 110);
+
+// QR Image
+const img = new Image();
+img.crossOrigin = "anonymous";
+
+img.onload = function(){
+
+ctx.drawImage(img, 100, 140, 200, 200);
+
+// Download
+const link = document.createElement("a");
+link.download = "vidhwaan-qr.png";
+link.href = canvas.toDataURL();
+link.click();
+
+};
+
+img.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`;
+
+}
+
+
+
+
+
+
 
 /* =========================
    GALLERY
