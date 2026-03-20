@@ -243,27 +243,25 @@ ${inner}
 
 
 <script>
-setTimeout(() => {
+document.addEventListener("DOMContentLoaded", () => {
 
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
+const btn = document.getElementById("menuBtn");
+const menu = document.getElementById("mobileMenu");
 
-if(menuBtn && mobileMenu){
+if(!btn || !menu) return;
 
-menuBtn.onclick = function(e){
+btn.onclick = (e) => {
 e.stopPropagation();
-mobileMenu.classList.toggle("active");
+menu.classList.toggle("active");
 };
 
-document.onclick = function(e){
-if(!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)){
-mobileMenu.classList.remove("active");
+document.onclick = (e) => {
+if(!menu.contains(e.target) && !btn.contains(e.target)){
+menu.classList.remove("active");
 }
 };
 
-}
-
-}, 50);
+});
 </script>
 
 
