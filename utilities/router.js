@@ -453,4 +453,3 @@ ${data.location.village}, ${data.location.subdistrict}, ${data.location.district
 renderLayout(layout(data, content));
 
 }
-}
