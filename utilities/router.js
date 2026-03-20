@@ -377,58 +377,41 @@ const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 600;
-canvas.height = 800;
+canvas.height = 750;
 
-// ===== BACKGROUND =====
-const gradient = ctx.createLinearGradient(0,0,0,800);
+// BACKGROUND
+const gradient = ctx.createLinearGradient(0,0,0,750);
 gradient.addColorStop(0,"#1e3a8a");
 gradient.addColorStop(1,"#020617");
 ctx.fillStyle = gradient;
-ctx.fillRect(0,0,600,800);
+ctx.fillRect(0,0,600,750);
 
-// ===== CARD SHADOW =====
-ctx.shadowColor = "rgba(0,0,0,0.6)";
-ctx.shadowBlur = 30;
+// CARD (LIKE WEBSITE)
+ctx.fillStyle = "rgba(255,255,255,0.08)";
+ctx.strokeStyle = "rgba(255,255,255,0.1)";
+ctx.lineWidth = 1;
 
-// ===== CARD =====
 ctx.beginPath();
-ctx.roundRect(50,50,500,700,25);
-ctx.fillStyle = "rgba(255,255,255,0.06)";
+ctx.roundRect(50,50,500,650,20);
 ctx.fill();
+ctx.stroke();
 
-// RESET SHADOW
-ctx.shadowBlur = 0;
-
-// ===== TITLE =====
+// TITLE
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 32px Inter, Arial";
+ctx.font = "bold 28px Inter";
 ctx.textAlign = "center";
-ctx.fillText("Vidhwaan Card", 300, 120);
+ctx.fillText("Scan & Share", 300, 120);
 
-// ===== NAME =====
-ctx.font = "bold 26px Inter, Arial";
-ctx.fillText(name, 300, 180);
+// SUBTEXT
+ctx.fillStyle = "#94a3b8";
+ctx.font = "14px Inter";
+ctx.fillText("Instant profile access", 300, 150);
 
-// ===== INSTRUMENT BADGE =====
-ctx.fillStyle = "#3b82f6";
-ctx.beginPath();
-ctx.roundRect(200,200,200,40,20);
-ctx.fill();
-
+// QR WHITE BOX (MATCH UI)
 ctx.fillStyle = "#ffffff";
-ctx.font = "16px Arial";
-ctx.fillText(instrument, 300, 227);
-
-// ===== QR CONTAINER (WHITE LIKE PHONEPE) =====
-ctx.shadowColor = "rgba(0,0,0,0.3)";
-ctx.shadowBlur = 20;
-
 ctx.beginPath();
-ctx.roundRect(150,260,300,300,20);
-ctx.fillStyle = "#ffffff";
+ctx.roundRect(175,180,250,250,20);
 ctx.fill();
-
-ctx.shadowBlur = 0;
 
 // FETCH QR
 fetch(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`)
@@ -440,17 +423,25 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-// QR CENTERED INSIDE BOX
-ctx.drawImage(img, 165, 275, 270, 270);
+ctx.drawImage(img, 190, 195, 220, 220);
 
-// ===== FOOTER =====
-ctx.fillStyle = "#cbd5f5";
-ctx.font = "16px Arial";
-ctx.fillText("Vidhwaan Community", 300, 620);
+// NAME
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 22px Inter";
+ctx.fillText(name, 300, 480);
 
+// INSTRUMENT
+ctx.fillStyle = "#60a5fa";
+ctx.font = "16px Inter";
+ctx.fillText(instrument, 300, 510);
+
+// FOOTER
 ctx.fillStyle = "#94a3b8";
-ctx.font = "14px Arial";
-ctx.fillText("Tradition • Pride • Legacy", 300, 650);
+ctx.font = "14px Inter";
+ctx.fillText("Vidhwaan Community", 300, 560);
+
+ctx.font = "12px Inter";
+ctx.fillText("Tradition • Pride • Legacy", 300, 590);
 
 // DOWNLOAD
 const link = document.createElement("a");
