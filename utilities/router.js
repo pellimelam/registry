@@ -360,7 +360,7 @@ btn.onclick = function(){
 downloadQR(
 this.dataset.name,
 this.dataset.instrument,
-this.dataset.url
+this.dataset.url,
 data.phone
 );
 };
