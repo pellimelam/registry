@@ -6,6 +6,10 @@ document.getElementById("app").innerHTML = content;
 
 export function initRouter(){
 
+if(window.location.pathname.match(/\d{10}$/)){
+document.body.innerHTML = "<div id='app'></div>";
+}
+
 let path = window.location.pathname.toLowerCase();
 
 /* HANDLE 404 REDIRECT */
@@ -372,36 +376,61 @@ function downloadQR(name, instrument, url){
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 500;
-canvas.height = 650;
+canvas.width = 600;
+canvas.height = 800;
 
-// Background gradient
-const gradient = ctx.createLinearGradient(0,0,0,650);
+// ===== BACKGROUND =====
+const gradient = ctx.createLinearGradient(0,0,0,800);
 gradient.addColorStop(0,"#1e3a8a");
 gradient.addColorStop(1,"#020617");
 ctx.fillStyle = gradient;
-ctx.fillRect(0,0,500,650);
+ctx.fillRect(0,0,600,800);
 
-// Card container
-ctx.fillStyle = "rgba(255,255,255,0.05)";
-ctx.fillRect(40,40,420,570);
+// ===== CARD SHADOW =====
+ctx.shadowColor = "rgba(0,0,0,0.6)";
+ctx.shadowBlur = 30;
 
-// Title
+// ===== CARD =====
+ctx.beginPath();
+ctx.roundRect(50,50,500,700,25);
+ctx.fillStyle = "rgba(255,255,255,0.06)";
+ctx.fill();
+
+// RESET SHADOW
+ctx.shadowBlur = 0;
+
+// ===== TITLE =====
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 26px Arial";
+ctx.font = "bold 32px Inter, Arial";
 ctx.textAlign = "center";
-ctx.fillText("Vidhwaan Card", 250, 90);
+ctx.fillText("Vidhwaan Card", 300, 120);
 
-// Name
-ctx.font = "bold 22px Arial";
-ctx.fillText(name, 250, 140);
+// ===== NAME =====
+ctx.font = "bold 26px Inter, Arial";
+ctx.fillText(name, 300, 180);
 
-// Instrument
-ctx.fillStyle = "#60a5fa";
+// ===== INSTRUMENT BADGE =====
+ctx.fillStyle = "#3b82f6";
+ctx.beginPath();
+ctx.roundRect(200,200,200,40,20);
+ctx.fill();
+
+ctx.fillStyle = "#ffffff";
 ctx.font = "16px Arial";
-ctx.fillText(instrument, 250, 180);
+ctx.fillText(instrument, 300, 227);
 
-// Fetch QR
+// ===== QR CONTAINER (WHITE LIKE PHONEPE) =====
+ctx.shadowColor = "rgba(0,0,0,0.3)";
+ctx.shadowBlur = 20;
+
+ctx.beginPath();
+ctx.roundRect(150,260,300,300,20);
+ctx.fillStyle = "#ffffff";
+ctx.fill();
+
+ctx.shadowBlur = 0;
+
+// FETCH QR
 fetch(`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${url}`)
 .then(res => res.blob())
 .then(blob => {
@@ -411,18 +440,19 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-// QR
-ctx.drawImage(img, 150, 210, 200, 200);
+// QR CENTERED INSIDE BOX
+ctx.drawImage(img, 165, 275, 270, 270);
 
-// Footer
+// ===== FOOTER =====
+ctx.fillStyle = "#cbd5f5";
+ctx.font = "16px Arial";
+ctx.fillText("Vidhwaan Community", 300, 620);
+
 ctx.fillStyle = "#94a3b8";
 ctx.font = "14px Arial";
-ctx.fillText("Vidhwaan Community", 250, 470);
+ctx.fillText("Tradition • Pride • Legacy", 300, 650);
 
-ctx.font = "12px Arial";
-ctx.fillText("Tradition • Pride • Legacy", 250, 500);
-
-// Download
+// DOWNLOAD
 const link = document.createElement("a");
 link.download = "vidhwaan-card.png";
 link.href = canvas.toDataURL("image/png");
@@ -433,7 +463,6 @@ link.click();
 });
 
 }
-
 
 
 
