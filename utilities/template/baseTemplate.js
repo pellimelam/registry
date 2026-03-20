@@ -203,20 +203,20 @@ Vidhwaan
 </div>
 
 <div class="nav-links">
-<a href="/">Home</a>
+<a href="https://vidhwaan.com">Home</a>
 <a href="https://pellimelam.vidhwaan.com">PelliMelam</a>
-<a href="https://vidhwaan.com">Technology</a>
-<a href="https://vidhwaan.com">Foundation</a>
+<a href="https://tech.vidhwaan.com">Technology</a>
+<a href="https://foundation.vidhwaan.com">Foundation</a>
 </div>
 
 <div class="menu-btn" id="menuBtn">☰</div>
 </div>
 
 <div id="mobileMenu" class="mobile-menu">
-<a href="/">Home</a>
+<a href="https://vidhwaan.com">Home</a>
 <a href="https://pellimelam.vidhwaan.com">PelliMelam</a>
-<a href="https://vidhwaan.com">Technology</a>
-<a href="https://vidhwaan.com">Foundation</a>
+<a href="https://tech.vidhwaan.com">Technology</a>
+<a href="https://foundation.vidhwaan.com">Foundation</a>
 </div>
 
 
