@@ -49,6 +49,7 @@ loadHero()
 loadRegistration()
 loadEditUI()
 loadFooter()
+initRouter()
 
 </script>
 
@@ -56,6 +57,8 @@ loadFooter()
 <!-- REGISTER FUNCTION -->
 
 <script type="module">
+
+import { initRouter } from "./utilities/router.js"
 
 import { checkRepo, createRepo, createUserSite } from "./utilities/github.js";
 
