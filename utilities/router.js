@@ -2,12 +2,17 @@ export function initRouter(){
 
 let path = window.location.pathname.toLowerCase();
 
-/* HANDLE REDIRECT FROM 404 */
+/* HANDLE 404 REDIRECT */
 const params = new URLSearchParams(window.location.search);
 const redirectedPath = params.get("path");
 
 if(redirectedPath){
-path = redirectedPath.toLowerCase();
+
+path = decodeURIComponent(redirectedPath).toLowerCase();
+
+/* 🔥 CLEAN URL (REMOVE ?path=) */
+window.history.replaceState({}, "", path);
+
 }
 
 /* IGNORE ROOT */
