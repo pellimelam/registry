@@ -15,16 +15,16 @@ color:white;
 /* ===== NAV ===== */
 
 .nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:14px 20px;
-background:rgba(2,6,23,0.9);
-backdrop-filter: blur(10px);
-position:sticky;
-top:0;
-z-index:100;
-width:100%;
+padding:12px 24px;
+background:linear-gradient(90deg,#1e3a8a,#0f172a);
+z-index:999;
 box-sizing:border-box;
 border-bottom:1px solid rgba(255,255,255,0.08);
 }
@@ -64,18 +64,22 @@ padding:10px;
 display:flex;
 }
 
-.mobile-menu a{
-padding:12px;
-color:white;
-text-decoration:none;
-border-bottom:1px solid #1e293b;
+.mobile-menu{
+display:none;
+flex-direction:column;
+position:fixed;
+top:60px;
+left:0;
+width:100%;
+background:#020617;
+z-index:998;
 }
 
 /* ===== CONTAINER ===== */
 .container{
 max-width:1000px;
 margin:auto;
-padding:30px;
+padding:90px 20px 30px; /* 👈 push content below fixed navbar */
 }
 
 /* ===== HERO ===== */
