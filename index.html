@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Vidhwaan Group</title>
+
+<meta name="description" content="Vidhwaan Group builds global platforms across technology, culture and artificial intelligence.">
+
+
+<link rel="icon" href="./favicon-v2.ico">
+
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<link rel="preload" href="./icons1/logo.png" as="image">
+
+<link rel="stylesheet" href="./css/design-system.css">
+<link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+
+
+<body>
+
+
+<!-- NAVBAR -->
+<div id="nav"></div>
+
+
+<!-- HERO -->
+<div id="hero"></div>
+
+
+<!-- PLATFORMS -->
+<div id="products"></div>
+
+
+<!-- FUTURE UTILITIES -->
+<div id="utilities"></div>
+
+
+<!-- GLOBAL ECOSYSTEM -->
+<div id="ecosystem"></div>
+
+
+<!-- FOOTER -->
+<div id="footer"></div>
+
+
+
+<script type="module">
+
+import { loadNav } from "./utilities/nav.js"
+import { loadHero } from "./utilities/hero.js"
+import { loadProducts } from "./utilities/products.js"
+import { loadUtilities } from "./utilities/utilities.js"
+import { loadEcosystem } from "./utilities/ecosystem.js"
+import { loadFooter } from "./utilities/footer.js"
+
+loadNav()
+loadHero()
+loadProducts()
+loadUtilities()
+loadEcosystem()
+loadFooter()
+
+</script>
+
+
+<script>
+document.addEventListener("mousemove", (e) => {
+
+document.querySelectorAll(".card").forEach(card => {
+
+const rect = card.getBoundingClientRect();
+
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+
+card.style.setProperty("--x", x + "px");
+card.style.setProperty("--y", y + "px");
+
+});
+
+});
+</script>
+
+
+
+</body>
+
+</html>
