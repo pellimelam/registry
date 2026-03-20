@@ -79,11 +79,24 @@ top:60px;
 left:0;
 width:100%;
 background:#020617;
-z-index:1001;
+z-index:1001; /* 🔥 FIX: ABOVE NAV */
+border-top:1px solid #1e293b;
 }
 
 .mobile-menu.active{
 display:flex;
+}
+
+/* 🔥 ADD THIS */
+.mobile-menu a{
+padding:14px 20px;
+border-bottom:1px solid #1e293b;
+color:#cbd5f5;
+text-decoration:none;
+}
+
+.mobile-menu a:hover{
+background:#0f172a;
 }
 
 /* ===== CONTAINER ===== */
