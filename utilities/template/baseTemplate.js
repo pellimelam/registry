@@ -257,23 +257,27 @@ ${inner}
 
 <script>
 
+(function(){
+
 const btn = document.getElementById("menuBtn");
 const menu = document.getElementById("mobileMenu");
 
-if(btn && menu){
+if(!btn || !menu) return;
 
+// TOGGLE
 btn.onclick = (e) => {
 e.stopPropagation();
 menu.classList.toggle("active");
 };
 
-document.onclick = (e) => {
+// CLOSE OUTSIDE
+document.addEventListener("click", (e) => {
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
-};
+});
 
-}
+})();
 
 </script>
 
