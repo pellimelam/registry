@@ -79,24 +79,11 @@ top:60px;
 left:0;
 width:100%;
 background:#020617;
-z-index:1001; /* 🔥 FIX: ABOVE NAV */
-border-top:1px solid #1e293b;
+z-index:998;
 }
 
 .mobile-menu.active{
 display:flex;
-}
-
-/* 🔥 ADD THIS */
-.mobile-menu a{
-padding:14px 20px;
-border-bottom:1px solid #1e293b;
-color:#cbd5f5;
-text-decoration:none;
-}
-
-.mobile-menu a:hover{
-background:#0f172a;
 }
 
 /* ===== CONTAINER ===== */
@@ -257,27 +244,26 @@ ${inner}
 
 <script>
 
-(function(){
+document.addEventListener("DOMContentLoaded", () => {
 
 const btn = document.getElementById("menuBtn");
 const menu = document.getElementById("mobileMenu");
 
 if(!btn || !menu) return;
 
-// TOGGLE
-btn.onclick = (e) => {
+btn.addEventListener("click", (e) => {
 e.stopPropagation();
 menu.classList.toggle("active");
-};
+});
 
-// CLOSE OUTSIDE
+// close when clicking outside
 document.addEventListener("click", (e) => {
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
 });
 
-})();
+});
 
 </script>
 
