@@ -70,7 +70,7 @@ color:white;
 
 .card{
 position:relative;
-overflow:hidden;
+overflow:visible;   /* 🔥 FIX */
 z-index:1;
 }
 
@@ -189,6 +189,9 @@ border-radius:12px;
 font-size:15px;
 }
 
+#registration input{
+background-clip:padding-box;
+}
 
 /* =========================
    MOBILE
