@@ -55,13 +55,8 @@ padding:0 var(--space-4);
 padding:60px 0;
 }
 
-.section:first-of-type{
-padding-top:40px;
-}
-
-.section:last-of-type{
-padding-bottom:40px;
-}
+.section:first-of-type{padding-top:40px;}
+.section:last-of-type{padding-bottom:40px;}
 
 .section-title{
 font-size:var(--text-lg);
@@ -84,7 +79,6 @@ background:var(--bg-secondary);
 border:1px solid var(--border);
 padding:26px;
 border-radius:var(--radius-lg);
-text-decoration:none;
 color:white;
 transition:.25s;
 }
@@ -92,17 +86,6 @@ transition:.25s;
 .card:hover{
 transform:translateY(-6px);
 background:#334155;
-}
-
-.card-title{
-font-size:18px;
-font-weight:700;
-margin-bottom:6px;
-}
-
-.card-desc{
-font-size:14px;
-color:var(--text-secondary);
 }
 
 /* HERO */
@@ -117,21 +100,20 @@ font-size:var(--text-hero);
 margin-bottom:12px;
 }
 
-.hero p{
-color:var(--text-secondary);
-}
+.hero p{color:var(--text-secondary);}
 
 /* LOGO */
 
 .logo{
 width:140px;
-display:block;
 margin:auto;
 margin-bottom:20px;
 filter:drop-shadow(0 10px 25px rgba(0,0,0,.6));
 }
 
-/* NAV — DESKTOP SAFE */
+/* =========================
+   NAV (DESKTOP)
+========================= */
 
 .nav{
 position:fixed;
@@ -140,7 +122,7 @@ width:100%;
 background:rgba(15,23,42,.85);
 backdrop-filter:blur(10px);
 border-bottom:1px solid var(--border);
-z-index:10;
+z-index:100;
 }
 
 .nav-inner{
@@ -154,7 +136,6 @@ align-items:center;
 
 .brand{
 font-weight:700;
-white-space:nowrap;
 }
 
 .nav-links{
@@ -166,61 +147,14 @@ gap:20px;
 color:var(--text-secondary);
 text-decoration:none;
 font-size:14px;
-white-space:nowrap;
 }
 
 .nav-links a:hover{
 color:white;
 }
 
-/* FOOTER */
-
-.footer{
-text-align:center;
-padding:60px 20px;
-color:#64748b;
-font-size:13px;
-}
-
-/* ========================= */
-/* MOBILE SAFE OVERRIDES */
-/* ========================= */
-
-@media (max-width:768px){
-
-/* NAV */
-.nav-inner{
-flex-direction:row;
-justify-content:space-between;
-align-items:center;
-}
-
-
-.nav-links{
-position:absolute;
-top:60px;
-left:0;
-width:100%;
-background:#020617;
-flex-direction:column;
-display:none;
-z-index:1000;
-}
-
-.nav-links.active{
-display:flex;
-}
-
-.nav-links a{
-padding:14px 20px;
-border-bottom:1px solid #1e293b;
-}
-
-
-
-
 /* =========================
-   HAMBURGER (CRITICAL FIX)
+   HAMBURGER
 ========================= */
 
 .nav-toggle{
@@ -234,25 +168,76 @@ cursor:pointer;
 width:24px;
 height:2px;
 background:#ffffff;
-display:block;
 border-radius:2px;
 }
 
-/* SHOW ONLY ON MOBILE */
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+text-align:center;
+padding:60px 20px;
+color:#64748b;
+font-size:13px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width:768px){
 
+/* NAV STRUCTURE */
+.nav-inner{
+justify-content:space-between;
+}
+
+/* SHOW HAMBURGER */
 .nav-toggle{
 display:flex;
 }
 
+/* MOBILE MENU */
 .nav-links{
-display:none;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+
+background:rgba(2,6,23,0.95);
+backdrop-filter:blur(12px);
+
+flex-direction:column;
+
+transform:translateY(-10px);
+opacity:0;
+pointer-events:none;
+
+transition:all 0.25s ease;
+
+border-bottom:1px solid #1e293b;
 }
 
+/* ACTIVE STATE */
+.nav-links.active{
+transform:translateY(0);
+opacity:1;
+pointer-events:auto;
 }
 
+/* LINKS */
+.nav-links a{
+padding:16px 20px;
+border-bottom:1px solid rgba(255,255,255,0.05);
+font-size:15px;
+}
 
-  
+/* TOUCH FEEDBACK */
+.nav-links a:hover{
+background:rgba(37,99,235,0.15);
+color:white;
+}
 
 /* HERO */
 .hero{
@@ -271,11 +256,6 @@ font-size:14px;
 /* LOGO */
 .logo{
 width:110px;
-}
-
-/* SECTIONS */
-.section{
-padding:50px 0;
 }
 
 /* GRID */
