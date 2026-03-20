@@ -2,17 +2,27 @@ import { getBaseHTML } from "./baseTemplate.js";
 
 export function generateHome(data){
 
-const { firstName, lastName, instrument, location } = data;
-
 const content = `
-<h1>${firstName} ${lastName}</h1>
+
+<div class="hero">
+
+<div class="badge">${data.instrument}</div>
+
+<h1>${data.firstName} ${data.lastName}</h1>
+
+<div class="location">
+${data.location.village}, ${data.location.district}
+</div>
+
+</div>
 
 <div class="card">
-<p><b>Instrument:</b> ${instrument}</p>
-<p><b>Location:</b> ${location.village}</p>
+<h3>About</h3>
+<p>${data.about || "Professional artist available for events."}</p>
 </div>
+
 `;
 
-return getBaseHTML(`Vidhwaan - ${firstName} ${lastName}`, content);
+return getBaseHTML("Vidhwaan", content);
 
 }
