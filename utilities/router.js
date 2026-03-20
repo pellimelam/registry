@@ -147,7 +147,10 @@ function applySEO(title, description, data){
 const geo = `${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}`;
 
 /* TITLE */
-document.title = `${title} | ${geo}`;
+
+
+document.title = `Vidhwaan | ${data.firstName} ${data.lastName} | ${data.instrument}`;
+
 
 /* META */
 const meta = document.createElement("meta");
@@ -207,6 +210,12 @@ return str.split("-")[0].replace(/\b\w/g,c=>c.toUpperCase());
 ========================= */
 
 function renderHome(data){
+
+applySEO(
+`${data.firstName} ${data.lastName}`,
+`${data.instrument} artist`,
+data
+);
 
 const profileUrl = window.location.href;
 
