@@ -192,7 +192,13 @@ const content = `
 
 <!-- PROFILE IMAGE -->
 <img src="https://ui-avatars.com/api/?name=${data.firstName}+${data.lastName}&background=1e3a8a&color=fff&size=200"
-style="border-radius:50%;width:110px;height:110px;border:3px solid rgba(255,255,255,0.2);">
+style="
+border-radius:50%;
+width:120px;
+height:120px;
+border:3px solid rgba(255,255,255,0.3);
+box-shadow:0 0 40px rgba(59,130,246,0.6);
+">
 
 <div>
 
