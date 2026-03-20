@@ -1,10 +1,6 @@
 import { layout } from "./baseTemplate.js";
 
-function renderLayout(content){
-  document.getElementById("app").innerHTML = content;
-}
-
-export function renderHome(data){
+export function generateHome(data){
 
 const content = `
 
@@ -27,6 +23,6 @@ ${data.location.village}, ${data.location.district}
 
 `;
 
-renderLayout(layout(data, content));
+return layout(data, content);
 
 }
