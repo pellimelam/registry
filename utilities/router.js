@@ -177,25 +177,51 @@ document.head.appendChild(script);
 
 function renderHome(data){
 
-applySEO(
-`Vidhwaan - ${data.firstName} ${data.lastName}`,
-`${data.firstName} ${data.lastName} - ${data.instrument} from ${data.location.village}`,
-data
-);
+const qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${window.location.href}`;
 
-document.body.innerHTML = `
-<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+const content = `
 
-${nav(data)}
+<div class="hero">
 
+<div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+
+<img src="https://ui-avatars.com/api/?name=${data.firstName}+${data.lastName}&background=1e3a8a&color=fff&size=120"
+style="border-radius:50%;width:100px;height:100px;">
+
+<div>
 <h1>${data.firstName} ${data.lastName}</h1>
-<p>${data.instrument} • ${data.location.village}</p>
+
+<div class="badge">${data.instrument}</div>
+
+<p class="location">
+${data.location.village}, ${data.location.subdistrict}, ${data.location.district}
+</p>
+</div>
 
 </div>
+
+</div>
+
+<div class="card">
+<h3>Contact</h3>
+<p><b>Phone:</b> ${data.phone}</p>
+</div>
+
+<div class="card" style="text-align:center;">
+<h3>Scan & Share</h3>
+
+<img src="${qr}" style="width:180px;margin-top:10px;">
+
+<br><br>
+
+<a href="${qr}" download="vidhwaan-qr.png">Download QR</a>
+</div>
+
 `;
 
-}
+renderLayout(layout(data, content));
 
+}
 
 /* =========================
    GALLERY
