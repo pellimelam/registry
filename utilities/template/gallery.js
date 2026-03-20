@@ -1,10 +1,6 @@
 import { layout } from "./baseTemplate.js";
 
-function renderLayout(content){
-  document.getElementById("app").innerHTML = content;
-}
-
-export function renderGallery(data){
+export function generateGallery(data){
 
 const content = `
 
@@ -20,6 +16,6 @@ ${img ? `<img src="${img}">` : `<div style="height:150px;display:flex;align-item
 
 `;
 
-renderLayout(layout(data, content));
+return layout(data, content);
 
 }
