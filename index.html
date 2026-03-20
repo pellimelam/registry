@@ -44,6 +44,7 @@ import { loadNav } from "./utilities/nav.js"
 import { loadHero } from "./utilities/hero.js"
 import { loadFooter } from "./utilities/footer.js"
 import { loadRegistration } from "./utilities/registration.js"
+import { loadSupport } from "./utilities/support.js"
 import { initRouter } from "./utilities/router.js"   // ✅ ADD THIS
 
 const isProfile = window.location.pathname.match(/\d{10}$/);
@@ -53,6 +54,7 @@ loadNav()
 loadHero()
 loadRegistration()
 loadFooter()
+loadSupport()
 }
 
 initRouter();
