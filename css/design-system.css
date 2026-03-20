@@ -216,6 +216,42 @@ padding:14px 20px;
 border-bottom:1px solid #1e293b;
 }
 
+
+
+
+/* =========================
+   HAMBURGER (CRITICAL FIX)
+========================= */
+
+.nav-toggle{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+}
+
+.nav-toggle span{
+width:24px;
+height:2px;
+background:#ffffff;
+display:block;
+border-radius:2px;
+}
+
+/* SHOW ONLY ON MOBILE */
+@media (max-width:768px){
+
+.nav-toggle{
+display:flex;
+}
+
+.nav-links{
+display:none;
+}
+
+}
+
+
   
 
 /* HERO */
