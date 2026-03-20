@@ -1,19 +1,25 @@
-import { getBaseHTML } from "./baseTemplate.js";
-
-export function generateVideos(data){
+function renderVideos(data){
 
 const content = `
 
 <h2>Videos</h2>
 
 <div class="grid">
-${data.videos.map(v => v ? `
+${(data.videos || Array(5).fill("")).map(v => `
+<div class="card">
+${v ? `
 <iframe src="${v.replace("watch?v=","embed/")}"></iframe>
-` : "").join("")}
+` : `
+<div style="height:150px;display:flex;align-items:center;justify-content:center;color:#64748b;">
+No Video
+</div>
+`}
+</div>
+`).join("")}
 </div>
 
 `;
 
-return getBaseHTML("Videos", content);
+renderLayout(layout(data, content));
 
 }
