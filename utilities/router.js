@@ -1,14 +1,22 @@
 export function initRouter(){
 
-const path = window.location.pathname.toLowerCase();
+let path = window.location.pathname.toLowerCase();
+
+/* HANDLE REDIRECT FROM 404 */
+const params = new URLSearchParams(window.location.search);
+const redirectedPath = params.get("path");
+
+if(redirectedPath){
+path = redirectedPath.toLowerCase();
+}
 
 /* IGNORE ROOT */
 if(path === "/" || path === "/index.html") return;
 
-/* SPLIT PATH */
+/* SPLIT */
 const parts = path.split("/").filter(Boolean);
 
-/* FIND PHONE IN ANY POSITION */
+/* FIND PHONE */
 let phone = null;
 
 for(const part of parts){
@@ -21,7 +29,7 @@ break;
 
 if(!phone) return;
 
-/* DETECT PAGE TYPE */
+/* PAGE TYPE */
 let page = "home";
 
 if(path.includes("/gallery")) page = "gallery";
