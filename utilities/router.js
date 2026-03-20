@@ -379,62 +379,64 @@ const ctx = canvas.getContext("2d");
 canvas.width = 600;
 canvas.height = 820;
 
-// ================= BACKGROUND =================
-ctx.fillStyle = "#0b1220";
+// ===== BACKGROUND (DEEP PREMIUM GRADIENT) =====
+const gradient = ctx.createLinearGradient(0,0,0,820);
+gradient.addColorStop(0,"#0f172a");
+gradient.addColorStop(1,"#020617");
+ctx.fillStyle = gradient;
 ctx.fillRect(0,0,600,820);
 
-// ================= MAIN CARD =================
+// ===== GLOW EFFECT =====
+ctx.shadowColor = "rgba(59,130,246,0.4)";
+ctx.shadowBlur = 60;
+
+// ===== MAIN CARD =====
 ctx.beginPath();
-ctx.roundRect(40,40,520,740,20);
-ctx.fillStyle = "#ffffff";
+ctx.roundRect(40,40,520,740,30);
+ctx.fillStyle = "rgba(255,255,255,0.06)";
 ctx.fill();
 
-// ================= HEADER BAR =================
-ctx.fillStyle = "#111827";
-ctx.fillRect(40,40,520,80);
+ctx.shadowBlur = 0;
 
-// ================= LOAD LOGO =================
-const logo = new Image();
-logo.crossOrigin = "anonymous"; // IMPORTANT (for canvas export)
-logo.src = "https://registry.vidhwaan.com/icons1/logo.png; // 🔥 REPLACE WITH YOUR ACTUAL LOGO URL
+// ===== GOLD ACCENT LINE =====
+ctx.fillStyle = "#facc15";
+ctx.fillRect(100,110,400,2);
 
-logo.onload = () => {
-
-// DRAW LOGO (top-left)
-ctx.drawImage(logo, 60, 55, 50, 50);
-
-// HEADER TEXT
+// ===== HEADER =====
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 20px Inter, Arial";
+ctx.font = "bold 26px Inter, Arial";
 ctx.textAlign = "center";
-ctx.fillText("VIDHWAAN IDENTITY", 320, 90);
+ctx.fillText("VIDHWAAN Card", 300, 90);
 
-// ================= GOLD LINE =================
-ctx.fillStyle = "#d4af37";
-ctx.fillRect(100,140,400,2);
 
-// ================= NAME =================
-ctx.fillStyle = "#111827";
-ctx.font = "bold 28px Inter";
-ctx.textAlign = "center";
+
+
+// ===== NAME =====
+ctx.font = "bold 26px Inter";
 ctx.fillText(name, 300, 200);
 
-// ================= ROLE =================
-ctx.fillStyle = "#2563eb";
-ctx.font = "18px Inter";
-ctx.fillText(instrument, 300, 240);
-
-// ================= QR BOX =================
+// ===== INSTRUMENT BADGE =====
+ctx.fillStyle = "#3b82f6";
 ctx.beginPath();
-ctx.roundRect(150,280,300,300,16);
+ctx.roundRect(200,220,200,40,20);
+ctx.fill();
+
+ctx.fillStyle = "#ffffff";
+ctx.font = "16px Inter";
+ctx.fillText(instrument, 300, 247);
+
+// ===== QR WHITE BOX =====
+ctx.shadowColor = "rgba(0,0,0,0.3)";
+ctx.shadowBlur = 25;
+
+ctx.beginPath();
+ctx.roundRect(150,280,300,300,24);
 ctx.fillStyle = "#ffffff";
 ctx.fill();
 
-ctx.lineWidth = 2;
-ctx.strokeStyle = "#e5e7eb";
-ctx.stroke();
+ctx.shadowBlur = 0;
 
-// ================= FETCH QR =================
+// ===== FETCH QR =====
 fetch(`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${url}`)
 .then(res => res.blob())
 .then(blob => {
@@ -444,32 +446,26 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
+// QR CENTER
 ctx.drawImage(img, 165, 295, 270, 270);
 
-// ================= ID NUMBER =================
-const id = "VID-" + Math.floor(100000 + Math.random() * 900000);
-
-ctx.fillStyle = "#6b7280";
-ctx.font = "14px Inter";
-ctx.fillText(id, 300, 620);
-
-// ================= FOOTER =================
-ctx.fillStyle = "#111827";
-ctx.font = "bold 18px Inter";
-ctx.fillText("Vidhwaan Community", 300, 670);
+// ===== FOOTER =====
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 20px Inter";
+ctx.fillText("Vidhwaan Community", 300, 650);
 
 // TAGLINE
-ctx.fillStyle = "#6b7280";
-ctx.font = "13px Inter";
-ctx.fillText("Tradition • Pride • Legacy", 300, 700);
+ctx.fillStyle = "#94a3b8";
+ctx.font = "14px Inter";
+ctx.fillText("Tradition • Pride • Legacy", 300, 690);
 
-// ================= SECURITY LINE =================
-ctx.fillStyle = "#111827";
-ctx.fillRect(120,730,360,1);
+// SUBTLE LINE
+ctx.fillStyle = "rgba(255,255,255,0.1)";
+ctx.fillRect(150,720,300,1);
 
-// ================= DOWNLOAD =================
+// ===== DOWNLOAD =====
 const link = document.createElement("a");
-link.download = `${name}-vidhwaan-id.png`;
+link.download = "vidhwaan-id-card.png";
 link.href = canvas.toDataURL("image/png");
 link.click();
 
@@ -477,9 +473,8 @@ link.click();
 
 });
 
-};
-
 }
+
 
 
 
