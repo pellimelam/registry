@@ -21,15 +21,16 @@ Register as Vidhwaan
 
 <div class="form-group">
 
-<select id="state"></select>
-<select id="district"></select>
-<select id="subdistrict"></select>
-<select id="village"></select>
+<div class="field"><select id="state"></select></div>
+<div class="field"><select id="district"></select></div>
+<div class="field"><select id="subdistrict"></select></div>
+<div class="field"><select id="village"></select></div>
 
-<input id="firstName" placeholder="First Name">
-<input id="lastName" placeholder="Last Name">
-<input id="phone" placeholder="Mobile Number" maxlength="10">
+<div class="field"><input id="firstName" placeholder="First Name"></div>
+<div class="field"><input id="lastName" placeholder="Last Name"></div>
+<div class="field"><input id="phone" placeholder="Mobile Number"></div>
 
+<div class="field">
 <select id="instrument">
 <option value="">Select Instrument</option>
 <option>Nadaswaram</option>
@@ -37,7 +38,6 @@ Register as Vidhwaan
 <option>Saxophone</option>
 <option>Drum</option>
 </select>
-
 </div>
 
 <button class="btn btn-primary" style="margin-top:16px;width:100%;" onclick="registerUser()">
