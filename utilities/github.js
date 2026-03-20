@@ -70,7 +70,8 @@ content: btoa(unescape(encodeURIComponent(content)))
 ========================= */
 export async function createUserSite(data){
 
-const { phone } = data;
+const { phone, uid } = data;
+const repo = uid || phone; // fallback
 
 const fullData = {
 ...data,
@@ -80,12 +81,12 @@ about:""
 };
 
 /* SAVE DATA */
-await pushFile(phone, "data.json", JSON.stringify(fullData, null, 2));
+await pushFile(repo, "data.json", JSON.stringify(fullData, null, 2));
 
 /* GENERATE PAGES */
-await pushFile(phone, "index.html", generateHome(fullData));
-await pushFile(phone, "gallery.html", generateGallery(fullData));
-await pushFile(phone, "videos.html", generateVideos(fullData));
-await pushFile(phone, "about.html", generateAbout(fullData));
+await pushFile(repo, "index.html", generateHome(fullData));
+await pushFile(repo, "gallery.html", generateGallery(fullData));
+await pushFile(repo, "videos.html", generateVideos(fullData));
+await pushFile(repo, "about.html", generateAbout(fullData));
 
 }
