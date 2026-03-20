@@ -53,7 +53,9 @@ loadProfilePage(phone, page);
 
 async function loadProfilePage(phone, page){
 
-document.body.innerHTML = "<div style='padding:40px;text-align:center'>Loading...</div>";
+function renderLayout(content){
+document.getElementById("app").innerHTML = content;
+}
 
 try{
 
