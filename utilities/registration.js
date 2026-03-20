@@ -6,7 +6,7 @@ const html = `
 
 <section class="section" id="registration">
 
-<div class="container" style="max-width:500px;margin:auto;">
+<div class="container" style="max-width:520px;margin:auto;">
 
 <h2 style="
 text-align:center;
@@ -17,7 +17,9 @@ font-weight:600;
 Register as Vidhwaan
 </h2>
 
-<div class="card" style="padding:20px;">
+<div class="card">
+
+<div class="form-group">
 
 <select id="state"></select>
 <select id="district"></select>
@@ -36,12 +38,9 @@ Register as Vidhwaan
 <option>Drum</option>
 </select>
 
-<button class="btn btn-primary" style="
-margin-top:15px;
-width:100%;
-height:48px;
-font-size:16px;
-" onclick="registerUser()">
+</div>
+
+<button class="btn btn-primary" style="margin-top:16px;width:100%;" onclick="registerUser()">
 Register
 </button>
 
@@ -57,13 +56,18 @@ Register
 
 document.getElementById("registration").innerHTML = html;
 
+/* LOAD GEO */
 await loadGeo();
+
+/* INIT DROPDOWN */
 initState();
 
 }
 
 
-/* ---------- LOAD GEO ---------- */
+/* =========================
+   LOAD JSON DATA
+========================= */
 
 async function loadGeo(){
 
@@ -81,6 +85,7 @@ let merged = {};
 for(const file of files){
 
 try{
+
 const res = await fetch(file);
 
 if(!res.ok){
@@ -89,10 +94,12 @@ continue;
 }
 
 const data = await res.json();
+
+/* merge all */
 Object.assign(merged, data);
 
-}catch(e){
-console.error("❌ ERROR:", file, e);
+}catch(err){
+console.error("❌ ERROR LOADING:", file, err);
 }
 
 }
@@ -104,7 +111,9 @@ console.log("✅ GEO LOADED:", Object.keys(GEO).length);
 }
 
 
-/* ---------- STATE ---------- */
+/* =========================
+   STATE
+========================= */
 
 function initState(){
 
@@ -121,7 +130,9 @@ el.onchange = () => loadDistrict(el.value);
 }
 
 
-/* ---------- DISTRICT ---------- */
+/* =========================
+   DISTRICT
+========================= */
 
 function loadDistrict(stateKey){
 
@@ -141,7 +152,9 @@ el.onchange = () => loadSubdistrict(stateKey, el.value);
 }
 
 
-/* ---------- SUBDISTRICT ---------- */
+/* =========================
+   SUBDISTRICT
+========================= */
 
 function loadSubdistrict(stateKey, districtKey){
 
@@ -161,7 +174,9 @@ el.onchange = () => loadVillage(stateKey, districtKey, el.value);
 }
 
 
-/* ---------- VILLAGE ---------- */
+/* =========================
+   VILLAGE
+========================= */
 
 function loadVillage(stateKey, districtKey, subKey){
 
