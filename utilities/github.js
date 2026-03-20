@@ -1,3 +1,10 @@
+import { generateHome } from "./template/home.js";
+import { generateGallery } from "./template/gallery.js";
+import { generateVideos } from "./template/videos.js";
+import { generateAbout } from "./template/about.js";
+
+
+
 const GITHUB_TOKEN = "PASTE_YOUR_TOKEN_HERE";
 const ORG = "vidhwaan";
 
