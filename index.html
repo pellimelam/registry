@@ -8,15 +8,10 @@
 
 <title>Vidhwaan Registry</title>
 
-<meta name="description" content="Create your official Vidhwaan identity profile. Join the global Vidhwaan community.">
+<meta name="description" content="Official Vidhwaan Community Registration Platform">
 
 <link rel="icon" href="./favicon.ico">
 
-<meta name="theme-color" content="#0f172a">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<!-- CSS (Vidhwaan ecosystem) -->
 <link rel="stylesheet" href="./css/design-system.css">
 <link rel="stylesheet" href="./css/main.css">
 
@@ -24,20 +19,11 @@
 
 <body>
 
-<!-- NAVBAR -->
 <div id="nav"></div>
-
-<!-- HERO -->
 <div id="hero"></div>
-
-<!-- REGISTRATION -->
 <div id="registration"></div>
-
-<!-- FOOTER -->
 <div id="footer"></div>
 
-
-<!-- MODULE SYSTEM -->
 <script type="module">
 
 import { loadNav } from "./utilities/nav.js"
@@ -45,7 +31,6 @@ import { loadHero } from "./utilities/hero.js"
 import { loadFooter } from "./utilities/footer.js"
 import { loadRegistration } from "./utilities/registration.js"
 
-/* LOAD IN ORDER */
 loadNav()
 loadHero()
 loadRegistration()
@@ -53,11 +38,8 @@ loadFooter()
 
 </script>
 
-
-<!-- GLOBAL FUNCTIONS -->
 <script>
 
-/* REGISTER FUNCTION (WILL BE USED NEXT STEP) */
 async function registerUser(){
 
 const state = document.getElementById("state").value;
@@ -71,12 +53,12 @@ const phone = document.getElementById("phone").value.trim();
 const instrument = document.getElementById("instrument").value;
 
 if(!state || !district || !subdistrict || !village){
-alert("Please select full location");
+alert("Select full location");
 return;
 }
 
 if(!firstName || !lastName || !phone || !instrument){
-alert("Please fill all details");
+alert("Fill all details");
 return;
 }
 
@@ -85,42 +67,17 @@ alert("Enter valid mobile number");
 return;
 }
 
-/* TEMP OUTPUT (NEXT STEP: GITHUB INTEGRATION) */
-
-const slug = `pelli-melam-${state}-${district}-${subdistrict}-${village}-${phone}`;
-
-const url = `${location.origin}/${slug}`;
+const slug = `pelli-melam-${village}-${phone}`;
+const url = location.origin + "/" + slug;
 
 document.getElementById("result").innerHTML = `
-<a href="${url}" target="_blank" style="color:#2563eb;">
-${url}
-</a>
+<a href="${url}" target="_blank">${url}</a>
 `;
 
-alert("Registration Ready ✅ (Next step: GitHub integration)");
+alert("Registration Ready ✅");
 
 }
 
-</script>
-
-
-<!-- OPTIONAL EFFECT (FROM YOUR SYSTEM) -->
-<script>
-document.addEventListener("mousemove", (e) => {
-
-document.querySelectorAll(".card").forEach(card => {
-
-const rect = card.getBoundingClientRect();
-
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
-
-card.style.setProperty("--x", x + "px");
-card.style.setProperty("--y", y + "px");
-
-});
-
-});
 </script>
 
 </body>
