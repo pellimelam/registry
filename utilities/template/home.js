@@ -1,6 +1,10 @@
-import { getBaseHTML } from "./baseTemplate.js";
+import { layout } from "./template/baseTemplate.js";
 
-export function generateHome(data){
+function renderLayout(content){
+  document.getElementById("app").innerHTML = content;
+}
+
+export function renderHome(data){
 
 const content = `
 
@@ -23,6 +27,6 @@ ${data.location.village}, ${data.location.district}
 
 `;
 
-return getBaseHTML("Vidhwaan", content);
+renderLayout(layout(data, content));
 
 }
