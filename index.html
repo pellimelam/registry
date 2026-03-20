@@ -46,10 +46,20 @@ import { loadFooter } from "./utilities/footer.js"
 import { loadRegistration } from "./utilities/registration.js"
 import { initRouter } from "./utilities/router.js"   // ✅ ADD THIS
 
+// 🚨 CHECK FIRST (BEFORE ANYTHING LOADS)
+const isProfile = window.location.pathname.match(/\d{10}$/);
+
+if(isProfile){
+document.body.innerHTML = "<div id='app'></div>";
+}
+
+// NORMAL LOAD
 loadNav()
 loadHero()
 loadRegistration()
 loadFooter()
+
+// ROUTER LAST
 initRouter()
 
 </script>
