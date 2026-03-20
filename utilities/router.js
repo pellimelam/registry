@@ -1,3 +1,9 @@
+import { layout } from "./template/baseTemplate.js";
+
+function renderLayout(content){
+document.getElementById("app").innerHTML = content;
+}
+
 export function initRouter(){
 
 let path = window.location.pathname.toLowerCase();
@@ -53,9 +59,6 @@ loadProfilePage(phone, page);
 
 async function loadProfilePage(phone, page){
 
-function renderLayout(content){
-document.getElementById("app").innerHTML = content;
-}
 
 try{
 
