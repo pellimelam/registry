@@ -6,29 +6,36 @@ const path = window.location.pathname.toLowerCase();
 if(path === "/" || path === "/index.html") return;
 
 /* EXTRACT PHONE */
-const match = path.match(/(\d{10})$/);
+const phoneMatch = path.match(/(\d{10})/);
 
-if(!match) return;
+if(!phoneMatch) return;
 
-const phone = match[1];
+const phone = phoneMatch[1];
 
-/* LOAD PROFILE */
-loadProfilePage(phone);
+/* EXTRACT SUB PAGE */
+let page = "home";
+
+if(path.includes("/gallery")) page = "gallery";
+else if(path.includes("/videos")) page = "videos";
+else if(path.includes("/about")) page = "about";
+
+/* LOAD */
+loadProfilePage(phone, page);
 
 }
 
 
 /* =========================
-   LOAD PROFILE PAGE
+   LOAD PROFILE
 ========================= */
 
-async function loadProfilePage(phone){
+async function loadProfilePage(phone, page){
 
-document.body.innerHTML = "<div style='padding:40px;text-align:center'>Loading profile...</div>";
+document.body.innerHTML = "<div style='padding:40px;text-align:center'>Loading...</div>";
 
 try{
 
-/* ✅ CDN (FAST) */
+/* CDN */
 const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${phone}/data.json`);
 
 if(!res.ok){
@@ -38,8 +45,8 @@ return;
 
 const data = await res.json();
 
-/* RENDER */
-renderProfile(data);
+/* ROUTE */
+renderPage(data, page);
 
 }catch(e){
 document.body.innerHTML = "Error loading profile";
@@ -49,79 +56,182 @@ document.body.innerHTML = "Error loading profile";
 
 
 /* =========================
-   RENDER PROFILE
+   ROUTE HANDLER
 ========================= */
 
-function renderProfile(data){
+function renderPage(data, page){
 
-const { firstName, lastName, instrument, location, gallery, videos, about } = data;
+if(page === "gallery") return renderGallery(data);
+if(page === "videos") return renderVideos(data);
+if(page === "about") return renderAbout(data);
+
+renderHome(data);
+
+}
+
 
 /* =========================
-   SEO
+   COMMON NAV
 ========================= */
 
-/* TITLE */
-document.title = `Vidhwaan - ${firstName} ${lastName}`;
+function nav(data){
 
-/* META DESCRIPTION */
+const slug = `${data.firstName}${data.lastName}${data.phone}`.toLowerCase();
+
+return `
+<div style="margin-bottom:30px;display:flex;gap:16px;flex-wrap:wrap;">
+<a href="/${slug}">Home</a>
+<a href="/${slug}/gallery">Gallery</a>
+<a href="/${slug}/videos">Videos</a>
+<a href="/${slug}/about">About</a>
+</div>
+`;
+
+}
+
+
+/* =========================
+   SEO HELPER
+========================= */
+
+function applySEO(title, description, data){
+
+document.title = title;
+
+/* meta */
 const meta = document.createElement("meta");
 meta.name = "description";
-meta.content = `${firstName} ${lastName} - ${instrument} from ${location.village}`;
+meta.content = description;
 document.head.appendChild(meta);
 
-/* STRUCTURED DATA */
+/* schema */
 const script = document.createElement("script");
 script.type = "application/ld+json";
 
 script.innerHTML = JSON.stringify({
 "@context":"https://schema.org",
 "@type":"Person",
-"name":`${firstName} ${lastName}`,
-"jobTitle":instrument,
+"name":`${data.firstName} ${data.lastName}`,
+"jobTitle":data.instrument,
 "address":{
 "@type":"PostalAddress",
-"addressLocality":location.village
+"addressLocality":data.location.village
 }
 });
 
 document.head.appendChild(script);
 
+}
+
 
 /* =========================
-   UI
+   HOME
 ========================= */
 
+function renderHome(data){
+
+applySEO(
+`Vidhwaan - ${data.firstName} ${data.lastName}`,
+`${data.firstName} ${data.lastName} - ${data.instrument} from ${data.location.village}`,
+data
+);
+
 document.body.innerHTML = `
+<div style="max-width:900px;margin:auto;padding:40px;color:white;">
 
-<div style="max-width:900px;margin:auto;padding:40px;color:white;font-family:system-ui;">
+${nav(data)}
 
-<h1>${firstName} ${lastName}</h1>
+<h1>${data.firstName} ${data.lastName}</h1>
+<p>${data.instrument} • ${data.location.village}</p>
 
-<p style="color:#94a3b8;margin-bottom:20px;">
-${instrument} • ${location.village}
-</p>
+</div>
+`;
 
-<hr style="margin:30px 0;border-color:#334155;">
+}
 
-<h2>Gallery</h2>
-${(gallery || []).map(i=> i ? `
+
+/* =========================
+   GALLERY
+========================= */
+
+function renderGallery(data){
+
+applySEO(
+`Gallery - ${data.firstName} ${data.lastName}`,
+`Gallery of ${data.firstName} ${data.lastName}`,
+data
+);
+
+document.body.innerHTML = `
+<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+
+${nav(data)}
+
+<h1>Gallery</h1>
+
+${data.gallery.map(i=> i ? `
 <img src="${i}" style="width:100%;margin-bottom:12px;border-radius:12px;">
 ` : "").join("")}
 
-<h2>Videos</h2>
-${(videos || []).map(v=> v ? `
+</div>
+`;
+
+}
+
+
+/* =========================
+   VIDEOS
+========================= */
+
+function renderVideos(data){
+
+applySEO(
+`Videos - ${data.firstName} ${data.lastName}`,
+`Videos of ${data.firstName} ${data.lastName}`,
+data
+);
+
+document.body.innerHTML = `
+<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+
+${nav(data)}
+
+<h1>Videos</h1>
+
+${data.videos.map(v=> v ? `
 <iframe src="${v.replace("watch?v=","embed/")}"
 style="width:100%;height:220px;margin-bottom:12px;border-radius:12px;border:none;">
 </iframe>
 ` : "").join("")}
 
-<h2>About</h2>
-<p style="color:#94a3b8;">
-${about || "No description yet."}
-</p>
+</div>
+`;
+
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+function renderAbout(data){
+
+applySEO(
+`About - ${data.firstName} ${data.lastName}`,
+`About ${data.firstName} ${data.lastName}`,
+data
+);
+
+document.body.innerHTML = `
+<div style="max-width:900px;margin:auto;padding:40px;color:white;">
+
+${nav(data)}
+
+<h1>About</h1>
+
+<p>${data.about || "No description yet."}</p>
 
 </div>
-
 `;
 
 }
