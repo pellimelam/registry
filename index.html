@@ -50,9 +50,12 @@ loadFooter()
 
 
 <!-- REGISTER FUNCTION -->
-<script>
 
-async function registerUser(){
+<script type="module">
+
+import { checkRepo, createRepo, createUserSite } from "./utilities/github.js";
+
+window.registerUser = async function(){
 
 const state = document.getElementById("state").value;
 const district = document.getElementById("district").value;
@@ -81,12 +84,54 @@ alert("Enter valid mobile number");
 return;
 }
 
-/* URL GENERATION (TEMP) */
+/* CHECK */
 
-const slug = `pelli-melam-${village}-${phone}`;
-const url = location.origin + "/" + slug;
+document.getElementById("result").innerHTML = "Checking...";
 
-/* SHOW RESULT */
+const exists = await checkRepo(phone);
+
+if(exists){
+alert("Vidhwaan with this phone number already exists. If not you contact support.");
+return;
+}
+
+/* CREATE */
+
+document.getElementById("result").innerHTML = "Creating profile...";
+
+const status = await createRepo(phone);
+
+if(status !== "created"){
+alert("Error creating profile");
+return;
+}
+
+/* DATA OBJECT */
+
+const data = {
+firstName,
+lastName,
+phone,
+instrument,
+location:{
+state,
+district,
+subdistrict,
+village
+}
+};
+
+/* CREATE SITE */
+
+await createUserSite({
+...data,
+village
+});
+
+/* FINAL URL */
+
+const slug = `${firstName}${lastName}${phone}`.toLowerCase();
+const url = `https://registry.vidhwaan.com/${slug}`;
 
 document.getElementById("result").innerHTML = `
 <a href="${url}" target="_blank" style="color:#2563eb;">
@@ -94,11 +139,11 @@ ${url}
 </a>
 `;
 
-alert("Registration ready ✅");
+alert("Profile created 🚀");
 
 }
 
-</script>
+</script> 
 
 
 <!-- OPTIONAL CARD HOVER EFFECT -->
