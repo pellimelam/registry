@@ -1,10 +1,6 @@
 import { layout } from "./baseTemplate.js";
 
-function renderLayout(content){
-  document.getElementById("app").innerHTML = content;
-}
-
-export function renderVideos(data){
+export function generateVideos(data){
 
 const content = `
 
@@ -26,6 +22,6 @@ No Video
 
 `;
 
-renderLayout(layout(data, content));
+return layout(data, content);
 
 }
