@@ -244,24 +244,24 @@ ${inner}
 
 <script>
 
-document.addEventListener("click", function(e){
+document.addEventListener("DOMContentLoaded", () => {
 
 const btn = document.getElementById("menuBtn");
 const menu = document.getElementById("mobileMenu");
 
 if(!btn || !menu) return;
 
-// toggle
-if(e.target.closest("#menuBtn")){
+btn.addEventListener("click", (e) => {
 e.stopPropagation();
 menu.classList.toggle("active");
-return;
-}
+});
 
 // close when clicking outside
-if(!menu.contains(e.target)){
+document.addEventListener("click", (e) => {
+if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
+});
 
 });
 
