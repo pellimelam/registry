@@ -10,7 +10,7 @@ return `
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Vidhwaan</title>
+<title>Loading...</title>
 
 <!-- ✅ FAVICON -->
 <link rel="icon" href="https://registry.vidhwaan.com/favicon.ico">
@@ -71,23 +71,16 @@ cursor:pointer;
 .mobile-menu{
 display:none;
 flex-direction:column;
-background:#020617;
-padding:10px;
-}
-
-.mobile-menu.active{
-display:flex;
-}
-
-.mobile-menu{
-display:none;
-flex-direction:column;
 position:fixed;
 top:60px;
 left:0;
 width:100%;
 background:#020617;
 z-index:998;
+}
+
+.mobile-menu.active{
+display:flex;
 }
 
 /* ===== CONTAINER ===== */
