@@ -406,11 +406,11 @@ ctx.fillRect(100,110,400,2);
 ctx.fillStyle = "#ffffff";
 ctx.font = "bold 26px Inter, Arial";
 ctx.textAlign = "center";
-ctx.fillText("VIDHWAAN", 300, 90);
+ctx.fillText("VIDHWAAN Card", 300, 90);
 
 // ===== CARD TITLE =====
 ctx.font = "bold 30px Inter";
-ctx.fillText("ID Card", 300, 140);
+
 
 // ===== NAME =====
 ctx.font = "bold 26px Inter";
