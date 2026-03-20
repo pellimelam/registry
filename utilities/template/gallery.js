@@ -1,4 +1,4 @@
-import { layout } from "./template/baseTemplate.js";
+import { layout } from "./baseTemplate.js";
 
 function renderLayout(content){
   document.getElementById("app").innerHTML = content;
