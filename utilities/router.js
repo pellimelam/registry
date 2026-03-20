@@ -346,7 +346,7 @@ WhatsApp
 
 renderLayout(layout(data, content));
 
-setTimeout(()=>{
+requestAnimationFrame(()=>{
 
 const btn = document.getElementById("downloadQRBtn");
 
@@ -360,7 +360,8 @@ this.dataset.url
 };
 }
 
-},100);
+});
+
 
 }
 
