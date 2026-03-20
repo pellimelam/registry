@@ -45,11 +45,10 @@ break;
 if(!phone) return;
 
 // ✅ HIDE LANDING UI WHEN PROFILE LOADS
-document.getElementById("nav").style.display = "none";
-document.getElementById("hero").style.display = "none";
-document.getElementById("registration").style.display = "none";
-document.getElementById("edit").style.display = "none";
-document.getElementById("footer").style.display = "none";
+["nav","hero","registration","edit","footer","support"].forEach(id=>{
+const el = document.getElementById(id);
+if(el) el.style.display = "none";
+});
 
 
 /* PAGE TYPE */
