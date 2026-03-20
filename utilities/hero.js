@@ -4,7 +4,7 @@ const hero = `
 
 <section class="hero">
 
-<img src="./icons/logo.png" class="logo" alt="Vidhwaan Logo">
+<img src="./icons1/logo.png" class="logo" alt="Vidhwaan Logo">
 
 <h1>Vidhwaan Community</h1>
 
