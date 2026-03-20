@@ -190,16 +190,33 @@ font-size:13px;
 
 /* NAV */
 .nav-inner{
-flex-direction:column;
+flex-direction:row;
+justify-content:space-between;
 align-items:center;
-gap:10px;
 }
 
+
 .nav-links{
-flex-wrap:wrap;
-justify-content:center;
-gap:12px;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+background:#020617;
+flex-direction:column;
+display:none;
+z-index:1000;
 }
+
+.nav-links.active{
+display:flex;
+}
+
+.nav-links a{
+padding:14px 20px;
+border-bottom:1px solid #1e293b;
+}
+
+  
 
 /* HERO */
 .hero{
