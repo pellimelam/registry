@@ -32,17 +32,17 @@ if(path === "/" || path === "/index.html") return;
 const parts = path.split("/").filter(Boolean);
 
 /* FIND PHONE */
-let userId = null;
+let phone = null;
 
 for(const part of parts){
-const match = part.match(/(vdw-[a-z0-9]+|\d{10})$/);
+const match = part.match(/(\d{10})$/);
 if(match){
-userId = match[1];
+phone = match[1];
 break;
 }
 }
 
-if(!userId) return;
+if(!phone) return;
 
 // ✅ HIDE LANDING UI WHEN PROFILE LOADS
 document.getElementById("nav").style.display = "none";
@@ -60,7 +60,7 @@ else if(path.includes("/videos")) page = "videos";
 else if(path.includes("/about")) page = "about";
 
 /* LOAD */
-loadProfilePage(userId, page);
+loadProfilePage(phone, page);
 
 }
 
@@ -69,13 +69,13 @@ loadProfilePage(userId, page);
    LOAD PROFILE
 ========================= */
 
-async function loadProfilePage(userId, page){
+async function loadProfilePage(phone, page){
 
 
 try{
 
 /* CDN */
-const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${userId}/data.json`);
+const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${phone}/data.json`);
 
 if(!res.ok){
 document.body.innerHTML = "Profile not found";
@@ -406,7 +406,9 @@ ctx.fillRect(100,110,400,2);
 ctx.fillStyle = "#ffffff";
 ctx.font = "bold 26px Inter, Arial";
 ctx.textAlign = "center";
-ctx.fillText("Vidhwaan Card", 300, 120);
+ctx.fillText("VIDHWAAN Card", 300, 90);
+
+
 
 
 // ===== NAME =====
