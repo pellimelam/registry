@@ -44,6 +44,10 @@ break;
 
 if(!phone) return;
 
+// ✅ REMOVE MAIN SUPPORT BUTTON ON PROFILE PAGE
+const supportBtn = document.getElementById("supportBtn");
+if(supportBtn) supportBtn.remove();
+
 // ✅ HIDE LANDING UI WHEN PROFILE LOADS
 ["nav","hero","registration","edit","footer","support"].forEach(id=>{
 const el = document.getElementById(id);
