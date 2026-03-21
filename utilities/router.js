@@ -460,7 +460,7 @@ qrSize - (innerPadding*2)
 );
 
 // ================= FOOTER =================
-const footerY = qrY + qrSize + 15;
+const footerY = qrY + qrSize + 25;
 
 // ID NUMBER (authority tone)
 ctx.fillStyle = "#374151";
