@@ -397,11 +397,11 @@ ctx.fillStyle = "#ffffff";
 ctx.fillRect(0,0,W,H);
 
 // ================= HEADER =================
-ctx.fillStyle = "#111827";
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 
-ctx.font = "bold 28px Inter";
+ctx.fillStyle = "#0f172a";
+ctx.font = "bold 30px Inter";
 ctx.fillText("VIDHWAAN IDENTITY", W/2, 60);
 
 // GOLD LINE
@@ -410,40 +410,33 @@ ctx.fillRect(P, 95, W - (P*2), 2);
 
 // ================= NAME =================
 ctx.fillStyle = "#111827";
-ctx.font = "bold 30px Inter";
-ctx.fillText(name, W/2, 150);
+ctx.font = "bold 34px Inter";
+ctx.fillText(name, W/2, 155);
 
 // ================= ROLE =================
 ctx.fillStyle = "#2563eb";
-ctx.font = "18px Inter";
-ctx.fillText(instrument, W/2, 185);
+ctx.font = "20px Inter";
+ctx.fillText(instrument, W/2, 195);
 
-// ================= LAYOUT CALCULATION =================
-
-// TOP SPACE USED
-const topEnd = 210;
-
-// BOTTOM RESERVED SPACE
-const footerHeight = 170;
-
-// AVAILABLE HEIGHT FOR QR
+// ================= LAYOUT =================
+const topEnd = 220;
+const footerHeight = 180;
 const availableHeight = H - topEnd - footerHeight;
 
-// QR SIZE (fit both width + height)
-const qrSize = Math.min(W - (P*2), availableHeight);
+const maxQR = W - (P * 2);
+const qrSize = Math.min(maxQR * 0.78, availableHeight);
 
-// CENTER QR
 const qrX = (W - qrSize) / 2;
 const qrY = topEnd;
 
 // ================= QR BOX =================
 ctx.beginPath();
-ctx.roundRect(qrX, qrY, qrSize, qrSize, 20);
+ctx.roundRect(qrX, qrY, qrSize, qrSize, 22);
 ctx.fillStyle = "#ffffff";
 ctx.fill();
 
 ctx.lineWidth = 2;
-ctx.strokeStyle = "#e5e7eb";
+ctx.strokeStyle = "#d1d5db";
 ctx.stroke();
 
 // ================= FETCH QR =================
@@ -456,7 +449,7 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-const innerPadding = 15;
+const innerPadding = 20;
 
 ctx.drawImage(
 img,
@@ -466,32 +459,32 @@ qrSize - (innerPadding*2),
 qrSize - (innerPadding*2)
 );
 
-// ================= FOOTER START =================
-const footerY = qrY + qrSize + 30;
+// ================= FOOTER =================
+const footerY = qrY + qrSize + 50;
 
-// ID
-ctx.fillStyle = "#6b7280";
-ctx.font = "15px Inter";
+// ID NUMBER (authority tone)
+ctx.fillStyle = "#374151";
+ctx.font = "bold 16px Inter";
 ctx.fillText(`VID-${phone}`, W/2, footerY);
 
-// COMMUNITY
+// COMMUNITY (primary footer identity)
 ctx.fillStyle = "#111827";
-ctx.font = "bold 19px Inter";
-ctx.fillText("Vidhwaan Community", W/2, footerY + 35);
+ctx.font = "bold 22px Inter";
+ctx.fillText("Vidhwaan Community", W/2, footerY + 40);
 
 // TAGLINE
-ctx.fillStyle = "#6b7280";
-ctx.font = "13px Inter";
-ctx.fillText("Tradition • Pride • Legacy", W/2, footerY + 60);
+ctx.fillStyle = "#4b5563";
+ctx.font = "15px Inter";
+ctx.fillText("Tradition • Pride • Legacy", W/2, footerY + 70);
 
-// LINE
-ctx.fillStyle = "#111827";
-ctx.fillRect(P + 40, footerY + 80, W - (P*2) - 80, 1);
+// DIVIDER (refined)
+ctx.fillStyle = "#1f2937";
+ctx.fillRect(P + 60, footerY + 95, W - (P*2) - 120, 1);
 
-// WEBSITE
-ctx.fillStyle = "#2563eb";
-ctx.font = "bold 13px Inter";
-ctx.fillText("www.vidhwaan.com", W/2, footerY + 110);
+// WEBSITE (strong visibility)
+ctx.fillStyle = "#1d4ed8";
+ctx.font = "bold 18px Inter";
+ctx.fillText("www.vidhwaan.com", W/2, footerY + 125);
 
 // ================= DOWNLOAD =================
 const link = document.createElement("a");
