@@ -68,8 +68,7 @@ initRouter();
 
 import { initRouter } from "./utilities/router.js"
 
-import { checkRepo, createRepo, createUserSite } from "./utilities/github.js";
-
+import { checkRepo, createRepo, createUserSite, updateSitemap } from "./utilities/github.js";
 window.registerUser = async function(){
 
 const state = document.getElementById("state").value;
@@ -155,6 +154,8 @@ await createUserSite({
 ...data,
 village
 });
+
+await updateSitemap(url);
 
 /* FINAL URL */
 
