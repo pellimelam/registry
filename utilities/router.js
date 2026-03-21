@@ -345,17 +345,17 @@ Vidhwaan Group
 
 <a href="https://tech.vidhwaan.com" target="_blank"
 style="background:#0ea5e9;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
-Technology
+Vidhwaan Technology
 </a>
 
 <a href="https://foundation.vidhwaan.com" target="_blank"
 style="background:#9333ea;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
-Foundation
+Vidhwaan Foundation
 </a>
 
 <a href="https://pellimelam.vidhwaan.com" target="_blank"
 style="background:#f59e0b;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
-PelliMelam
+Vidhwaan PelliMelam
 </a>
 
 </div>
