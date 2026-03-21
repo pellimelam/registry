@@ -329,19 +329,50 @@ Download Card
 </div>
 
 
-<!-- QUICK ACTIONS -->
+
+
+<!-- VIDHWAAN ECOSYSTEM -->
 <div class="card">
 
-<h3>Quick Actions</h3>
+<h3>Vidhwaan Ecosystem</h3>
 
 <div style="display:flex;gap:10px;flex-wrap:wrap;">
 
-<a href="tel:${data.phone}"
-style="background:#16a34a;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
-Call
+<a href="https://vidhwaan.com" target="_blank"
+style="background:#1e40af;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Vidhwaan Group
 </a>
 
-<a href="https://wa.me/91${data.phone}"
+<a href="https://tech.vidhwaan.com" target="_blank"
+style="background:#0ea5e9;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Technology
+</a>
+
+<a href="https://foundation.vidhwaan.com" target="_blank"
+style="background:#9333ea;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Foundation
+</a>
+
+<a href="https://pellimelam.vidhwaan.com" target="_blank"
+style="background:#f59e0b;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+PelliMelam
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- QUICK ACTIONS -->
+<div class="card">
+
+<h3>Vidhwaan Support</h3>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+
+<a href="https://wa.me/919440246101"
 style="background:#22c55e;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
 WhatsApp
 </a>
@@ -349,79 +380,6 @@ WhatsApp
 </div>
 
 </div>
-
-<!-- VIDHWAAN ECOSYSTEM -->
-<div class="card">
-
-<h3>Vidhwaan Ecosystem</h3>
-
-<div style="
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-top:10px;
-">
-
-<a href="https://vidhwaan.com" target="_blank"
-style="
-background:#1e40af;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-text-align:center;
-font-size:14px;
-font-weight:500;
-">
-Vidhwaan Group
-</a>
-
-<a href="https://tech.vidhwaan.com" target="_blank"
-style="
-background:#0ea5e9;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-text-align:center;
-font-size:14px;
-font-weight:500;
-">
-Vidhwaan Technology
-</a>
-
-<a href="https://foundation.vidhwaan.com" target="_blank"
-style="
-background:#9333ea;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-text-align:center;
-font-size:14px;
-font-weight:500;
-">
-Vidhwaan Foundation
-</a>
-
-<a href="https://pellimelam.vidhwaan.com" target="_blank"
-style="
-background:#f59e0b;
-padding:12px;
-border-radius:10px;
-color:white;
-text-decoration:none;
-text-align:center;
-font-size:14px;
-font-weight:500;
-">
-Vidhwaan Pellimelam
-</a>
-
-</div>
-
-</div>
-
 
 
 
