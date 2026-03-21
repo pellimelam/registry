@@ -382,7 +382,7 @@ const scale = 2;
 
 const W = 600;
 const H = 820;
-const P = 30; // 🔥 SAFE PADDING
+const P = 30;
 
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
@@ -401,29 +401,42 @@ ctx.fillStyle = "#111827";
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
 
-ctx.font = "bold 30px Inter, Arial";
+ctx.font = "bold 28px Inter";
 ctx.fillText("VIDHWAAN IDENTITY", W/2, 60);
 
-// GOLD LINE (FULL WIDTH INSIDE PADDING)
+// GOLD LINE
 ctx.fillStyle = "#d4af37";
-ctx.fillRect(P, 100, W - (P*2), 2);
+ctx.fillRect(P, 95, W - (P*2), 2);
 
 // ================= NAME =================
 ctx.fillStyle = "#111827";
-ctx.font = "bold 34px Inter";
-ctx.fillText(name, W/2, 160);
+ctx.font = "bold 30px Inter";
+ctx.fillText(name, W/2, 150);
 
 // ================= ROLE =================
 ctx.fillStyle = "#2563eb";
-ctx.font = "20px Inter";
-ctx.fillText(instrument, W/2, 200);
+ctx.font = "18px Inter";
+ctx.fillText(instrument, W/2, 185);
 
-// ================= QR SIZE (MAXIMIZED) =================
-const qrSize = W - (P * 2); // 🔥 FULL WIDTH
-const qrX = P;
-const qrY = 230;
+// ================= LAYOUT CALCULATION =================
 
-// QR BOX
+// TOP SPACE USED
+const topEnd = 210;
+
+// BOTTOM RESERVED SPACE
+const footerHeight = 170;
+
+// AVAILABLE HEIGHT FOR QR
+const availableHeight = H - topEnd - footerHeight;
+
+// QR SIZE (fit both width + height)
+const qrSize = Math.min(W - (P*2), availableHeight);
+
+// CENTER QR
+const qrX = (W - qrSize) / 2;
+const qrY = topEnd;
+
+// ================= QR BOX =================
 ctx.beginPath();
 ctx.roundRect(qrX, qrY, qrSize, qrSize, 20);
 ctx.fillStyle = "#ffffff";
@@ -443,7 +456,6 @@ img.src = URL.createObjectURL(blob);
 
 img.onload = function(){
 
-// QR inside padding
 const innerPadding = 15;
 
 ctx.drawImage(
@@ -454,29 +466,32 @@ qrSize - (innerPadding*2),
 qrSize - (innerPadding*2)
 );
 
-// ================= ID =================
-ctx.fillStyle = "#6b7280";
-ctx.font = "16px Inter";
-ctx.fillText(`VID-${phone}`, W/2, qrY + qrSize + 40);
+// ================= FOOTER START =================
+const footerY = qrY + qrSize + 30;
 
-// ================= FOOTER =================
+// ID
+ctx.fillStyle = "#6b7280";
+ctx.font = "15px Inter";
+ctx.fillText(`VID-${phone}`, W/2, footerY);
+
+// COMMUNITY
 ctx.fillStyle = "#111827";
-ctx.font = "bold 20px Inter";
-ctx.fillText("Vidhwaan Community", W/2, qrY + qrSize + 80);
+ctx.font = "bold 19px Inter";
+ctx.fillText("Vidhwaan Community", W/2, footerY + 35);
 
 // TAGLINE
 ctx.fillStyle = "#6b7280";
-ctx.font = "14px Inter";
-ctx.fillText("Tradition • Pride • Legacy", W/2, qrY + qrSize + 110);
+ctx.font = "13px Inter";
+ctx.fillText("Tradition • Pride • Legacy", W/2, footerY + 60);
 
 // LINE
 ctx.fillStyle = "#111827";
-ctx.fillRect(P + 40, qrY + qrSize + 130, W - (P*2) - 80, 1);
+ctx.fillRect(P + 40, footerY + 80, W - (P*2) - 80, 1);
 
 // WEBSITE
 ctx.fillStyle = "#2563eb";
-ctx.font = "bold 14px Inter";
-ctx.fillText("www.vidhwaan.com", W/2, qrY + qrSize + 160);
+ctx.font = "bold 13px Inter";
+ctx.fillText("www.vidhwaan.com", W/2, footerY + 110);
 
 // ================= DOWNLOAD =================
 const link = document.createElement("a");
