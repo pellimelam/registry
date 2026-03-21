@@ -67,19 +67,29 @@ text-decoration:none;
 /* MOBILE */
 .menu-btn{
 display:none;
-font-size:22px;
+flex-direction:column;
+gap:5px;
 cursor:pointer;
+}
+
+.menu-btn span{
+width:24px;
+height:2px;
+background:white;
+display:block;
 }
 
 .mobile-menu{
 display:none;
 flex-direction:column;
 position:fixed;
-top:60px;
+top:0;
 left:0;
 width:100%;
-background:#020617;
-z-index:998;
+padding-top:70px;
+background:rgba(2,6,23,0.98);
+backdrop-filter:blur(10px);
+z-index:1001;
 }
 
 .mobile-menu.active{
@@ -203,20 +213,24 @@ Vidhwaan
 </div>
 
 <div class="nav-links">
-<a href="https://vidhwaan.com">Home</a>
-<a href="https://pellimelam.vidhwaan.com">PelliMelam</a>
-<a href="https://tech.vidhwaan.com">Technology</a>
-<a href="https://foundation.vidhwaan.com">Foundation</a>
+<a href="/" id="navHome">Home</a>
+<a href="/gallery" id="navGallery">Gallery</a>
+<a href="/videos" id="navVideos">Videos</a>
+<a href="/about" id="navAbout">About</a>
 </div>
 
-<div class="menu-btn" id="menuBtn">☰</div>
+<div class="menu-btn" id="menuBtn">
+<span></span>
+<span></span>
+<span></span>
+</div>
 </div>
 
 <div id="mobileMenu" class="mobile-menu">
-<a href="https://vidhwaan.com">Home</a>
-<a href="https://pellimelam.vidhwaan.com">PelliMelam</a>
-<a href="https://tech.vidhwaan.com">Technology</a>
-<a href="https://foundation.vidhwaan.com">Foundation</a>
+<a href="/" id="mNavHome">Home</a>
+<a href="/gallery" id="mNavGallery">Gallery</a>
+<a href="/videos" id="mNavVideos">Videos</a>
+<a href="/about" id="mNavAbout">About</a>
 </div>
 
 
@@ -262,8 +276,15 @@ e.stopPropagation();
 menu.classList.toggle("active");
 });
 
-// close when clicking outside
-document.addEventListener("click", (e) => {
+/* close on link click */
+document.querySelectorAll("#mobileMenu a").forEach(link=>{
+link.addEventListener("click", ()=>{
+menu.classList.remove("active");
+});
+});
+
+/* close outside */
+document.addEventListener("click", (e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
