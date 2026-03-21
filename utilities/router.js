@@ -460,32 +460,31 @@ qrSize - (innerPadding*2)
 );
 
 // ================= FOOTER =================
-// ================= FOOTER =================
-const footerY = qrY + qrSize + 25; // 🔥 reduced from 50 → tighter
+const footerY = qrY + qrSize - 5;
 
-// ID (closer to QR)
+// ID NUMBER (authority tone)
 ctx.fillStyle = "#374151";
 ctx.font = "bold 16px Inter";
 ctx.fillText(`VID-${phone}`, W/2, footerY);
 
-// COMMUNITY (tight grouping)
+// COMMUNITY (primary footer identity)
 ctx.fillStyle = "#111827";
 ctx.font = "bold 22px Inter";
-ctx.fillText("Vidhwaan Community", W/2, footerY + 30);
+ctx.fillText("Vidhwaan Community", W/2, footerY + 40);
 
-// TAGLINE (tight)
+// TAGLINE
 ctx.fillStyle = "#4b5563";
 ctx.font = "15px Inter";
-ctx.fillText("Tradition • Pride • Legacy", W/2, footerY + 55);
+ctx.fillText("Tradition • Pride • Legacy", W/2, footerY + 70);
 
-// LINE (closer)
+// DIVIDER (refined)
 ctx.fillStyle = "#1f2937";
-ctx.fillRect(P + 60, footerY + 75, W - (P*2) - 120, 1);
+ctx.fillRect(P + 60, footerY + 95, W - (P*2) - 120, 1);
 
-// WEBSITE (moved up to avoid cut)
+// WEBSITE (strong visibility)
 ctx.fillStyle = "#1d4ed8";
-ctx.font = "bold 17px Inter";
-ctx.fillText("www.vidhwaan.com", W/2, footerY + 100);
+ctx.font = "bold 18px Inter";
+ctx.fillText("www.vidhwaan.com", W/2, footerY + 125);
 
 // ================= DOWNLOAD =================
 const link = document.createElement("a");
