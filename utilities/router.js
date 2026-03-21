@@ -350,6 +350,41 @@ WhatsApp
 
 </div>
 
+<!-- VIDHWAAN ECOSYSTEM -->
+<div class="card">
+
+<h3>Vidhwaan Ecosystem</h3>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<a href="https://vidhwaan.com" target="_blank"
+style="background:#1e40af;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Vidhwaan Group
+</a>
+
+<a href="https://tech.vidhwaan.com" target="_blank"
+style="background:#0ea5e9;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Technology
+</a>
+
+<a href="https://foundation.vidhwaan.com" target="_blank"
+style="background:#9333ea;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+Foundation
+</a>
+
+<a href="https://pellimelam.vidhwaan.com" target="_blank"
+style="background:#f59e0b;padding:10px 14px;border-radius:8px;color:white;text-decoration:none;">
+PelliMelam
+</a>
+
+</div>
+
+</div>
+
+
+
+
+
 `;
 
 renderLayout(layout(data, content));
