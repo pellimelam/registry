@@ -89,3 +89,30 @@ await pushFile(phone, "videos.html", generateVideos(fullData));
 await pushFile(phone, "about.html", generateAbout(fullData));
 
 }
+
+
+
+
+export async function updateSitemap(url){
+
+const repo = "vidhwaan-sitemap";
+const path = "sitemap.json";
+
+let list = [];
+
+try{
+const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${repo}/${path}`);
+list = await res.json();
+}catch(e){
+list = [];
+}
+
+/* avoid duplicate */
+if(!list.includes(url)){
+list.push(url);
+}
+
+/* push updated file */
+await pushFile(repo, path, JSON.stringify(list, null, 2));
+
+}
