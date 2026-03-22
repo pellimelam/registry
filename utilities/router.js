@@ -87,10 +87,36 @@ let cached = localStorage.getItem(CACHE_KEY);
 cached = cached ? JSON.parse(cached) : null;
 
 if(mem && cached && mem.version === cached.version){
+
   renderPage(mem, page);
+
+  // 🔥 SAFE BACKGROUND VERIFY
+  fetch(`https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`)
+    .then(r => {
+      if(!r.ok) throw new Error("fetch failed");
+      return r.json();
+    })
+    .then(newData => {
+      if(newData.version !== mem.version){
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          version: newData.version,
+          data: newData
+        }));
+
+        window.__PROFILE_CACHE[phone] = newData;
+
+        // ✅ prevent flicker in background tab
+        if(document.visibilityState === "visible"){
+          renderPage(newData, page);
+        }
+        }
+      }
+    })
+    .catch(()=>{});
+
   return;
 }
-
 
 
 /* =========================
@@ -133,19 +159,36 @@ if(cached && cached.version === latestData.version){
 
 window.__PROFILE_CACHE[phone] = finalData;
 
-setTimeout(()=>{
-  fetch(`https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`)
-    .then(r=>r.json())
-    .then(newData=>{
-      if(newData.version !== finalData.version){
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          version: newData.version,
-          data: newData
-        }));
-        window.__PROFILE_CACHE[phone] = newData;
-      }
-    });
-}, 2000);
+if(!window.__BG_REFRESH) window.__BG_REFRESH = {};
+
+if(!window.__BG_REFRESH[phone]){
+  window.__BG_REFRESH[phone] = true;
+
+  setTimeout(()=>{
+    fetch(`https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`)
+      .then(r => {
+        if(!r.ok) throw new Error("fetch failed");
+        return r.json();
+      })
+      .then(newData => {
+        if(newData.version !== finalData.version){
+
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            version: newData.version,
+            data: newData
+          }));
+
+          window.__PROFILE_CACHE[phone] = newData;
+
+          // ✅ optional UI refresh (safe)
+          if(document.visibilityState === "visible"){
+            renderPage(newData, page);
+          }
+        }
+      })
+      .catch(()=>{});
+  }, 2000);
+}
    
 renderPage(finalData, page);
 
@@ -543,8 +586,11 @@ ctx.stroke();
 
 // ================= FETCH QR =================
 fetch(`https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${url}`)
-.then(res => res.blob())
-.then(blob => {
+  .then(res => {
+    if(!res.ok) throw new Error("QR fetch failed");
+    return res.blob();
+  })
+  .then(blob => {
 
 const img = new Image();
 img.src = URL.createObjectURL(blob);
@@ -845,7 +891,7 @@ if(!window.__NAV_INIT){
 window.__NAV_INIT = true;
 
 document.addEventListener("click",(e)=>{
-if(!menu.contains(e.target) && !btn.contains(e.target)){
+if(menu && btn && !menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 btn.classList.remove("active");
 }
