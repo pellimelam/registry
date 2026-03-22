@@ -39,7 +39,7 @@ justify-content:space-between;
 align-items:center;
 padding:12px 24px;
 background:linear-gradient(90deg,#1e3a8a,#0f172a);
-z-index:999;
+z-index:3000;
 box-sizing:border-box;
 border-bottom:1px solid rgba(255,255,255,0.08);
 }
