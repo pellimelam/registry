@@ -652,10 +652,7 @@ link.click();
 
 function renderGallery(data){
 
-const gallery = data.gallery || [];
-
-/* ✅ check if any real image exists */
-const hasImages = gallery.some(img => img && typeof img === "string" && img.trim() !== "");
+const images = data.gallery || [];
 
 const content = `
 
@@ -667,27 +664,11 @@ Photos and event moments
 
 <div class="grid">
 
-${gallery.length ? gallery.map(img => `
+${images.length ? images.map(img => `
 <div class="card" style="padding:10px;">
-  ${img && typeof img === "string" && img.trim() !== "" ? `
-    <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
-      <img src="${img}" loading="lazy"
-      style="width:100%;height:100%;object-fit:cover;">
-    </div>
-  ` : `
-    <div style="
-      width:100%;
-      aspect-ratio:1/1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,0.03);
-      border-radius:10px;
-      color:#64748b;
-      font-size:13px;">
-      No Image
-    </div>
-  `}
+  <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
+    <img src="${img}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+  </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
 <div class="card" style="padding:10px;">
@@ -708,9 +689,9 @@ ${gallery.length ? gallery.map(img => `
 
 </div>
 
-${!hasImages ? `
+${!images.length ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
-To update images, please contact Vidhwaan support (details on home page).
+To add photos, please contact Vidhwaan support (details on home page).
 </div>
 ` : ""}
 
@@ -718,8 +699,25 @@ To update images, please contact Vidhwaan support (details on home page).
 
 renderLayout(layout(data, content));
 
-requestAnimationFrame(()=>initUI(data));
+requestAnimationFrame(()=>{
+initUI(data);
+});
 
+}
+
+
+function getEmbedUrl(url){
+if(!url) return "";
+
+if(url.includes("youtu.be/")){
+return "https://www.youtube.com/embed/" + url.split("youtu.be/")[1].split("?")[0];
+}
+
+if(url.includes("watch?v=")){
+return "https://www.youtube.com/embed/" + url.split("watch?v=")[1].split("&")[0];
+}
+
+return url;
 }
 
 
@@ -730,9 +728,6 @@ requestAnimationFrame(()=>initUI(data));
 function renderVideos(data){
 
 const videos = data.videos || [];
-
-/* ✅ check if any real video exists */
-const hasVideos = videos.some(v => v && typeof v === "string" && v.trim() !== "");
 
 const content = `
 
@@ -746,26 +741,11 @@ Performance highlights and recordings
 
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
-  ${v && typeof v === "string" && v.trim() !== "" ? `
-    <div style="position:relative;width:100%;padding-top:56.25%;">
-      <iframe src="${getEmbedUrl(v)}" loading="lazy"
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"
-      allowfullscreen></iframe>
-    </div>
-  ` : `
-    <div style="
-      width:100%;
-      aspect-ratio:16/9;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,0.03);
-      border-radius:10px;
-      color:#64748b;
-      font-size:13px;">
-      No Video
-    </div>
-  `}
+  <div style="position:relative;width:100%;padding-top:56.25%;">
+    <iframe src="${getEmbedUrl(v)}" loading="lazy"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"
+    allowfullscreen></iframe>
+  </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
 <div class="card" style="padding:10px;">
@@ -786,9 +766,9 @@ ${videos.length ? videos.map(v => `
 
 </div>
 
-${!hasVideos ? `
+${!videos.length ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
-To update videos, please contact Vidhwaan support (details on home page).
+To add videos, please contact Vidhwaan support (details on home page).
 </div>
 ` : ""}
 
@@ -796,7 +776,9 @@ To update videos, please contact Vidhwaan support (details on home page).
 
 renderLayout(layout(data, content));
 
-requestAnimationFrame(()=>initUI(data));
+requestAnimationFrame(()=>{
+initUI(data);
+});
 
 }
 
@@ -953,7 +935,6 @@ initRouter();
 });
 
 }
-
 
 
 
