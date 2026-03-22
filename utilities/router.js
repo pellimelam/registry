@@ -766,6 +766,14 @@ btn.classList.remove("active");
 
 }
 
+/* ===== CLOSE ON OUTSIDE CLICK ===== */
+document.addEventListener("click",(e)=>{
+if(!menu.contains(e.target) && !btn.contains(e.target)){
+menu.classList.remove("active");
+btn.classList.remove("active");
+}
+});
+
 /* ===== NAVIGATION ===== */
 
 const slug = `${data.firstName}${data.lastName}${data.phone}`
