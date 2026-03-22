@@ -110,7 +110,6 @@ if(mem && cached && mem.version === cached.version){
         if(document.visibilityState === "visible"){
           renderPage(newData, page);
         }
-        }
       }
     })
     .catch(()=>{});
