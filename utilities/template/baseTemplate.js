@@ -77,16 +77,12 @@ cursor:pointer;
 position:absolute;
 left:0;
 width:100%;
-height:2px;
-background:#fff;
-transition:0.3s;
-}
-
-
-.menu-btn span{
 height:2.5px;
+
 background:linear-gradient(90deg,#fff,#cbd5f5);
 border-radius:3px;
+
+transition:0.3s;
 }
 
 .menu-btn span:nth-child(1){ top:0; }
