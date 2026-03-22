@@ -219,10 +219,10 @@ Vidhwaan
 </div>
 
 <div class="nav-links">
-<a href="/" id="navHome">Home</a>
-<a href="/gallery" id="navGallery">Gallery</a>
-<a href="/videos" id="navVideos">Videos</a>
-<a href="/about" id="navAbout">About</a>
+<a href="#" id="navHome">Home</a>
+<a href="#" id="navGallery">Gallery</a>
+<a href="#" id="navVideos">Videos</a>
+<a href="#" id="navAbout">About</a>
 </div>
 
 <div class="menu-btn" id="menuBtn">
@@ -233,10 +233,10 @@ Vidhwaan
 </div>
 
 <div id="mobileMenu" class="mobile-menu">
-<a href="/" id="mNavHome">Home</a>
-<a href="/gallery" id="mNavGallery">Gallery</a>
-<a href="/videos" id="mNavVideos">Videos</a>
-<a href="/about" id="mNavAbout">About</a>
+<a href="#" id="mNavHome">Home</a>
+<a href="#" id="mNavGallery">Gallery</a>
+<a href="#" id="mNavVideos">Videos</a>
+<a href="#" id="mNavAbout">About</a>
 </div>
 
 
