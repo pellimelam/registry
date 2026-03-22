@@ -555,10 +555,14 @@ Photos and event moments
 ${images.map(img => `
 <div class="card" style="padding:10px;">
 
-${img 
-? `<img src="${img}" style="height:180px;object-fit:cover;">`
-: `<div style="
-height:180px;
+${img ? `
+<div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
+<img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+</div>
+` : `
+<div style="
+width:100%;
+aspect-ratio:1/1;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -567,8 +571,8 @@ border-radius:10px;
 color:#64748b;
 font-size:13px;">
 No Image
-</div>`
-}
+</div>
+`}
 
 </div>
 `).join("")}
@@ -603,10 +607,29 @@ Performance highlights and recordings
 ${videos.map(v => `
 <div class="card" style="padding:10px;">
 
-${v 
-? `<iframe src="${v.replace("watch?v=","embed/")}" style="height:180px;"></iframe>`
-: `<div style="
-height:180px;
+${v ? `
+<div style="
+position:relative;
+width:100%;
+padding-top:56.25%;
+border-radius:10px;
+overflow:hidden;
+">
+<iframe src="${v.replace("watch?v=","embed/")}"
+style="
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+"
+allowfullscreen>
+</iframe>
+</div>
+` : `
+<div style="
+width:100%;
+aspect-ratio:16/9;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -615,8 +638,8 @@ border-radius:10px;
 color:#64748b;
 font-size:13px;">
 No Video
-</div>`
-}
+</div>
+`}
 
 </div>
 `).join("")}
@@ -683,7 +706,11 @@ With passion and experience in my field, I aim to deliver high-quality performan
 <h3>Location</h3>
 
 <p style="color:#cbd5f5;">
-${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}
+${getVillageName(data.location.village)} Village<br>
+${formatName(data.location.subdistrict)} Mandal<br>
+${formatName(data.location.district)} District<br>
+${formatName(data.location.state)}<br>
+India - ${extractPincode(data.location.village)}
 </p>
 
 </div>
