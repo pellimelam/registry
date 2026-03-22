@@ -747,23 +747,20 @@ function initUI(data){
 
 const btn = document.getElementById("menuBtn");
 const menu = document.getElementById("mobileMenu");
-const backdrop = document.getElementById("backdrop");
 
 /* ===== MOBILE MENU ===== */
 if(btn && menu){
 
 btn.onclick = (e)=>{
 e.stopPropagation();
-
 menu.classList.toggle("active");
-btn.classList.toggle("active");
-backdrop.classList.toggle("active");
+btn.classList.toggle("active"); // 🔥 ADD THIS
 };
 
-backdrop.onclick = ()=>{
+document.onclick = (e)=>{
+if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
-btn.classList.remove("active");
-backdrop.classList.remove("active");
+}
 };
 
 }
@@ -801,7 +798,6 @@ initRouter();
 });
 
 }
-
 
 
 
