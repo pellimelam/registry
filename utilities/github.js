@@ -101,9 +101,10 @@ const path = "sitemap.json";
 let list = [];
 
 try{
-const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${repo}/${path}`);
+const res = await fetch(`https://raw.githubusercontent.com/vidhwaan/${repo}/main/${path}?t=${Date.now()}`);
 list = await res.json();
 }catch(e){
+console.log("Sitemap fetch failed, starting fresh");
 list = [];
 }
 
@@ -112,7 +113,25 @@ if(!list.includes(url)){
 list.push(url);
 }
 
-/* push updated file */
-await pushFile(repo, path, JSON.stringify(list, null, 2));
+/* PUSH WITH CHECK */
+const res = await fetch(API, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+action: "pushFile",
+repo,
+path,
+content: btoa(unescape(encodeURIComponent(JSON.stringify(list, null, 2))))
+})
+});
+
+const result = await res.json().catch(()=>null);
+
+if(!res.ok){
+console.error("❌ Sitemap push failed", result);
+throw new Error("Sitemap update failed");
+}
+
+console.log("✅ Sitemap updated");
 
 }
