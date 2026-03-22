@@ -654,6 +654,9 @@ function renderGallery(data){
 
 const gallery = data.gallery || [];
 
+/* ✅ check if any real image exists */
+const hasImages = gallery.some(img => img && typeof img === "string" && img.trim() !== "");
+
 const content = `
 
 <h2>Gallery</h2>
@@ -666,7 +669,7 @@ Photos and event moments
 
 ${gallery.length ? gallery.map(img => `
 <div class="card" style="padding:10px;">
-  ${img ? `
+  ${img && typeof img === "string" && img.trim() !== "" ? `
     <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
       <img src="${img}" loading="lazy"
       style="width:100%;height:100%;object-fit:cover;">
@@ -705,7 +708,7 @@ ${gallery.length ? gallery.map(img => `
 
 </div>
 
-${!gallery.some(img => img && img.trim() !== "") ? `
+${!hasImages ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
 To update images, please contact Vidhwaan support (details on home page).
 </div>
@@ -715,9 +718,7 @@ To update images, please contact Vidhwaan support (details on home page).
 
 renderLayout(layout(data, content));
 
-requestAnimationFrame(()=>{
-initUI(data);
-});
+requestAnimationFrame(()=>initUI(data));
 
 }
 
@@ -729,6 +730,9 @@ initUI(data);
 function renderVideos(data){
 
 const videos = data.videos || [];
+
+/* ✅ check if any real video exists */
+const hasVideos = videos.some(v => v && typeof v === "string" && v.trim() !== "");
 
 const content = `
 
@@ -742,7 +746,7 @@ Performance highlights and recordings
 
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
-  ${v ? `
+  ${v && typeof v === "string" && v.trim() !== "" ? `
     <div style="position:relative;width:100%;padding-top:56.25%;">
       <iframe src="${getEmbedUrl(v)}" loading="lazy"
       style="position:absolute;top:0;left:0;width:100%;height:100%;"
@@ -782,7 +786,7 @@ ${videos.length ? videos.map(v => `
 
 </div>
 
-${videos.some(v => !v || v.trim() === "") ? `
+${!hasVideos ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
 To update videos, please contact Vidhwaan support (details on home page).
 </div>
@@ -792,9 +796,7 @@ To update videos, please contact Vidhwaan support (details on home page).
 
 renderLayout(layout(data, content));
 
-requestAnimationFrame(()=>{
-initUI(data);
-});
+requestAnimationFrame(()=>initUI(data));
 
 }
 
