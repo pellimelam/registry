@@ -78,16 +78,44 @@ async function loadProfilePage(phone, page){
 try{
 
 /* CDN */
-const res = await fetch(`https://cdn.jsdelivr.net/gh/vidhwaan/${phone}/data.json`);
+async function loadProfilePage(phone, page){
 
-if(!res.ok){
+try{
+
+/* =========================
+   STEP 1: ALWAYS CHECK GITHUB (TRUTH)
+========================= */
+
+const rawRes = await fetch(
+  `https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`,
+  { cache: "no-store" }
+);
+
+if(!rawRes.ok){
 document.body.innerHTML = "Profile not found";
 return;
 }
 
-const data = await res.json();
+let data = await rawRes.json();
 
-/* ROUTE */
+/* =========================
+   STEP 2: OPTIONAL CDN BOOST (SAFE)
+========================= */
+
+try{
+const cdnRes = await fetch(
+  `https://cdn.jsdelivr.net/gh/vidhwaan/${phone}@main/data.json`
+);
+
+if(cdnRes.ok){
+data = await cdnRes.json();
+}
+}catch(e){}
+
+/* =========================
+   STEP 3: RENDER
+========================= */
+
 renderPage(data, page);
 
 }catch(e){
