@@ -755,7 +755,7 @@ document.onclick = (e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
-});
+};
 
 }
 
