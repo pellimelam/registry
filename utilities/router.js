@@ -766,6 +766,7 @@ btn.classList.remove("active");
 
 }
 
+
 /* ===== CLOSE ON OUTSIDE CLICK ===== */
 document.addEventListener("click",(e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
