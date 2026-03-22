@@ -652,7 +652,7 @@ link.click();
 
 function renderGallery(data){
 
-const images = data.gallery || [];
+const images = (data.gallery || []).filter(Boolean);
 
 const content = `
 
@@ -666,18 +666,8 @@ Photos and event moments
 
 ${images.length ? images.map(img => `
 <div class="card" style="padding:10px;">
-  <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-    
-    ${img && img.trim() ? `
-      <img src="${img}" loading="lazy"
-      style="width:100%;height:100%;object-fit:cover;"
-      onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\\'color:#64748b;font-size:13px;\\'>Contact support to upload</span>';">
-    ` : `
-      <span style="color:#64748b;font-size:13px;">
-        Contact support to upload
-      </span>
-    `}
-
+  <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
+    <img src="${img}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
   </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
@@ -692,7 +682,7 @@ ${images.length ? images.map(img => `
     border-radius:10px;
     color:#64748b;
     font-size:13px;">
-    Contact support to upload
+    No Image
   </div>
 </div>
 `).join("")}
@@ -716,13 +706,28 @@ initUI(data);
 }
 
 
+function getEmbedUrl(url){
+if(!url) return "";
+
+if(url.includes("youtu.be/")){
+return "https://www.youtube.com/embed/" + url.split("youtu.be/")[1].split("?")[0];
+}
+
+if(url.includes("watch?v=")){
+return "https://www.youtube.com/embed/" + url.split("watch?v=")[1].split("&")[0];
+}
+
+return url;
+}
+
+
 /* =========================
    VIDEOS
 ========================= */
 
 function renderVideos(data){
 
-const videos = data.videos || [];
+const videos = (data.videos || []).filter(Boolean);
 
 const content = `
 
