@@ -68,14 +68,7 @@ loadProfilePage(phone, page);
 }
 
 
-/* =========================
-   LOAD PROFILE
-========================= */
 
-async function loadProfilePage(phone, page){
-
-
-try{
 
 /* CDN */
 async function loadProfilePage(phone, page){
