@@ -70,7 +70,8 @@ content: btoa(unescape(encodeURIComponent(content)))
 ========================= */
 export async function createUserSite(data){
 
-const { phone } = data;
+const { phone, uid } = data;
+const repo = uid || phone; // fallback
 
 const fullData = {
 ...data,
@@ -80,58 +81,12 @@ about:""
 };
 
 /* SAVE DATA */
-await pushFile(phone, "data.json", JSON.stringify(fullData, null, 2));
+await pushFile(repo, "data.json", JSON.stringify(fullData, null, 2));
 
 /* GENERATE PAGES */
-await pushFile(phone, "index.html", generateHome(fullData));
-await pushFile(phone, "gallery.html", generateGallery(fullData));
-await pushFile(phone, "videos.html", generateVideos(fullData));
-await pushFile(phone, "about.html", generateAbout(fullData));
-
-}
-
-
-
-
-export async function updateSitemap(url){
-
-const repo = "vidhwaan-sitemap";
-const path = "sitemap.json";
-
-let list = [];
-
-try{
-const res = await fetch(`https://raw.githubusercontent.com/vidhwaan/${repo}/main/${path}?t=${Date.now()}`);
-list = await res.json();
-}catch(e){
-console.log("Sitemap fetch failed, starting fresh");
-list = [];
-}
-
-/* avoid duplicate */
-if(!list.includes(url)){
-list.push(url);
-}
-
-/* PUSH WITH CHECK */
-const res = await fetch(API, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-action: "pushFile",
-repo,
-path,
-content: btoa(unescape(encodeURIComponent(JSON.stringify(list, null, 2))))
-})
-});
-
-const result = await res.json().catch(()=>null);
-
-if(!res.ok){
-console.error("❌ Sitemap push failed", result);
-throw new Error("Sitemap update failed");
-}
-
-console.log("✅ Sitemap updated");
+await pushFile(repo, "index.html", generateHome(fullData));
+await pushFile(repo, "gallery.html", generateGallery(fullData));
+await pushFile(repo, "videos.html", generateVideos(fullData));
+await pushFile(repo, "about.html", generateAbout(fullData));
 
 }
