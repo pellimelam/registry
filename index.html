@@ -68,7 +68,8 @@ initRouter();
 
 import { initRouter } from "./utilities/router.js"
 
-import { checkRepo, createRepo, createUserSite, updateSitemap } from "./utilities/github.js";
+import { checkRepo, createRepo, createUserSite } from "./utilities/github.js";
+
 window.registerUser = async function(){
 
 const state = document.getElementById("state").value;
@@ -151,18 +152,15 @@ village
 /* CREATE SITE */
 
 await createUserSite({
-  ...data,
-  village
+...data,
+village
 });
 
-/* KEEP SLUG (WORKING URL) */
-const slug = `${firstName}${lastName}${phone}`
-  .toLowerCase()
-  .replace(/\s+/g,"");
+/* FINAL URL */
 
-/* KEEP SEO PATH (FUTURE USE) */
+const slug = `${firstName}${lastName}${phone}`.toLowerCase();
 function slugify(str){
-  return str.toLowerCase().replace(/\s+/g,"-");
+return str.toLowerCase().replace(/\s+/g,"-");
 }
 
 const geoPath = `
@@ -174,16 +172,7 @@ ${slugify(instrument)}/
 ${slug}
 `.replace(/\n/g,"");
 
-/* ✅ CURRENT WORKING URL */
 const url = `https://registry.vidhwaan.com/${slug}`;
-
-/* 🔥 STORE SEO PATH ALSO (OPTIONAL FUTURE) */
-await pushFile(phone, "seo.json", JSON.stringify({ geoPath }, null, 2));
-
-/* UPDATE SITEMAP (USE CURRENT URL ONLY) */
-await updateSitemap(url);
-
-/* SUCCESS UI */
 
 document.getElementById("result").innerHTML = `
 <div style="
