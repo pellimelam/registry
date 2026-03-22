@@ -387,11 +387,11 @@ WhatsApp
 
 renderLayout(layout(data, content));
 
-requestAnimationFrame(()=>{
-initUI(data);
-});
+
 
 requestAnimationFrame(()=>{
+
+initUI(data);
 
 const btn = document.getElementById("downloadQRBtn");
 
@@ -729,6 +729,8 @@ India - ${extractPincode(data.location.village)}
 
 `;
 
+renderLayout(layout(data, content));
+   
 requestAnimationFrame(()=>{
 initUI(data);
 });
@@ -749,11 +751,11 @@ e.stopPropagation();
 menu.classList.toggle("active");
 };
 
-document.onclick = (e)=>{
+document.addEventListener("click", (e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
-};
+});
 
 }
 
@@ -780,11 +782,13 @@ Object.entries(routes).forEach(([id, url])=>{
 const el = document.getElementById(id);
 if(!el) return;
 
-el.onclick = (e)=>{
+el.addEventListener("click", (e)=>{
 e.preventDefault();
+e.stopPropagation();
+
 history.pushState({}, "", url);
 initRouter();
-};
+});
 });
 
 }
