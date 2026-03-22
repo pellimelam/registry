@@ -67,20 +67,35 @@ text-decoration:none;
 /* MOBILE */
 .menu-btn{
 display:none;
-flex-direction:column;
-justify-content:center;
-gap:5px;
+width:28px;
+height:20px;
+position:relative;
 cursor:pointer;
-padding:6px;
 }
 
+/* 3 LINES */
 .menu-btn span{
-width:22px;
+position:absolute;
+left:0;
+width:100%;
 height:2px;
 background:#ffffff;
 border-radius:2px;
-display:block;
-transition:0.3s;
+transition:0.3s ease;
+}
+
+.menu-btn.active span:nth-child(1){
+transform: rotate(45deg);
+top:9px;
+}
+
+.menu-btn.active span:nth-child(2){
+opacity:0;
+}
+
+.menu-btn.active span:nth-child(3){
+transform: rotate(-45deg);
+bottom:9px;
 }
 
 .mobile-menu{
