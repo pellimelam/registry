@@ -86,6 +86,21 @@ transition:0.3s;
 .menu-btn span:nth-child(2){ top:8px; }
 .menu-btn span:nth-child(3){ top:16px; }
 
+
+.menu-btn.active span:nth-child(1){
+transform: rotate(45deg);
+top:8px;
+}
+
+.menu-btn.active span:nth-child(2){
+opacity:0;
+}
+
+.menu-btn.active span:nth-child(3){
+transform: rotate(-45deg);
+top:8px;
+}
+
 /* ===== MOBILE MENU (FINAL FIX) ===== */
 .mobile-menu{
 position:fixed;
@@ -94,7 +109,7 @@ right:0;
 width:280px;
 height:100vh;
 
-background:#020617;
+background: radial-gradient(circle at top, #1e3a8a, #020617);
 
 transform:translateX(100%);
 transition:0.3s ease;
