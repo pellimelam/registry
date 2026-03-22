@@ -68,15 +68,19 @@ text-decoration:none;
 .menu-btn{
 display:none;
 flex-direction:column;
+justify-content:center;
 gap:5px;
 cursor:pointer;
+padding:6px;
 }
 
 .menu-btn span{
-width:24px;
+width:22px;
 height:2px;
-background:white;
+background:#ffffff;
+border-radius:2px;
 display:block;
+transition:0.3s;
 }
 
 .mobile-menu{
@@ -93,9 +97,31 @@ backdrop-filter:blur(10px);
 z-index:1001;
 }
 
+.mobile-menu{
+display:none;
+flex-direction:column;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(180deg,#020617,#0f172a);
+z-index:1001;
+padding-top:80px;
+}
+
 .mobile-menu a{
-padding:14px 20px;
-border-bottom:1px solid rgba(255,255,255,0.05);
+color:#e2e8f0;
+font-size:16px;
+text-decoration:none;
+padding:16px 24px;
+border-bottom:1px solid rgba(255,255,255,0.06);
+transition:0.2s;
+}
+
+.mobile-menu a:hover{
+background:rgba(255,255,255,0.05);
+padding-left:30px;
 }
 
 .mobile-menu.active{
