@@ -680,7 +680,12 @@ const content = `
 
 Hello, I am <b>${data.firstName} ${data.lastName}</b>, a dedicated and professional 
 <b>${data.instrument}</b> artist based in 
-<b>${data.location.village}</b>.
+<b>
+${getVillageName(data.location.village)},
+${formatName(data.location.subdistrict)},
+${formatName(data.location.district)},
+${formatName(data.location.state)}
+</b>
 
 </p>
 
