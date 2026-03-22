@@ -751,7 +751,7 @@ e.stopPropagation();
 menu.classList.toggle("active");
 };
 
-document.addEventListener("click", (e)=>{
+document.onclick = (e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 }
