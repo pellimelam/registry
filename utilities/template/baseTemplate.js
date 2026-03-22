@@ -39,7 +39,7 @@ justify-content:space-between;
 align-items:center;
 padding:12px 24px;
 background:linear-gradient(90deg,#1e3a8a,#0f172a);
-z-index:2000;
+z-index:999;
 box-sizing:border-box;
 border-bottom:1px solid rgba(255,255,255,0.08);
 }
@@ -99,27 +99,30 @@ bottom:9px;
 }
 
 .mobile-menu{
-position:fixed;
-top:0;
-right:-100%;
-width:80%;
-max-width:320px;
-height:100vh;
-
-background:linear-gradient(180deg,#020617,#0f172a);
-box-shadow:-10px 0 30px rgba(0,0,0,0.5);
-
-transition:right 0.3s ease;
-
-display:flex;
+display:none;
 flex-direction:column;
-padding-top:80px;
-
-z-index:1500;
+position:fixed;
+transition: all 0.25s ease;
+top:0;
+left:0;
+width:100%;
+padding-top:70px;
+background:rgba(2,6,23,0.98);
+backdrop-filter:blur(10px);
+z-index:1001;
 }
 
-.mobile-menu.active{
-right:0;
+.mobile-menu{
+display:none;
+flex-direction:column;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(180deg,#020617,#0f172a);
+z-index:1001;
+padding-top:80px;
 }
 
 .mobile-menu a{
@@ -139,29 +142,6 @@ padding-left:30px;
 .mobile-menu.active{
 display:flex;
 }
-
-
-.backdrop{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-backdrop-filter:blur(4px);
-
-opacity:0;
-pointer-events:none;
-transition:0.3s;
-
-z-index:1400;
-}
-
-.backdrop.active{
-opacity:1;
-pointer-events:auto;
-}
-
 
 /* ===== CONTAINER ===== */
 .container{
@@ -294,7 +274,6 @@ Vidhwaan
 </div>
 
 <div id="mobileMenu" class="mobile-menu">
-<div id="backdrop" class="backdrop"></div>
 <a href="#" id="mNavHome">Home</a>
 <a href="#" id="mNavGallery">Gallery</a>
 <a href="#" id="mNavVideos">Videos</a>
