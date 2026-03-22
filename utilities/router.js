@@ -82,17 +82,16 @@ try{
 
 const CACHE_KEY = `profile_${phone}`;
 
-if(window.__PROFILE_CACHE[phone]){
-  renderPage(window.__PROFILE_CACHE[phone], page);
+const mem = window.__PROFILE_CACHE[phone];
+let cached = localStorage.getItem(CACHE_KEY);
+cached = cached ? JSON.parse(cached) : null;
+
+if(mem && cached && mem.version === cached.version){
+  renderPage(mem, page);
   return;
 }
 
-/* =========================
-   STEP 1: CHECK CACHE
-========================= */
 
-let cached = localStorage.getItem(CACHE_KEY);
-cached = cached ? JSON.parse(cached) : null;
 
 /* =========================
    STEP 2: FETCH LATEST
@@ -103,6 +102,12 @@ const rawRes = await fetch(
 );
 
 if(!rawRes.ok){
+
+  if(cached){
+    renderPage(cached.data, page);
+    return;
+  }
+
   document.body.innerHTML = "Profile not found";
   return;
 }
@@ -127,6 +132,20 @@ if(cached && cached.version === latestData.version){
 }
 
 window.__PROFILE_CACHE[phone] = finalData;
+
+setTimeout(()=>{
+  fetch(`https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`)
+    .then(r=>r.json())
+    .then(newData=>{
+      if(newData.version !== finalData.version){
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          version: newData.version,
+          data: newData
+        }));
+        window.__PROFILE_CACHE[phone] = newData;
+      }
+    });
+}, 2000);
    
 renderPage(finalData, page);
 
@@ -603,7 +622,7 @@ Photos and event moments
 ${images.length ? images.map(img => `
 <div class="card" style="padding:10px;">
   <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
-    <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+    <img src="${img}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
   </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
@@ -678,7 +697,7 @@ Performance highlights and recordings
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
   <div style="position:relative;width:100%;padding-top:56.25%;">
-    <iframe src="${getEmbedUrl(v)}"
+    <iframe src="${getEmbedUrl(v)}" loading="lazy"
     style="position:absolute;top:0;left:0;width:100%;height:100%;"
     allowfullscreen></iframe>
   </div>
