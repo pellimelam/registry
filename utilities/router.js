@@ -737,27 +737,9 @@ Performance highlights and recordings
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
   <div style="position:relative;width:100%;padding-top:56.25%;">
-    
-    ${v && v.trim() ? `
-      <iframe src="${getEmbedUrl(v)}" loading="lazy"
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"
-      allowfullscreen></iframe>
-    ` : `
-      <div style="
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:#64748b;
-        font-size:13px;">
-        Contact support to upload
-      </div>
-    `}
-
+    <iframe src="${getEmbedUrl(v)}" loading="lazy"
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"
+    allowfullscreen></iframe>
   </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
@@ -772,7 +754,7 @@ ${videos.length ? videos.map(v => `
     border-radius:10px;
     color:#64748b;
     font-size:13px;">
-    Contact support to upload
+    No Video
   </div>
 </div>
 `).join("")}
