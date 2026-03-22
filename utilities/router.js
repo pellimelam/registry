@@ -757,10 +757,11 @@ menu.classList.toggle("active");
 btn.classList.toggle("active"); // 🔥 ADD THIS
 };
 
-document.onclick = (e)=>{
-if(!menu.contains(e.target) && !btn.contains(e.target)){
-menu.classList.remove("active");
-}
+btn.onclick = (e)=>{
+e.stopPropagation();
+
+menu.classList.toggle("active");
+btn.classList.toggle("active");
 };
 
 }
@@ -788,13 +789,17 @@ Object.entries(routes).forEach(([id, url])=>{
 const el = document.getElementById(id);
 if(!el) return;
 
-el.addEventListener("click", (e)=>{
+el.onclick = (e)=>{
 e.preventDefault();
-e.stopPropagation();
 
+/* CLOSE MENU */
+menu.classList.remove("active");
+btn.classList.remove("active");
+
+/* ROUTE */
 history.pushState({}, "", url);
 initRouter();
-});
+};
 });
 
 }
