@@ -753,15 +753,15 @@ if(btn && menu){
 
 btn.onclick = (e)=>{
 e.stopPropagation();
-menu.classList.toggle("active");
-btn.classList.toggle("active"); // 🔥 ADD THIS
-};
 
-btn.onclick = (e)=>{
-e.stopPropagation();
+const isOpen = menu.classList.toggle("active");
 
-menu.classList.toggle("active");
-btn.classList.toggle("active");
+/* sync hamburger animation */
+if(isOpen){
+btn.classList.add("active");
+}else{
+btn.classList.remove("active");
+}
 };
 
 }
