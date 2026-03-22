@@ -652,7 +652,7 @@ link.click();
 
 function renderGallery(data){
 
-const images = (data.gallery || []).filter(Boolean);
+const images = data.gallery || [];
 
 const content = `
 
@@ -727,7 +727,7 @@ return url;
 
 function renderVideos(data){
 
-const videos = (data.videos || []).filter(Boolean);
+const videos = data.videos || [];
 
 const content = `
 
