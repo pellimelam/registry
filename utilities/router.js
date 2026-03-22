@@ -388,6 +388,10 @@ WhatsApp
 renderLayout(layout(data, content));
 
 requestAnimationFrame(()=>{
+initUI(data);
+});
+
+requestAnimationFrame(()=>{
 
 const btn = document.getElementById("downloadQRBtn");
 
@@ -583,6 +587,10 @@ No Image
 
 renderLayout(layout(data, content));
 
+requestAnimationFrame(()=>{
+initUI(data);
+});
+
 }
 /* =========================
    VIDEOS
@@ -649,6 +657,10 @@ No Video
 `;
 
 renderLayout(layout(data, content));
+
+requestAnimationFrame(()=>{
+initUI(data);
+});
 
 }
 
@@ -717,6 +729,67 @@ India - ${extractPincode(data.location.village)}
 
 `;
 
-renderLayout(layout(data, content));
+requestAnimationFrame(()=>{
+initUI(data);
+});
 
 }
+
+
+function initUI(data){
+
+const btn = document.getElementById("menuBtn");
+const menu = document.getElementById("mobileMenu");
+
+/* ===== MOBILE MENU ===== */
+if(btn && menu){
+
+btn.onclick = (e)=>{
+e.stopPropagation();
+menu.classList.toggle("active");
+};
+
+document.onclick = (e)=>{
+if(!menu.contains(e.target) && !btn.contains(e.target)){
+menu.classList.remove("active");
+}
+};
+
+}
+
+/* ===== NAVIGATION ===== */
+
+const slug = `${data.firstName}${data.lastName}${data.phone}`
+.toLowerCase()
+.replace(/\s+/g,"");
+
+const base = `/${slug}`;
+
+const routes = {
+navHome: base,
+navGallery: `${base}/gallery`,
+navVideos: `${base}/videos`,
+navAbout: `${base}/about`,
+mNavHome: base,
+mNavGallery: `${base}/gallery`,
+mNavVideos: `${base}/videos`,
+mNavAbout: `${base}/about`
+};
+
+Object.entries(routes).forEach(([id, url])=>{
+const el = document.getElementById(id);
+if(!el) return;
+
+el.onclick = (e)=>{
+e.preventDefault();
+history.pushState({}, "", url);
+initRouter();
+};
+});
+
+}
+
+
+
+
+
