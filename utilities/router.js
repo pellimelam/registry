@@ -736,16 +736,26 @@ Performance highlights and recordings
 
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
-  <div style="position:relative;width:100%;padding-top:56.25%;display:flex;align-items:center;justify-content:center;">
+  <div style="position:relative;width:100%;padding-top:56.25%;">
     
     ${v && v.trim() ? `
       <iframe src="${getEmbedUrl(v)}" loading="lazy"
       style="position:absolute;top:0;left:0;width:100%;height:100%;"
       allowfullscreen></iframe>
     ` : `
-      <span style="color:#64748b;font-size:13px;">
+      <div style="
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#64748b;
+        font-size:13px;">
         Contact support to upload
-      </span>
+      </div>
     `}
 
   </div>
