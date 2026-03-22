@@ -75,8 +75,8 @@ const repo = uid || phone; // fallback
 
 const fullData = {
 ...data,
-gallery:["","","","",""],
-videos:["","","","",""],
+gallery:[],
+videos:[],
 about:""
 };
 
