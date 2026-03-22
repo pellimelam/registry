@@ -22,6 +22,10 @@ const content = `
 
 <h2>Videos</h2>
 
+<p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
+Performance highlights and recordings
+</p>
+
 <div class="grid">
 
 ${videos.length ? videos.map(v => `
@@ -53,7 +57,7 @@ ${videos.length ? videos.map(v => `
 
 ${!videos.length ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
-To add videos, please contact Vidhwaan support (see home page).
+To add videos, please contact Vidhwaan support (details on home page).
 </div>
 ` : ""}
 
