@@ -666,8 +666,18 @@ Photos and event moments
 
 ${images.length ? images.map(img => `
 <div class="card" style="padding:10px;">
-  <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;">
-    <img src="${img}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
+  <div style="width:100%;aspect-ratio:1/1;overflow:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+    
+    ${img && img.trim() ? `
+      <img src="${img}" loading="lazy"
+      style="width:100%;height:100%;object-fit:cover;"
+      onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\\'color:#64748b;font-size:13px;\\'>Contact support to upload</span>';">
+    ` : `
+      <span style="color:#64748b;font-size:13px;">
+        Contact support to upload
+      </span>
+    `}
+
   </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
@@ -682,7 +692,7 @@ ${images.length ? images.map(img => `
     border-radius:10px;
     color:#64748b;
     font-size:13px;">
-    No Image
+    Contact support to upload
   </div>
 </div>
 `).join("")}
@@ -706,21 +716,6 @@ initUI(data);
 }
 
 
-function getEmbedUrl(url){
-if(!url) return "";
-
-if(url.includes("youtu.be/")){
-return "https://www.youtube.com/embed/" + url.split("youtu.be/")[1].split("?")[0];
-}
-
-if(url.includes("watch?v=")){
-return "https://www.youtube.com/embed/" + url.split("watch?v=")[1].split("&")[0];
-}
-
-return url;
-}
-
-
 /* =========================
    VIDEOS
 ========================= */
@@ -741,10 +736,18 @@ Performance highlights and recordings
 
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
-  <div style="position:relative;width:100%;padding-top:56.25%;">
-    <iframe src="${getEmbedUrl(v)}" loading="lazy"
-    style="position:absolute;top:0;left:0;width:100%;height:100%;"
-    allowfullscreen></iframe>
+  <div style="position:relative;width:100%;padding-top:56.25%;display:flex;align-items:center;justify-content:center;">
+    
+    ${v && v.trim() ? `
+      <iframe src="${getEmbedUrl(v)}" loading="lazy"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      allowfullscreen></iframe>
+    ` : `
+      <span style="color:#64748b;font-size:13px;">
+        Contact support to upload
+      </span>
+    `}
+
   </div>
 </div>
 `).join("") : Array(5).fill("").map(() => `
@@ -759,7 +762,7 @@ ${videos.length ? videos.map(v => `
     border-radius:10px;
     color:#64748b;
     font-size:13px;">
-    No Video
+    Contact support to upload
   </div>
 </div>
 `).join("")}
