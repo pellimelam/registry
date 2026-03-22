@@ -583,6 +583,28 @@ No Image
 
 renderLayout(layout(data, content));
 
+requestAnimationFrame(()=>{
+
+const slug = `${data.firstName}${data.lastName}${data.phone}`
+  .toLowerCase()
+  .replace(/\s+/g,"");
+
+const base = `/${slug}`;
+
+/* DESKTOP */
+document.getElementById("navHome").href = base;
+document.getElementById("navGallery").href = `${base}/gallery`;
+document.getElementById("navVideos").href = `${base}/videos`;
+document.getElementById("navAbout").href = `${base}/about`;
+
+/* MOBILE */
+document.getElementById("mNavHome").href = base;
+document.getElementById("mNavGallery").href = `${base}/gallery`;
+document.getElementById("mNavVideos").href = `${base}/videos`;
+document.getElementById("mNavAbout").href = `${base}/about`;
+
+});
+
 }
 /* =========================
    VIDEOS
