@@ -1,5 +1,7 @@
 import { layout } from "./template/baseTemplate.js";
 
+window.__PROFILE_CACHE = window.__PROFILE_CACHE || {};
+
 function renderLayout(content){
 document.getElementById("app").innerHTML = content;
 }
@@ -70,7 +72,6 @@ loadProfilePage(phone, page);
 
 
 
-/* CDN */
 async function loadProfilePage(phone, page){
 
 try{
@@ -80,6 +81,11 @@ try{
 ========================= */
 
 const CACHE_KEY = `profile_${phone}`;
+
+if(window.__PROFILE_CACHE[phone]){
+  renderPage(window.__PROFILE_CACHE[phone], page);
+  return;
+}
 
 /* =========================
    STEP 1: CHECK CACHE
@@ -107,32 +113,24 @@ const latestData = await rawRes.json();
    STEP 3: VERSION CHECK
 ========================= */
 
+let finalData;
+
 if(cached && cached.version === latestData.version){
-
-  /* USE CACHE (FAST) */
-  renderPage(cached.data, page);
-
+  finalData = cached.data;
 }else{
+  finalData = latestData;
 
-  /* UPDATE CACHE */
   localStorage.setItem(CACHE_KEY, JSON.stringify({
     version: latestData.version,
     data: latestData
   }));
-
 }
 
-/* =========================
-   STEP 2: OPTIONAL CDN BOOST (SAFE)
-========================= */
+window.__PROFILE_CACHE[phone] = finalData;
+   
+renderPage(finalData, page);
 
 
-
-/* =========================
-   STEP 3: RENDER
-========================= */
-
-renderPage(data, page);
 
 }catch(e){
 document.body.innerHTML = "Error loading profile";
@@ -195,6 +193,10 @@ return `
 ========================= */
 
 function applySEO(title, description, data){
+
+document.querySelectorAll("meta[name='description']").forEach(e=>e.remove());
+document.querySelectorAll("meta[name='keywords']").forEach(e=>e.remove());
+document.querySelectorAll("script[type='application/ld+json']").forEach(e=>e.remove());  
 
 const geo = `${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}`;
 
@@ -638,6 +640,23 @@ initUI(data);
 });
 
 }
+
+
+function getEmbedUrl(url){
+if(!url) return "";
+
+if(url.includes("youtu.be/")){
+return "https://www.youtube.com/embed/" + url.split("youtu.be/")[1].split("?")[0];
+}
+
+if(url.includes("watch?v=")){
+return "https://www.youtube.com/embed/" + url.split("watch?v=")[1].split("&")[0];
+}
+
+return url;
+}
+
+
 /* =========================
    VIDEOS
 ========================= */
@@ -659,7 +678,7 @@ Performance highlights and recordings
 ${videos.length ? videos.map(v => `
 <div class="card" style="padding:10px;">
   <div style="position:relative;width:100%;padding-top:56.25%;">
-    <iframe src="${v.replace("watch?v=","embed/")}"
+    <iframe src="${getEmbedUrl(v)}"
     style="position:absolute;top:0;left:0;width:100%;height:100%;"
     allowfullscreen></iframe>
   </div>
@@ -803,12 +822,17 @@ btn.classList.remove("active");
 
 
 /* ===== CLOSE ON OUTSIDE CLICK ===== */
+if(!window.__NAV_INIT){
+window.__NAV_INIT = true;
+
 document.addEventListener("click",(e)=>{
 if(!menu.contains(e.target) && !btn.contains(e.target)){
 menu.classList.remove("active");
 btn.classList.remove("active");
 }
 });
+
+}
 
 /* ===== NAVIGATION ===== */
 
