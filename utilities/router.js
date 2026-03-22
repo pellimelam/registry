@@ -89,21 +89,13 @@ document.body.innerHTML = "Profile not found";
 return;
 }
 
-let data = await rawRes.json();
+const data = await rawRes.json();
 
 /* =========================
    STEP 2: OPTIONAL CDN BOOST (SAFE)
 ========================= */
 
-try{
-const cdnRes = await fetch(
-  `https://cdn.jsdelivr.net/gh/vidhwaan/${phone}@main/data.json`
-);
 
-if(cdnRes.ok){
-data = await cdnRes.json();
-}
-}catch(e){}
 
 /* =========================
    STEP 3: RENDER
