@@ -8,6 +8,10 @@ const content = `
 
 <h2>Gallery</h2>
 
+<p style="color:#94a3b8;font-size:14px;margin-bottom:10px;">
+Photos and event moments
+</p>
+
 <div class="grid">
 
 ${images.length ? images.map(img => `
@@ -38,7 +42,7 @@ ${images.length ? images.map(img => `
 
 ${!images.length ? `
 <div class="card" style="text-align:center;color:#94a3b8;">
-To add photos, please contact Vidhwaan support (see home page).
+To add photos, please contact Vidhwaan support (details on home page).
 </div>
 ` : ""}
 
