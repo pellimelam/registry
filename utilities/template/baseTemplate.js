@@ -83,6 +83,7 @@ display:block;
 display:none;
 flex-direction:column;
 position:fixed;
+transition: all 0.25s ease;
 top:0;
 left:0;
 width:100%;
@@ -90,6 +91,11 @@ padding-top:70px;
 background:rgba(2,6,23,0.98);
 backdrop-filter:blur(10px);
 z-index:1001;
+}
+
+.mobile-menu a{
+padding:14px 20px;
+border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
 .mobile-menu.active{
