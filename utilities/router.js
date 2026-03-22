@@ -79,17 +79,49 @@ try{
    STEP 1: ALWAYS CHECK GITHUB (TRUTH)
 ========================= */
 
+const CACHE_KEY = `profile_${phone}`;
+
+/* =========================
+   STEP 1: CHECK CACHE
+========================= */
+
+let cached = localStorage.getItem(CACHE_KEY);
+cached = cached ? JSON.parse(cached) : null;
+
+/* =========================
+   STEP 2: FETCH LATEST
+========================= */
+
 const rawRes = await fetch(
-  `https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`,
-  { cache: "no-store" }
+  `https://raw.githubusercontent.com/vidhwaan/${phone}/main/data.json`
 );
 
 if(!rawRes.ok){
-document.body.innerHTML = "Profile not found";
-return;
+  document.body.innerHTML = "Profile not found";
+  return;
 }
 
-const data = await rawRes.json();
+const latestData = await rawRes.json();
+
+/* =========================
+   STEP 3: VERSION CHECK
+========================= */
+
+if(cached && cached.version === latestData.version){
+
+  /* USE CACHE (FAST) */
+  renderPage(cached.data, page);
+
+}else{
+
+  /* UPDATE CACHE */
+  localStorage.setItem(CACHE_KEY, JSON.stringify({
+    version: latestData.version,
+    data: latestData
+  }));
+
+  renderPage(latestData, page);
+}
 
 /* =========================
    STEP 2: OPTIONAL CDN BOOST (SAFE)
