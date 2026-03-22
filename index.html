@@ -137,16 +137,19 @@ return;
 /* DATA OBJECT */
 
 const data = {
-firstName,
-lastName,
-phone,
-instrument,
-location:{
-state,
-district,
-subdistrict,
-village
-}
+  version: 1,   // ✅ ADD THIS
+  firstName,
+  lastName,
+  phone,
+  instrument,
+  location:{
+    state,
+    district,
+    subdistrict,
+    village
+  },
+  gallery: [],
+  videos: [],
 };
 
 /* CREATE SITE */
