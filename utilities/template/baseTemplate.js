@@ -268,37 +268,7 @@ ${inner}
 </div>
 
 
-<script>
 
-document.addEventListener("DOMContentLoaded", () => {
-
-const btn = document.getElementById("menuBtn");
-const menu = document.getElementById("mobileMenu");
-
-if(!btn || !menu) return;
-
-btn.addEventListener("click", (e) => {
-e.stopPropagation();
-menu.classList.toggle("active");
-});
-
-/* close on link click */
-document.querySelectorAll("#mobileMenu a").forEach(link=>{
-link.addEventListener("click", ()=>{
-menu.classList.remove("active");
-});
-});
-
-/* close outside */
-document.addEventListener("click", (e)=>{
-if(!menu.contains(e.target) && !btn.contains(e.target)){
-menu.classList.remove("active");
-}
-});
-
-});
-
-</script>
 
 
 </body>
