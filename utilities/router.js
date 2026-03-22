@@ -754,6 +754,7 @@ if(btn && menu){
 btn.onclick = (e)=>{
 e.stopPropagation();
 menu.classList.toggle("active");
+btn.classList.toggle("active"); // 🔥 ADD THIS
 };
 
 document.onclick = (e)=>{
