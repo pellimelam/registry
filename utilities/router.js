@@ -554,28 +554,19 @@ const btnInstall = document.getElementById("installAppBtn");
 
 if(btnInstall){
 
-  let canInstall = false;
-
   window.addEventListener("beforeinstallprompt", (e)=>{
     e.preventDefault();
     window.__DEFERRED_PROMPT = e;
-    canInstall = true;
   });
 
-  btnInstall.onclick = async ()=>{
-
-    /* ✅ INSTALL AVAILABLE */
-    if(canInstall && window.__DEFERRED_PROMPT){
-      window.__DEFERRED_PROMPT.prompt();
-      window.__DEFERRED_PROMPT = null;
-      return;
-    }
-
-    /* ✅ ALREADY INSTALLED (OR NOT SUPPORTED) */
-    btnInstall.innerText = "Already Installed";
-    btnInstall.disabled = true;
-  };
-}
+  if(btnInstall){
+    btnInstall.onclick = async ()=>{
+      const promptEvent = window.__DEFERRED_PROMPT;
+      if(promptEvent){
+        promptEvent.prompt(); // ✅ browser handles everything
+      }
+    };
+  }
 
 
 /* =========================
