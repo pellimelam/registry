@@ -339,6 +339,8 @@ const qr = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${prof
 const isStandalone =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
+
+const isInstalled = localStorage.getItem("PWA_INSTALLED") === "1";
    
 const content = `
 
@@ -476,7 +478,7 @@ Vidhwaan PelliMelam
 
 
 
-${!isStandalone ? `
+${(!isStandalone && !isInstalled) ? `
 
 <div class="card">
 
@@ -553,17 +555,15 @@ const btnInstall = document.getElementById("installAppBtn");
 
 if(btnInstall){
   btnInstall.onclick = async ()=>{
-
     const promptEvent = window.__DEFERRED_PROMPT;
 
-    /* ✅ INSTALL AVAILABLE */
     if(promptEvent){
       promptEvent.prompt();
-      return;
-    }
 
-    /* ✅ ALREADY INSTALLED OR NOT ELIGIBLE */
-    window.location.href = window.location.href;
+      /* 🔥 ADD THIS LINE */
+      localStorage.setItem("PWA_INSTALLED", "1");
+
+    }
   };
 }
 
