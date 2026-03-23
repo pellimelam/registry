@@ -553,10 +553,17 @@ const btnInstall = document.getElementById("installAppBtn");
 
 if(btnInstall){
   btnInstall.onclick = async ()=>{
+
     const promptEvent = window.__DEFERRED_PROMPT;
+
+    /* ✅ INSTALL AVAILABLE */
     if(promptEvent){
       promptEvent.prompt();
+      return;
     }
+
+    /* ✅ ALREADY INSTALLED OR NOT ELIGIBLE */
+    window.location.href = window.location.href;
   };
 }
 
