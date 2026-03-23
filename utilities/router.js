@@ -538,8 +538,7 @@ initUI(data);
    PWA INSTALL
 ========================= */
 
-
-
+/* INIT ONCE */
 if(!window.__PWA_INIT){
   window.__PWA_INIT = true;
 
@@ -549,25 +548,17 @@ if(!window.__PWA_INIT){
   });
 }
 
+/* BUTTON */
 const btnInstall = document.getElementById("installAppBtn");
 
-
 if(btnInstall){
-
-  window.addEventListener("beforeinstallprompt", (e)=>{
-    e.preventDefault();
-    window.__DEFERRED_PROMPT = e;
-  });
-
-  if(btnInstall){
-    btnInstall.onclick = async ()=>{
-      const promptEvent = window.__DEFERRED_PROMPT;
-      if(promptEvent){
-        promptEvent.prompt(); // ✅ browser handles everything
-      }
-    };
-  }
-
+  btnInstall.onclick = async ()=>{
+    const promptEvent = window.__DEFERRED_PROMPT;
+    if(promptEvent){
+      promptEvent.prompt();
+    }
+  };
+}
 
 /* =========================
    DYNAMIC MANIFEST
