@@ -560,33 +560,7 @@ if(btnInstall){
   };
 }
 
-/* =========================
-   DYNAMIC MANIFEST
-========================= */
 
-const manifest = {
-  name: `VID ${data.firstName}`,
-  short_name: `VID ${data.firstName}`,
-  start_url: window.location.pathname,
-  display: "standalone",
-  background_color: "#020617",
-  theme_color: "#1e3a8a",
-  icons: [
-    {
-      src: "/icons1/icon-192.png",
-      sizes: "192x192",
-      type: "image/png"
-    },
-    {
-      src: "/icons1/icon-512.png",
-      sizes: "512x512",
-      type: "image/png"
-    }
-  ]
-};
-
-const blob = new Blob([JSON.stringify(manifest)], {type:"application/json"});
-const url = URL.createObjectURL(blob);
 
 let link = document.querySelector("link[rel='manifest']");
 if(!link){
@@ -595,16 +569,18 @@ if(!link){
   document.head.appendChild(link);
 }
 
-link.href = url;
-
-URL.revokeObjectURL(url);
-
-
-
 if("serviceWorker" in navigator && !window.__SW_REGISTERED){
   window.__SW_REGISTERED = true;
   navigator.serviceWorker.register("/sw.js");
 }
+
+   
+/* 🔥 DYNAMIC PER USER */
+link.href = `/manifest.json?name=${encodeURIComponent(data.firstName)}&start=${encodeURIComponent(window.location.pathname)}`;
+
+
+
+
 
    
    
