@@ -336,6 +336,10 @@ const profileUrl = window.location.href;
 
 const qr = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${profileUrl}`;
 
+const isStandalone =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.navigator.standalone === true;
+   
 const content = `
 
 <div class="hero">
@@ -471,10 +475,22 @@ Vidhwaan PelliMelam
 
 
 
+
+
+
+
+
+
+
+
+
+
 <!-- QUICK ACTIONS -->
 <div class="card">
 
 <h3>Vidhwaan Support</h3>
+
+
 
 <div style="display:flex;gap:10px;flex-wrap:wrap;">
 
@@ -490,6 +506,29 @@ WhatsApp
 
 
 
+${!isStandalone ? `
+
+<div class="card">
+
+<h3>Download My App</h3>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+<button id="installAppBtn"
+style="background:#2563eb;padding:10px 14px;border-radius:8px;color:white;border:none;cursor:pointer;">
+Download App
+</button>
+
+</div>
+
+</div>
+
+` : ""}
+
+
+
+
+
 `;
 
 renderLayout(layout(data, content));
@@ -499,6 +538,100 @@ renderLayout(layout(data, content));
 requestAnimationFrame(()=>{
 
 initUI(data);
+
+
+/* =========================
+   PWA INSTALL
+========================= */
+
+
+
+if(!window.__PWA_INIT){
+  window.__PWA_INIT = true;
+
+  window.addEventListener("beforeinstallprompt", (e)=>{
+    e.preventDefault();
+    window.__DEFERRED_PROMPT = e;
+  });
+}
+
+const btnInstall = document.getElementById("installAppBtn");
+
+
+if(btnInstall){
+
+  let canInstall = false;
+
+  window.addEventListener("beforeinstallprompt", (e)=>{
+    e.preventDefault();
+    window.__DEFERRED_PROMPT = e;
+    canInstall = true;
+  });
+
+  btnInstall.onclick = async ()=>{
+
+    /* ✅ INSTALL AVAILABLE */
+    if(canInstall && window.__DEFERRED_PROMPT){
+      window.__DEFERRED_PROMPT.prompt();
+      window.__DEFERRED_PROMPT = null;
+      return;
+    }
+
+    /* ✅ ALREADY INSTALLED (OR NOT SUPPORTED) */
+    btnInstall.innerText = "Already Installed";
+    btnInstall.disabled = true;
+  };
+}
+
+
+/* =========================
+   DYNAMIC MANIFEST
+========================= */
+
+const manifest = {
+  name: `VID ${data.firstName}`,
+  short_name: `VID ${data.firstName}`,
+  start_url: window.location.pathname,
+  display: "standalone",
+  background_color: "#020617",
+  theme_color: "#1e3a8a",
+  icons: [
+    {
+      src: "/icons1/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "/icons1/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    }
+  ]
+};
+
+const blob = new Blob([JSON.stringify(manifest)], {type:"application/json"});
+const url = URL.createObjectURL(blob);
+
+let link = document.querySelector("link[rel='manifest']");
+if(!link){
+  link = document.createElement("link");
+  link.rel = "manifest";
+  document.head.appendChild(link);
+}
+
+link.href = url;
+
+URL.revokeObjectURL(url);
+
+
+
+if("serviceWorker" in navigator && !window.__SW_REGISTERED){
+  window.__SW_REGISTERED = true;
+  navigator.serviceWorker.register("/sw.js");
+}
+
+   
+   
 
 const btn = document.getElementById("downloadQRBtn");
 
