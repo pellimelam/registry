@@ -1,24 +1,25 @@
-self.addEventListener("install", (e)=>{
+self.addEventListener("install", (event)=>{
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (e)=>{
-  e.waitUntil(self.clients.claim());
+self.addEventListener("activate", (event)=>{
+  event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener("fetch", (event)=>{
 
   const url = new URL(event.request.url);
 
-  /* 🔥 INTERCEPT MANIFEST */
+  /* 🔥 HANDLE MANIFEST DYNAMICALLY */
   if(url.pathname === "/manifest.json"){
 
     const name = url.searchParams.get("name") || "Vidhwaan";
+    const start = url.searchParams.get("start") || "/";
 
     const manifest = {
       name: `VID ${name}`,
       short_name: `VID ${name}`,
-      start_url: self.location.origin + url.searchParams.get("start") || "/",
+      start_url: start,
       display: "standalone",
       background_color: "#020617",
       theme_color: "#1e3a8a",
@@ -45,6 +46,6 @@ self.addEventListener("fetch", (event)=>{
     return;
   }
 
-  /* DEFAULT */
+  /* NORMAL REQUESTS */
   event.respondWith(fetch(event.request));
 });
