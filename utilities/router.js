@@ -340,7 +340,22 @@ const isStandalone =
   window.matchMedia('(display-mode: standalone)').matches ||
   window.navigator.standalone === true;
 
-const isInstalled = localStorage.getItem("PWA_INSTALLED") === "1";
+let isInstalled = localStorage.getItem("PWA_INSTALLED") === "1";
+
+/* 🔥 ONLY RESET IF USER REALLY UNINSTALLED */
+if(!isStandalone && isInstalled){
+
+  // wait small delay to confirm it's not install phase
+  setTimeout(()=>{
+    const stillStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if(!stillStandalone){
+      localStorage.removeItem("PWA_INSTALLED");
+    }
+  }, 3000);
+}
    
 const content = `
 
