@@ -476,12 +476,24 @@ Vidhwaan PelliMelam
 
 
 
+${!isStandalone ? `
 
+<div class="card">
 
+<h3>Download Vidhwaan App</h3>
 
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
 
+<button id="installAppBtn"
+style="background:#2563eb;padding:10px 14px;border-radius:8px;color:white;border:none;cursor:pointer;">
+Download
+</button>
 
+</div>
 
+</div>
+
+` : ""}
 
 
 
@@ -506,24 +518,6 @@ WhatsApp
 
 
 
-${!isStandalone ? `
-
-<div class="card">
-
-<h3>Download My App</h3>
-
-<div style="display:flex;gap:10px;flex-wrap:wrap;">
-
-<button id="installAppBtn"
-style="background:#2563eb;padding:10px 14px;border-radius:8px;color:white;border:none;cursor:pointer;">
-Download App
-</button>
-
-</div>
-
-</div>
-
-` : ""}
 
 
 
