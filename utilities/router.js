@@ -354,7 +354,7 @@ if(!isStandalone && isInstalled){
     if(!stillStandalone){
       localStorage.removeItem("PWA_INSTALLED");
     }
-  }, 3000);
+  }, 2000);
 }
    
 const content = `
@@ -551,11 +551,11 @@ requestAnimationFrame(()=>{
 initUI(data);
 
 
+
 /* =========================
-   PWA INSTALL
+   PWA INIT (RUN ONCE)
 ========================= */
 
-/* INIT ONCE */
 if(!window.__PWA_INIT){
   window.__PWA_INIT = true;
 
@@ -565,6 +565,18 @@ if(!window.__PWA_INIT){
   });
 }
 
+/* 🔥 ADD EXACTLY HERE (STEP 2) */
+
+if(!window.__PWA_INSTALLED_LISTENER){
+  window.__PWA_INSTALLED_LISTENER = true;
+
+  window.addEventListener("appinstalled", ()=>{
+    localStorage.setItem("PWA_INSTALLED", "1");
+  });
+}
+
+
+
 /* BUTTON */
 const btnInstall = document.getElementById("installAppBtn");
 
@@ -573,11 +585,7 @@ if(btnInstall){
     const promptEvent = window.__DEFERRED_PROMPT;
 
     if(promptEvent){
-      promptEvent.prompt();
-
-      /* 🔥 ADD THIS LINE */
-      localStorage.setItem("PWA_INSTALLED", "1");
-
+      promptEvent.prompt(); // ✅ ONLY THIS
     }
   };
 }
