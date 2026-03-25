@@ -15,20 +15,23 @@ document.body.innerHTML = "<div id='app'></div>";
 let path = window.location.pathname.toLowerCase();
 
 /* HANDLE 404 REDIRECT */
+/* 🔥 HANDLE GITHUB 404 FIRST */
 const params = new URLSearchParams(window.location.search);
 const redirectedPath = params.get("path");
 
+let path = window.location.pathname.toLowerCase();
+
 if(redirectedPath){
+  path = decodeURIComponent(redirectedPath)
+    .replace(/\/+$/, "")   // remove trailing slash
+    .toLowerCase();
 
-path = decodeURIComponent(redirectedPath).toLowerCase();
-
-/* 🔥 CLEAN URL (REMOVE ?path=) */
-window.history.replaceState({}, "", path);
-
+  window.history.replaceState({}, "", path);
 }
+   
 
 /* IGNORE ROOT */
-if(path === "/" || path === "/index.html") return;
+if((path === "/" || path === "/index.html") && !redirectedPath) return;
 
 /* SPLIT */
 const parts = path.split("/").filter(Boolean);
