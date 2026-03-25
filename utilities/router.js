@@ -257,29 +257,58 @@ function applySEO(title, description, data){
 
 document.querySelectorAll("meta[name='description']").forEach(e=>e.remove());
 document.querySelectorAll("meta[name='keywords']").forEach(e=>e.remove());
-document.querySelectorAll("script[type='application/ld+json']").forEach(e=>e.remove());  
+document.querySelectorAll("script[type='application/ld+json']").forEach(e=>e.remove());
+document.querySelectorAll("link[rel='canonical']").forEach(e=>e.remove());
+document.querySelectorAll("meta[property^='og:']").forEach(e=>e.remove());
 
 const geo = `${data.location.village}, ${data.location.subdistrict}, ${data.location.district}, ${data.location.state}`;
 
+const slug = `${data.firstName}${data.lastName}${data.phone}`.toLowerCase();
+const canonicalUrl = `https://registry.vidhwaan.com/${slug}`;
+
 /* TITLE */
-
-
 document.title = `Vidhwaan | ${data.firstName} ${data.lastName} | ${data.instrument}`;
 
-
-/* META */
+/* DESCRIPTION */
 const meta = document.createElement("meta");
 meta.name = "description";
-meta.content = `${description} in ${geo}`;
+meta.content = `${data.firstName} ${data.lastName} is a professional ${data.instrument} artist in ${geo}. Book now via Vidhwaan.`;
 document.head.appendChild(meta);
 
-/* KEYWORDS (optional boost) */
+/* KEYWORDS */
 const keywords = document.createElement("meta");
 keywords.name = "keywords";
-keywords.content = `${data.instrument}, ${data.firstName}, ${geo}`;
+keywords.content = `${data.instrument}, ${data.firstName}, ${geo}, vidhwaan`;
 document.head.appendChild(keywords);
 
-/* STRUCTURED DATA */
+/* ✅ CANONICAL (VERY IMPORTANT) */
+const link = document.createElement("link");
+link.rel = "canonical";
+link.href = canonicalUrl;
+document.head.appendChild(link);
+
+/* ✅ OPEN GRAPH (SOCIAL + GOOGLE BOOST) */
+const ogTitle = document.createElement("meta");
+ogTitle.setAttribute("property","og:title");
+ogTitle.content = `${data.firstName} ${data.lastName} | ${data.instrument}`;
+document.head.appendChild(ogTitle);
+
+const ogDesc = document.createElement("meta");
+ogDesc.setAttribute("property","og:description");
+ogDesc.content = meta.content;
+document.head.appendChild(ogDesc);
+
+const ogUrl = document.createElement("meta");
+ogUrl.setAttribute("property","og:url");
+ogUrl.content = canonicalUrl;
+document.head.appendChild(ogUrl);
+
+const ogType = document.createElement("meta");
+ogType.setAttribute("property","og:type");
+ogType.content = "profile";
+document.head.appendChild(ogType);
+
+/* ✅ STRUCTURED DATA (ENHANCED) */
 const script = document.createElement("script");
 script.type = "application/ld+json";
 
@@ -287,11 +316,13 @@ script.innerHTML = JSON.stringify({
 "@context":"https://schema.org",
 "@type":"Person",
 "name":`${data.firstName} ${data.lastName}`,
-"jobTitle":data.instrument,
+"url": canonicalUrl,
+"jobTitle": data.instrument,
 "address":{
 "@type":"PostalAddress",
-"addressLocality":data.location.village,
-"addressRegion":data.location.district
+"addressLocality": data.location.village,
+"addressRegion": data.location.district,
+"addressCountry": "IN"
 }
 });
 
