@@ -20,12 +20,10 @@ const redirectedPath = params.get("path");
 
 if(redirectedPath){
 
-  path = decodeURIComponent(redirectedPath)
-    .replace(/\/+$/, "")   // 🔥 remove trailing slash
-    .toLowerCase();
+path = decodeURIComponent(redirectedPath).toLowerCase();
 
-  /* 🔥 CLEAN URL (REMOVE ?path=) */
-  window.history.replaceState({}, "", path);
+/* 🔥 CLEAN URL (REMOVE ?path=) */
+window.history.replaceState({}, "", path);
 
 }
 
@@ -1083,6 +1081,5 @@ initRouter();
 });
 
 }
-
 
 
