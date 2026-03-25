@@ -528,7 +528,7 @@ ${(!isStandalone && !isInstalled) ? `
 
 <div class="card">
 
-<h3>Download Vidhwaan App</h3>
+<h3>Vidhwaan App</h3>
 
 <div style="display:flex;gap:10px;flex-wrap:wrap;">
 
