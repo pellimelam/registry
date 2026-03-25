@@ -12,9 +12,6 @@ if(window.location.pathname.match(/\d{10}$/)){
 document.body.innerHTML = "<div id='app'></div>";
 }
 
-let path = window.location.pathname.toLowerCase();
-
-/* HANDLE 404 REDIRECT */
 /* 🔥 HANDLE GITHUB 404 FIRST */
 const params = new URLSearchParams(window.location.search);
 const redirectedPath = params.get("path");
@@ -28,7 +25,7 @@ if(redirectedPath){
 
   window.history.replaceState({}, "", path);
 }
-   
+  
 
 /* IGNORE ROOT */
 if((path === "/" || path === "/index.html") && !redirectedPath) return;
