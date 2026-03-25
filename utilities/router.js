@@ -20,10 +20,12 @@ const redirectedPath = params.get("path");
 
 if(redirectedPath){
 
-path = decodeURIComponent(redirectedPath).toLowerCase();
+  path = decodeURIComponent(redirectedPath)
+    .replace(/\/+$/, "")   // 🔥 remove trailing slash
+    .toLowerCase();
 
-/* 🔥 CLEAN URL (REMOVE ?path=) */
-window.history.replaceState({}, "", path);
+  /* 🔥 CLEAN URL (REMOVE ?path=) */
+  window.history.replaceState({}, "", path);
 
 }
 
