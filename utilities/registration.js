@@ -1,4 +1,4 @@
-let GEO = null;
+
 
 export async function loadRegistration(){
 
@@ -56,6 +56,9 @@ Register
 
 document.getElementById("registration").innerHTML = html;
 
+document.getElementById("state").innerHTML =
+  `<option>Loading states...</option>`;
+
 /* LOAD GEO */
 await loadGeo();
 
@@ -69,45 +72,16 @@ initState();
    LOAD JSON DATA
 ========================= */
 
+let GEO = null;
+const STATE_CACHE = {};
+
 async function loadGeo(){
+  if(GEO) return;
 
-if(GEO) return;
+  const res = await fetch("./geo/states.v1.json");
+  GEO = await res.json();
 
-const files = [
-"./geo_dataset_1.json",
-"./geo_dataset_2.json",
-"./geo_dataset_3.json",
-"./geo_dataset_4.json"
-];
-
-let merged = {};
-
-for(const file of files){
-
-try{
-
-const res = await fetch(file);
-
-if(!res.ok){
-console.error("❌ JSON NOT FOUND:", file);
-continue;
-}
-
-const data = await res.json();
-
-/* merge all */
-Object.assign(merged, data);
-
-}catch(err){
-console.error("❌ ERROR LOADING:", file, err);
-}
-
-}
-
-GEO = merged;
-
-console.log("✅ GEO LOADED:", Object.keys(GEO).length);
-
+  console.log("⚡ STATES LOADED");
 }
 
 
@@ -119,7 +93,7 @@ function initState(){
 
 const el = document.getElementById("state");
 
-el.innerHTML = `<option value="">Select State</option>`;
+el.innerHTML = `<option value="" disabled selected>Select State</option>`;
 
 Object.keys(GEO).forEach(key=>{
 el.innerHTML += `<option value="${key}">${GEO[key].name}</option>`;
@@ -134,22 +108,101 @@ el.onchange = () => loadDistrict(el.value);
    DISTRICT
 ========================= */
 
-function loadDistrict(stateKey){
+async function loadDistrict(stateKey){
 
 const el = document.getElementById("district");
-el.innerHTML = `<option value="">Select District</option>`;
 
-if(!stateKey) return;
+if(!stateKey){
+  el.innerHTML = `<option value="" disabled selected>Select District</option>`;
+  document.getElementById("subdistrict").innerHTML = `<option value="">Select Subdistrict</option>`;
+  document.getElementById("village").innerHTML = `<option value="">Select Village</option>`;
+  return;
+}
 
-const districts = GEO[stateKey].districts;
+el.innerHTML = `<option>Loading...</option>`;
+el.disabled = true;
 
-Object.keys(districts).forEach(key=>{
-el.innerHTML += `<option value="${key}">${districts[key].name}</option>`;
-});
+/* RESET */
+document.getElementById("subdistrict").innerHTML = `<option value="">Select Subdistrict</option>`;
+document.getElementById("village").innerHTML = `<option value="">Select Village</option>`;
 
-el.onchange = () => loadSubdistrict(stateKey, el.value);
+/* 1. GEO */
+if(GEO[stateKey]?.districts){
+  renderDistrict(GEO[stateKey]);
+  el.disabled = false;
+  return;
+}
+
+/* 2. CACHE */
+if(STATE_CACHE[stateKey]){
+  renderDistrict(STATE_CACHE[stateKey]);
+  GEO[stateKey] = STATE_CACHE[stateKey];
+  el.disabled = false;
+  return;
+}
+
+/* 3. FETCH */
+try {
+  const res = await fetch(`./geo/${stateKey}.v1.json`);
+  const data = await res.json();
+
+  STATE_CACHE[stateKey] = data;
+  GEO[stateKey] = data;
+
+  renderDistrict(data);
+
+} catch(e){
+  el.innerHTML = `<option>Failed to load</option>`;
+}
+
+el.disabled = false;
+
+/* 🔥 PREFETCH */
+const idle = window.requestIdleCallback || function(fn){ setTimeout(fn, 1); };
+
+if(!window.__PREFETCH_DONE){
+  window.__PREFETCH_DONE = true;
+
+  idle(() => {
+    const keys = Object.keys(GEO || {}).slice(0,2);
+
+    keys.forEach(s=>{
+      if(!STATE_CACHE[s]){
+        fetch(`./geo/${s}.v1.json`)
+          .then(r=>r.json())
+          .then(d=>{
+            STATE_CACHE[s] = d;
+          })
+          .catch(()=>{});
+      }
+    });
+  });
+}
+}
+
+
+
+function renderDistrict(stateData){
+
+const el = document.getElementById("district");
+
+let html = `<option value="" disabled selected>Select District</option>`;
+
+for(const key in stateData.districts){
+  html += `<option value="${key}">
+    ${stateData.districts[key].name}
+  </option>`;
+}
+
+el.innerHTML = html;
+
+el.onchange = () => loadSubdistrict(
+  document.getElementById("state").value,
+  el.value
+);
 
 }
+
 
 
 /* =========================
@@ -159,11 +212,11 @@ el.onchange = () => loadSubdistrict(stateKey, el.value);
 function loadSubdistrict(stateKey, districtKey){
 
 const el = document.getElementById("subdistrict");
-el.innerHTML = `<option value="">Select Subdistrict</option>`;
+el.innerHTML = `<option value="" disabled selected>Select Subdistrict</option>`;
 
 if(!districtKey) return;
 
-const subs = GEO[stateKey].districts[districtKey].subdistricts;
+const subs = GEO[stateKey]?.districts?.[districtKey]?.subdistricts || {};
 
 Object.keys(subs).forEach(key=>{
 el.innerHTML += `<option value="${key}">${subs[key].name}</option>`;
@@ -181,21 +234,38 @@ el.onchange = () => loadVillage(stateKey, districtKey, el.value);
 function loadVillage(stateKey, districtKey, subKey){
 
 const el = document.getElementById("village");
-el.innerHTML = `<option value="">Select Village</option>`;
 
-if(!subKey) return;
+if(!subKey){
+  el.innerHTML = `<option value="" disabled selected>Select Village</option>`;
+  return;
+}
 
 const villages =
-GEO[stateKey]
-.districts[districtKey]
-.subdistricts[subKey]
-.villages;
+GEO[stateKey]?.districts?.[districtKey]?.subdistricts?.[subKey]?.villages || [];
 
-villages.forEach(v=>{
-el.innerHTML += `
-<option value="${v.slug}">
-${v.name} (${v.pincode})
-</option>`;
-});
+el.innerHTML = `<option value="" disabled selected>Select Village</option>`;
 
+const CHUNK = 300;
+let i = 0;
+
+function renderChunk(){
+
+  let part = "";
+  let end = Math.min(i + CHUNK, villages.length);
+
+  for(; i < end; i++){
+    const v = villages[i];
+    part += `<option value="${v.slug}">
+      ${v.name} (${v.pincode})
+    </option>`;
+  }
+
+  el.insertAdjacentHTML("beforeend", part);
+
+  if(i < villages.length){
+    requestAnimationFrame(renderChunk);
+  }
+}
+
+renderChunk();
 }
