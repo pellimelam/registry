@@ -6,9 +6,9 @@ const hero = `
 
 <img src="./icons1/logo.png" class="logo" alt="Vidhwaan Logo">
 
-<h1>Vidhwaan Community</h1>
+<h1>Artist Community</h1>
 
-<p>Official Vidhwaan Registration Platform</p>
+<p>Official Artist Registration Platform</p>
 
 <div class="hero-buttons">
 
