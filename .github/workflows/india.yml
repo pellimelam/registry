@@ -1,0 +1,163 @@
+name: Generate India Villages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate india.json
+        run: |
+          rm -f india.json
+
+          node <<'EOF'
+          const fs = require("fs");
+
+          const stateFiles = [
+            "andaman-and-nicobar-islands.v1.json",
+            "andhra-pradesh.v1.json",
+            "arunachal-pradesh.v1.json",
+            "assam.v1.json",
+            "bihar.v1.json",
+            "chhattisgarh.v1.json",
+            "delhi.v1.json",
+            "goa.v1.json",
+            "gujarat.v1.json",
+            "haryana.v1.json",
+            "himachal-pradesh.v1.json",
+            "jammu-and-kashmir.v1.json",
+            "jharkhand.v1.json",
+            "karnataka.v1.json",
+            "kerala.v1.json",
+            "ladakh.v1.json",
+            "lakshadweep.v1.json",
+            "madhya-pradesh.v1.json",
+            "maharashtra.v1.json",
+            "manipur.v1.json",
+            "meghalaya.v1.json",
+            "mizoram.v1.json",
+            "nagaland.v1.json",
+            "odisha.v1.json",
+            "puducherry.v1.json",
+            "punjab.v1.json",
+            "rajasthan.v1.json",
+            "sikkim.v1.json",
+            "states.v1.json",
+            "tamil-nadu.v1.json",
+            "telangana.v1.json",
+            "the-dadra-and-nagar-haveli-and-daman-and-diu.v1.json",
+            "tripura.v1.json",
+            "uttar-pradesh.v1.json",
+            "uttarakhand.v1.json",
+            "west-bengal.v1.json"
+          ];
+
+          const villages = [];
+
+          function cleanName(name) {
+            return String(name)
+
+              // Remove (...) completely
+              .replace(/\s*\([^)]*\)\s*/g, "")
+
+              // A. Vemavaram -> A.Vemavaram
+              .replace(/\.\s+/g, ".")
+
+              // Remove spaces around hyphen
+              .replace(/\s*-\s*/g, "-")
+
+              // Remove spaces around slash
+              .replace(/\s*\/\s*/g, "/")
+
+              // Remove spaces after comma
+              .replace(/,\s+/g, ",")
+
+              // Remove remaining spaces
+              .replace(/\s+/g, "")
+
+              .trim();
+          }
+
+          stateFiles.forEach((fileName, index) => {
+
+            const stateNumber = index + 1;
+            const filePath = `geo/${fileName}`;
+
+            console.log(`Processing ${stateNumber}: ${filePath}`);
+
+            const data = JSON.parse(
+              fs.readFileSync(filePath, "utf8")
+            );
+
+            for (const district of Object.values(data.districts || {})) {
+
+              const districtName = district.name;
+
+              for (const mandal of Object.values(
+                district.subdistricts || {}
+              )) {
+
+                const mandalName = mandal.name;
+
+                for (const village of (mandal.villages || [])) {
+
+                  if (!village.name || !village.pincode) continue;
+
+                  villages.push({
+                    s: stateNumber,
+                    d: cleanName(village.d || districtName),
+                    m: cleanName(village.m || mandalName),
+                    n: cleanName(village.name),
+                    p: String(village.pincode).trim()
+                  });
+
+                }
+              }
+            }
+          });
+
+          villages.sort((a, b) =>
+            a.n.localeCompare(b.n)
+          );
+
+          fs.writeFileSync(
+            "india.json",
+            JSON.stringify(villages),
+            "utf8"
+          );
+
+          console.log(`Generated ${villages.length} villages.`);
+          console.log(
+            `Size: ${fs.statSync("india.json").size} bytes`
+          );
+          EOF
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add india.json
+
+          if git diff --cached --quiet; then
+            echo "No changes detected."
+            exit 0
+          fi
+
+          git commit -m "Auto-generate india.json"
+          git push
