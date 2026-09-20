@@ -1,0 +1,73 @@
+name: Compress India JSON
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "india.json"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Minify india.json
+        shell: bash
+        run: |
+          set -e
+
+          echo "Original size:"
+          du -h india.json
+
+          jq -c . india.json > india.min.json
+
+          mv india.min.json india.json
+
+          echo "Compressed size:"
+          du -h india.json
+
+      - name: Validate JSON
+        shell: bash
+        run: |
+          set -e
+
+          jq empty india.json
+
+          echo "india.json is valid JSON."
+
+      - name: Show size reduction
+        shell: bash
+        run: |
+          echo "Final india.json size:"
+          du -h india.json
+
+      - name: Commit compressed india.json
+        shell: bash
+        run: |
+          set -e
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add india.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Compress india.json"
+
+          git push
