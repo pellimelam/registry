@@ -115,13 +115,16 @@ jobs:
 
                 for (const village of (mandal.villages || [])) {
 
-                  if (!village.name || !village.pincode) continue;
+                  if (!village.pincode) continue;
+
+                  const villageName =
+                    cleanName(village.name || "");
 
                   villages.push({
                     s: stateNumber,
                     d: cleanName(village.d || districtName),
                     m: cleanName(village.m || mandalName),
-                    n: cleanName(village.name),
+                    n: villageName || "Village",
                     p: String(village.pincode).trim()
                   });
 
