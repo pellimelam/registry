@@ -74,6 +74,12 @@ jobs:
               // Remove (...) completely
               .replace(/\s*\([^)]*\)\s*/g, "")
 
+              // Remove quotation marks
+              .replace(/["']/g, "")
+
+              // Remove backticks
+              .replace(/`/g, "")
+
               // A. Vemavaram -> A.Vemavaram
               .replace(/\.\s+/g, ".")
 
