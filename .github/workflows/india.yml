@@ -29,41 +29,8 @@ jobs:
           const fs = require("fs");
 
           const stateFiles = [
-            "andaman-and-nicobar-islands.v1.json",
-            "andhra-pradesh.v1.json",
-            "arunachal-pradesh.v1.json",
-            "assam.v1.json",
-            "bihar.v1.json",
-            "chhattisgarh.v1.json",
-            "delhi.v1.json",
-            "goa.v1.json",
-            "gujarat.v1.json",
-            "haryana.v1.json",
-            "himachal-pradesh.v1.json",
-            "jammu-and-kashmir.v1.json",
-            "jharkhand.v1.json",
-            "karnataka.v1.json",
-            "kerala.v1.json",
-            "ladakh.v1.json",
-            "lakshadweep.v1.json",
-            "madhya-pradesh.v1.json",
-            "maharashtra.v1.json",
-            "manipur.v1.json",
-            "meghalaya.v1.json",
-            "mizoram.v1.json",
-            "nagaland.v1.json",
-            "odisha.v1.json",
-            "puducherry.v1.json",
-            "punjab.v1.json",
-            "rajasthan.v1.json",
-            "sikkim.v1.json",
-            "tamil-nadu.v1.json",
-            "telangana.v1.json",
-            "the-dadra-and-nagar-haveli-and-daman-and-diu.v1.json",
-            "tripura.v1.json",
-            "uttar-pradesh.v1.json",
-            "uttarakhand.v1.json",
-            "west-bengal.v1.json"
+            "uttar-pradesh.v1.json"
+
           ];
 
           const villages = [];
